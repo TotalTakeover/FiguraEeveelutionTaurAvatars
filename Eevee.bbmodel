@@ -14,6 +14,20 @@
 		"height": 64
 	},
 	"elements": [],
-	"outliner": [],
+	"outliner": [
+		{
+			"name": "Player",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"uuid": "b3fb9d00-02e1-495c-ee41-2a3e8e30013c",
+			"export": true,
+			"mirror_uv": false,
+			"isOpen": true,
+			"locked": false,
+			"visibility": true,
+			"autouv": 0,
+			"children": []
+		}
+	],
 	"textures": []
 }
