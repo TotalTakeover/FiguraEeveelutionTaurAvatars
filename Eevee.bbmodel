@@ -10,8 +10,8 @@
 	"timeline_setups": [],
 	"unhandled_root_fields": {},
 	"resolution": {
-		"width": 16,
-		"height": 16
+		"width": 64,
+		"height": 64
 	},
 	"elements": [],
 	"outliner": [],
