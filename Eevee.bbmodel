@@ -825,5 +825,23 @@
 			]
 		}
 	],
-	"textures": []
+	"textures": [],
+	"texture_groups": [
+		{
+			"uuid": "a874ec0f-81e0-efb4-0926-973395a68e86",
+			"name": "Main"
+		},
+		{
+			"uuid": "bc92eeef-9d3e-88db-7e80-fd3525afa73e",
+			"name": "Pokeball"
+		},
+		{
+			"uuid": "42a50cc2-6c65-34b9-e7d8-3696df00c7f3",
+			"name": "Armor"
+		},
+		{
+			"uuid": "5d1ac216-537b-19f4-1c07-83a972a833d8",
+			"name": "Armor Trims"
+		}
+	]
 }
