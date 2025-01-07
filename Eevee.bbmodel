@@ -16,7 +16,7 @@
 	"elements": [
 		{
 			"name": "torso",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -53,7 +53,7 @@
 		},
 		{
 			"name": "hips",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -90,7 +90,7 @@
 		},
 		{
 			"name": "leg_back_right1",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -130,7 +130,7 @@
 		},
 		{
 			"name": "leg_back_right2",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -169,7 +169,7 @@
 		},
 		{
 			"name": "leg_back_right3",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -209,7 +209,7 @@
 		},
 		{
 			"name": "leg_back_left",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -247,7 +247,7 @@
 		},
 		{
 			"name": "leg_back_left2",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -284,7 +284,7 @@
 		},
 		{
 			"name": "leg_back_left",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -322,7 +322,7 @@
 		},
 		{
 			"name": "leg_front_right1",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -362,7 +362,7 @@
 		},
 		{
 			"name": "leg_front_right2",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -401,7 +401,7 @@
 		},
 		{
 			"name": "leg_front_right3",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -441,7 +441,7 @@
 		},
 		{
 			"name": "leg_front_left",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -479,7 +479,7 @@
 		},
 		{
 			"name": "leg_front_left2",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
@@ -516,7 +516,7 @@
 		},
 		{
 			"name": "leg_front_left3",
-			"box_uv": true,
+			"box_uv": false,
 			"rescale": false,
 			"locked": false,
 			"light_emission": 0,
