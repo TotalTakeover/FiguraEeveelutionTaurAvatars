@@ -10,6 +10,9 @@ if not s then avatar = {} end
 local s, _, type = pcall(require, "scripts.EeveeType")
 if not s then type = {} end
 
+local s, squapi = pcall(require, "scripts.SquishyAnims")
+if not s then squapi = {} end
+
 local s, c = pcall(require, "scripts.ColorProperties")
 if not s then c = {} end
 
@@ -38,6 +41,7 @@ local pages = {
 	avatar = action_wheel:newPage("Avatar"),
 	eevee  = action_wheel:newPage("Eevee"),
 	type   = action_wheel:newPage("Type"),
+	anims  = action_wheel:newPage("Anims")
 	
 }
 
@@ -51,6 +55,10 @@ local pageActs = {
 	eevee = action_wheel:newAction()
 		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
 		:onLeftClick(function() descend(pages.eevee) end),
+	
+	anims = action_wheel:newAction()
+		:item(itemCheck("jukebox"))
+		:onLeftClick(function() descend(pages.anims) end),
 	
 	type = action_wheel:newAction()
 		:item(itemCheck("cobblemon:eviolite", "rabbit_hide"))
@@ -70,6 +78,11 @@ function events.RENDER(delta, context)
 		pageActs.eevee
 			:title(toJson(
 				{text = "Pokemon Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.anims
+			:title(toJson(
+				{text = "Animations", bold = true, color = c.primary}
 			))
 		
 		pageActs.type
@@ -101,6 +114,7 @@ action_wheel:setPage(pages.main)
 pages.main
 	:action( -1, pageActs.avatar)
 	:action( -1, pageActs.eevee)
+	:action( -1, pageActs.anims)
 
 -- Avatar actions
 pages.avatar
@@ -128,3 +142,8 @@ pages.type
 for _, action in ipairs(pages.type:getActions()) do
 	action:onRightClick(function() ascend() end)
 end
+
+-- Animation actions
+pages.anims
+	:action( -1, squapi.armsAct)
+	:action( -1, backAct)
