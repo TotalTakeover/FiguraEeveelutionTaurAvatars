@@ -4,6 +4,9 @@ if not host:isHost() then return end
 -- Required scripts
 local itemCheck = require("lib.ItemCheck")
 
+local s, avatar = pcall(require, "scripts.Player")
+if not s then avatar = {} end
+
 local s, _, type = pcall(require, "scripts.EeveeType")
 if not s then type = {} end
 
@@ -31,14 +34,19 @@ end
 -- Page setups
 local pages = {
 	
-	main  = action_wheel:newPage("Main"),
-	eevee = action_wheel:newPage("Eevee"),
-	type  = action_wheel:newPage("Type"),
+	main   = action_wheel:newPage("Main"),
+	avatar = action_wheel:newPage("Avatar"),
+	eevee  = action_wheel:newPage("Eevee"),
+	type   = action_wheel:newPage("Type"),
 	
 }
 
 -- Page actions
 local pageActs = {
+	
+	avatar = action_wheel:newAction()
+		:item(itemCheck("armor_stand"))
+		:onLeftClick(function() descend(pages.avatar) end),
 	
 	eevee = action_wheel:newAction()
 		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
@@ -54,6 +62,11 @@ local pageActs = {
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
+		pageActs.avatar
+			:title(toJson(
+				{text = "Avatar Settings", bold = true, color = c.primary}
+			))
+		
 		pageActs.eevee
 			:title(toJson(
 				{text = "Pokemon Settings", bold = true, color = c.primary}
@@ -86,7 +99,14 @@ action_wheel:setPage(pages.main)
 
 -- Main actions
 pages.main
+	:action( -1, pageActs.avatar)
 	:action( -1, pageActs.eevee)
+
+-- Avatar actions
+pages.avatar
+	:action( -1, avatar.vanillaSkinAct)
+	:action( -1, avatar.modelAct)
+	:action( -1, backAct)
 
 -- Eevee actions
 pages.eevee
