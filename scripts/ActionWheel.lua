@@ -40,7 +40,6 @@ local pages = {
 	main   = action_wheel:newPage("Main"),
 	avatar = action_wheel:newPage("Avatar"),
 	eevee  = action_wheel:newPage("Eevee"),
-	type   = action_wheel:newPage("Type"),
 	anims  = action_wheel:newPage("Anims")
 	
 }
@@ -58,11 +57,7 @@ local pageActs = {
 	
 	anims = action_wheel:newAction()
 		:item(itemCheck("jukebox"))
-		:onLeftClick(function() descend(pages.anims) end),
-	
-	type = action_wheel:newAction()
-		:item(itemCheck("cobblemon:eviolite", "rabbit_hide"))
-		:onLeftClick(function() descend(pages.type) end)
+		:onLeftClick(function() descend(pages.anims) end)
 	
 }
 
@@ -83,11 +78,6 @@ function events.RENDER(delta, context)
 		pageActs.anims
 			:title(toJson(
 				{text = "Animations", bold = true, color = c.primary}
-			))
-		
-		pageActs.type
-			:title(toJson(
-				{text = "Eeveelution Type", bold = true, color = c.primary}
 			))
 		
 		for _, page in pairs(pageActs) do
@@ -124,24 +114,8 @@ pages.avatar
 
 -- Eevee actions
 pages.eevee
-	:action( -1, pageActs.type)
+	:action( -1, type.typeAct)
 	:action( -1, backAct)
-
--- Type actions
-pages.type
-	:action( -1, type.vaporeonAct)
-	:action( -1, type.jolteonAct)
-	:action( -1, type.flareonAct)
-	:action( -1, type.espeonAct)
-	:action( -1, type.umbreonAct)
-	:action( -1, type.leafeonAct)
-	:action( -1, type.glaceonAct)
-	:action( -1, type.sylveonAct)
-
--- Allow back action for all `pages.type` actions
-for _, action in ipairs(pages.type:getActions()) do
-	action:onRightClick(function() ascend() end)
-end
 
 -- Animation actions
 pages.anims
