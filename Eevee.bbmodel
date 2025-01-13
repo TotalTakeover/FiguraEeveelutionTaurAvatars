@@ -15,7 +15,7 @@
 	},
 	"elements": [
 		{
-			"name": "LowerTorso",
+			"name": "LowerTorso_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -58,7 +58,7 @@
 			"uuid": "6ee820ae-57d3-0343-cc74-3a45998c329c"
 		},
 		{
-			"name": "Thigh",
+			"name": "Thigh_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -104,7 +104,7 @@
 			"uuid": "76c30ff3-c038-6c69-d554-e40ad70de774"
 		},
 		{
-			"name": "Calf",
+			"name": "Calf_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -149,7 +149,7 @@
 			"uuid": "5dc3dccf-a5bd-1676-8669-c2a96d48573c"
 		},
 		{
-			"name": "Paw",
+			"name": "Paw_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -195,7 +195,7 @@
 			"uuid": "8ae96ad8-df74-eb55-3c89-210678a69662"
 		},
 		{
-			"name": "Thigh",
+			"name": "Thigh_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -239,7 +239,7 @@
 			"uuid": "b72f9dd4-7b38-2731-b433-964d6a44988d"
 		},
 		{
-			"name": "Calf",
+			"name": "Calf_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -282,7 +282,7 @@
 			"uuid": "1a9d7ad0-c970-b3b9-1f0f-5a3773cd031c"
 		},
 		{
-			"name": "Paw",
+			"name": "Paw_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -326,7 +326,7 @@
 			"uuid": "7f851fd3-2864-8c8e-3402-3dd078c1a824"
 		},
 		{
-			"name": "Thigh",
+			"name": "Thigh_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -372,7 +372,7 @@
 			"uuid": "87909639-6081-7e9f-0151-abff93ebbe61"
 		},
 		{
-			"name": "Calf",
+			"name": "Calf_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -417,7 +417,7 @@
 			"uuid": "7390352c-e639-3067-174d-2efaf3646272"
 		},
 		{
-			"name": "Paw",
+			"name": "Paw_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -463,7 +463,7 @@
 			"uuid": "953fde37-8f7d-7f24-fbd7-fbdd3b70d5b8"
 		},
 		{
-			"name": "Thigh",
+			"name": "Thigh_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -507,7 +507,7 @@
 			"uuid": "88c05438-8974-9418-7332-91170324cdaa"
 		},
 		{
-			"name": "Calf",
+			"name": "Calf_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -550,7 +550,7 @@
 			"uuid": "6e813d36-75c2-a7e6-709b-770df50e977c"
 		},
 		{
-			"name": "Paw",
+			"name": "Paw_Type",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,

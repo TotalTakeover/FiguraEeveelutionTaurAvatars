@@ -6,7 +6,7 @@ local typeData = {
 	setType = config:load("EeveeType") or 1,
 	curType = config:load("EeveeType") or 1,
 	types = {
-		"eevee",
+		--"eevee",
 		"vaporeon",
 		"jolteon",
 		"flareon",
@@ -17,6 +17,13 @@ local typeData = {
 		"sylveon"
 	}
 }
+
+-- Find capitalized version of type
+function typeData:upperCase(s)
+	
+	return s:gsub("^%l", string.upper)
+	
+end
 
 -- Reset if type is out of bounds
 if typeData.setType > #typeData.types then
@@ -89,7 +96,7 @@ function events.RENDER(delta, context)
 			:title(toJson(
 				{
 					"",
-					{text = typeData.types[typeData.setType]:gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
+					{text = typeData:upperCase(typeData.types[typeData.setType]):gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
 					{text = "Left click, Right click, or scroll to set your type!", color = c.secondary}
 				}
 			))
