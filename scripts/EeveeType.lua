@@ -6,7 +6,7 @@ local typeData = {
 	setType = config:load("EeveeType") or 1,
 	curType = config:load("EeveeType") or 1,
 	types = {
-		--"eevee",
+		"eevee",
 		"vaporeon",
 		"jolteon",
 		"flareon",
@@ -15,8 +15,72 @@ local typeData = {
 		"leafeon",
 		"glaceon",
 		"sylveon"
+	},
+	textures = {
+		primary = {},
+		secondary = {},
+		primaryShiny = {},
+		secondaryShiny = {}
 	}
 }
+
+-- Store textures
+-- Deletes type if texture cannot be found
+for i = #typeData.types, 1, -1 do
+	
+	-- Variables
+	local curType = typeData.types[i]
+	local primaryTex = textures["textures."..curType] or textures["Eevee."..curType]
+	
+	if primaryTex then
+		
+		-- Store primary texture
+		typeData.textures.primary[curType] = primaryTex
+		
+		-- Variables
+		local secondaryTex = textures["textures."..curType.."_e"] or textures["Eevee."..curType.."_e"]
+		local primaryShinyTex = textures["textures."..curType.."_shiny"] or textures["Eevee."..curType.."_shiny"]
+		
+		if secondaryTex then
+			
+			-- Store secondary texture
+			typeData.textures.secondary[curType] = secondaryTex
+			
+		end
+		
+		if primaryShinyTex then
+			
+			-- Store primary shiny texture
+			typeData.textures.primaryShiny[curType] = primaryShinyTex
+			
+			-- Variable
+			local secondaryShinyTex = textures["textures."..curType.."_shiny_e"] or textures["Eevee."..curType.."_shiny_e"]
+			
+			if secondaryShinyTex then
+				
+				-- Store secondary shiny texture
+				typeData.textures.secondaryShiny[curType] = secondaryShinyTex
+				
+			end
+			
+		end
+		
+	else
+		
+		-- Remove type if primary is not found
+		table.remove(typeData.types, i)
+		
+	end
+	
+end
+
+-- Reset if type is out of bounds
+if typeData.setType > #typeData.types then
+	
+	typeData.setType = 1
+	typeData.curType = 1
+	
+end
 
 -- Find capitalized version of type
 function typeData:upperCase(s)
@@ -25,90 +89,5 @@ function typeData:upperCase(s)
 	
 end
 
--- Reset if type is out of bounds
-if typeData.setType > #typeData.types then
-	typeData.setType = 1
-	typeData.curType = 1
-end
-
--- Eevee type
-function pings.setEeveeType(i)
-	
-	typeData.setType = typeData.setType + i
-	if typeData.setType > #typeData.types then typeData.setType = 1 end
-	if typeData.setType < 1 then typeData.setType = #typeData.types end
-	config:save("EeveeType", typeData.setType)
-	
-end
-
--- Sync variable
-function pings.syncType(a)
-	
-	typeData.setType = a
-	
-end
-
--- Host only instructions, return type data
-if not host:isHost() then return typeData end
-
--- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local s, c = pcall(require, "scripts.ColorProperties")
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncType(typeData.setType)
-	end
-	
-end
-
--- Table setup
-local t = {}
-
--- Action
-t.typeAct = action_wheel:newAction()
-	:onLeftClick(function() pings.setEeveeType(1) end)
-	:onRightClick(function() pings.setEeveeType(-1) end)
-	:onScroll(pings.setEeveeType)
-
--- Primary info table
-local typeItem = {
-	
-	eevee    = itemCheck("cobblemon:everstone",     "white_glazed_terracotta"),
-	vaporeon = itemCheck("cobblemon:water_stone",   "blue_glazed_terracotta"),
-	jolteon  = itemCheck("cobblemon:thunder_stone", "yellow_glazed_terracotta"),
-	flareon  = itemCheck("cobblemon:fire_stone",    "red_glazed_terracotta"),
-	espeon   = itemCheck("cobblemon:psychic_gem",   "magenta_glazed_terracotta"),
-	umbreon  = itemCheck("cobblemon:dark_gem",      "black_glazed_terracotta"),
-	leafeon  = itemCheck("cobblemon:leaf_stone",    "lime_glazed_terracotta"),
-	glaceon  = itemCheck("cobblemon:ice_stone",     "blue_glazed_terracotta"),
-	sylveon  = itemCheck("cobblemon:fairy_gem",     "pink_glazed_terracotta")
-	
-}
-
--- Update action
-function events.RENDER(delta, context)
-	
-	if action_wheel:isEnabled() then
-		t.typeAct
-			:title(toJson(
-				{
-					"",
-					{text = typeData:upperCase(typeData.types[typeData.setType]):gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
-					{text = "Left click, Right click, or scroll to set your type!", color = c.secondary}
-				}
-			))
-			:item(typeItem[typeData.types[typeData.setType]])
-		
-		for _, page in pairs(t) do
-			page:hoverColor(c.hover)
-		end
-		
-	end
-	
-end
-
--- Return type data and actions
-return typeData, t
+-- Return typeData
+return typeData
