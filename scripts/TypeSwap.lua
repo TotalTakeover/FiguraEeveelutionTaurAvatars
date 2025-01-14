@@ -128,7 +128,7 @@ function events.RENDER(delta, context)
 			:item(typeItem[typeData.types[typeData.setType]])
 		
 		for _, page in pairs(t) do
-			page:hoverColor(c.hover)
+			page:color(c.active):hoverColor(c.hover)
 		end
 		
 	end
