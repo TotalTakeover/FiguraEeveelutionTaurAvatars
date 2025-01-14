@@ -2,8 +2,14 @@
 local parts    = require("lib.PartsAPI")
 local typeData = require("scripts.TypeData")
 
+-- Optional script
+-- This allows the textures to update if shiny was toggled
+local s, shiny = pcall(require, "scripts.Shiny")
+if not s then shiny = {} end
+
 -- Variables
 local _type = nil
+local _shiny = nil
 
 -- Texture Swap Parts
 local mainParts = parts:createTable(function(part) return part:getName():find("_Type") end)
@@ -17,13 +23,14 @@ end
 function events.RENDER(delta, context)
 	
 	-- Enable parts based on type
-	if _type ~= typeData.setType then
+	if _type ~= typeData.setType or _shiny ~= shiny.isShiny then
 		
 		-- Variables
 		local typeString = typeData.types[typeData.setType]
 		local primaryTex = typeData.textures.primary[typeString]
 		local secondaryTex = typeData.textures.secondary[typeString]
 		
+		-- If Shiny.lua is present, it will provide shiny textures to use if it is able, and modify these to show the changes
 		for _, part in ipairs(mainParts) do
 			
 			-- Set Primary
@@ -38,6 +45,7 @@ function events.RENDER(delta, context)
 			
 		end
 		
+		-- Toggle accessories based on type
 		for k, v in pairs(eeveeParts) do
 			
 			local isVisible = typeString == k
@@ -52,7 +60,8 @@ function events.RENDER(delta, context)
 	end
 	
 	-- Store data
-	_type = typeData.setType
+	_type  = typeData.setType
+	_shiny = shiny.isShiny
 	
 end
 

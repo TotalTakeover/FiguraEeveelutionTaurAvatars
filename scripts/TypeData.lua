@@ -16,11 +16,10 @@ local typeData = {
 		"glaceon",
 		"sylveon"
 	},
+	-- If Shiny.lua is present, it will provide shiny textures to use if it is able, and modify these to show the changes
 	textures = {
 		primary = {},
-		secondary = {},
-		primaryShiny = {},
-		secondaryShiny = {}
+		secondary = {}
 	}
 }
 
@@ -45,23 +44,6 @@ for i = #typeData.types, 1, -1 do
 			
 			-- Store secondary texture
 			typeData.textures.secondary[curType] = secondaryTex
-			
-		end
-		
-		if primaryShinyTex then
-			
-			-- Store primary shiny texture
-			typeData.textures.primaryShiny[curType] = primaryShinyTex
-			
-			-- Variable
-			local secondaryShinyTex = textures["textures."..curType.."_shiny_e"] or textures["Eevee."..curType.."_shiny_e"]
-			
-			if secondaryShinyTex then
-				
-				-- Store secondary shiny texture
-				typeData.textures.secondaryShiny[curType] = secondaryShinyTex
-				
-			end
 			
 		end
 		
