@@ -65,6 +65,10 @@ function events.RENDER(delta, context)
 	
 end
 
+-- Kills script early if only one type was found in the types table
+-- This prevents the action wheel from creating the type choosing action
+if #typeData.types == 1 then return {} end
+
 -- Eevee type
 function pings.setEeveeType(i)
 	
