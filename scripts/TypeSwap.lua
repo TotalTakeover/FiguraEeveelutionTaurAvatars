@@ -1,6 +1,6 @@
 -- Required scripts
 local parts    = require("lib.PartsAPI")
-local typeData = require("scripts.EeveeType")
+local typeData = require("scripts.TypeData")
 
 -- Variables
 local _type = nil
