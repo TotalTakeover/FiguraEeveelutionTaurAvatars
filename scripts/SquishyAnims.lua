@@ -175,7 +175,7 @@ function events.RENDER(delta, context)
 	
 	-- Control tail activity
 	for k, tail in pairs(squishyTails) do
-		tail.enabled = k == typeData.types[typeData.setType]
+		tail.enabled = k == typeData.types[typeData.curType]
 	end
 	
 end

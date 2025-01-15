@@ -23,10 +23,10 @@ end
 function events.RENDER(delta, context)
 	
 	-- Enable parts based on type
-	if _type ~= typeData.setType or _shiny ~= shiny.isShiny then
+	if _type ~= typeData.curType or _shiny ~= shiny.isShiny then
 		
 		-- Variables
-		local typeString = typeData.types[typeData.setType]
+		local typeString = typeData.types[typeData.curType]
 		local primaryTex = typeData.textures.primary[typeString]
 		local secondaryTex = typeData.textures.secondary[typeString]
 		
@@ -60,7 +60,7 @@ function events.RENDER(delta, context)
 	end
 	
 	-- Store data
-	_type  = typeData.setType
+	_type  = typeData.curType
 	_shiny = shiny.isShiny
 	
 end

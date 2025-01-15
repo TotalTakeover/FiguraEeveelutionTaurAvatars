@@ -50,7 +50,7 @@ c.typeColors = {
 function events.RENDER(delta, context)
 	
 	-- Variables
-	local typeString = typeData.types[typeData.setType]
+	local typeString = typeData.types[typeData.curType]
 	
 	-- Avatar color
 	avatar:color(c.typeColors[typeString].primary)
@@ -66,7 +66,7 @@ if not host:isHost() then return end
 function events.RENDER(delta, context)
 	
 	-- Variables
-	local typeString = typeData.types[typeData.setType]
+	local typeString = typeData.types[typeData.curType]
 	
 	-- Action variables
 	c.hover     = c.typeColors[typeString].secondary
