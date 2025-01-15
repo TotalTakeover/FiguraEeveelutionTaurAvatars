@@ -23,6 +23,23 @@ local function calculateParentRot(m)
 	
 end
 
+-- Match group to type
+local function matchType(n)
+	
+	local m = nil
+	
+	for _, t in ipairs(typeData.types) do
+		local u = typeData:upperCase(t)
+		if n:find(u) then
+			m = t
+			break
+		end
+	end
+	
+	return m
+	
+end
+
 -- Lerp tables
 local leftArmLerp  = lerp:new(0.5, armsMove and 1 or 0)
 local rightArmLerp = lerp:new(0.5, armsMove and 1 or 0)
@@ -33,13 +50,7 @@ if parts.group.Tails then
 	
 	for _, v in ipairs(parts.group.Tails:getChildren()) do
 		local name = v:getName()
-		for _, eeveeType in ipairs(typeData.types) do
-			local upper = typeData:upperCase(eeveeType)
-			if name:find(upper) then
-				tails[eeveeType] = parts:createChain(name, eeveeType == "espeon" and 5 or nil)
-				break
-			end
-		end
+		tails[matchType(name)] = parts:createChain(name, eeveeType == "espeon" and 5 or nil)
 	end
 	
 end
