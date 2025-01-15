@@ -7706,6 +7706,7 @@
 			"sync_to_project": "",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7734,6 +7735,7 @@
 			"sync_to_project": "cae11b47-24d0-079e-4d11-86aeb6d72598",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7762,6 +7764,7 @@
 			"sync_to_project": "",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7790,6 +7793,7 @@
 			"sync_to_project": "",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7818,6 +7822,7 @@
 			"sync_to_project": "",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7846,6 +7851,7 @@
 			"sync_to_project": "",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7874,6 +7880,7 @@
 			"sync_to_project": "",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7902,6 +7909,7 @@
 			"sync_to_project": "",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7930,6 +7938,7 @@
 			"sync_to_project": "",
 			"render_mode": "default",
 			"render_sides": "auto",
+			"pbr_channel": "color",
 			"frame_time": 1,
 			"frame_order_type": "loop",
 			"frame_order": "",
@@ -7945,19 +7954,43 @@
 	"texture_groups": [
 		{
 			"uuid": "a874ec0f-81e0-efb4-0926-973395a68e86",
-			"name": "Main"
+			"material_config": {
+				"color_value": [255, 255, 255, 255],
+				"mer_value": [0, 0, 0],
+				"saved": true
+			},
+			"name": "Main",
+			"is_material": false
 		},
 		{
 			"uuid": "bc92eeef-9d3e-88db-7e80-fd3525afa73e",
-			"name": "Pokeball"
+			"material_config": {
+				"color_value": [255, 255, 255, 255],
+				"mer_value": [0, 0, 0],
+				"saved": true
+			},
+			"name": "Pokeball",
+			"is_material": false
 		},
 		{
 			"uuid": "42a50cc2-6c65-34b9-e7d8-3696df00c7f3",
-			"name": "Armor"
+			"material_config": {
+				"color_value": [255, 255, 255, 255],
+				"mer_value": [0, 0, 0],
+				"saved": true
+			},
+			"name": "Armor",
+			"is_material": false
 		},
 		{
 			"uuid": "5d1ac216-537b-19f4-1c07-83a972a833d8",
-			"name": "Armor Trims"
+			"material_config": {
+				"color_value": [255, 255, 255, 255],
+				"mer_value": [0, 0, 0],
+				"saved": true
+			},
+			"name": "Armor Trims",
+			"is_material": false
 		}
 	]
 }
