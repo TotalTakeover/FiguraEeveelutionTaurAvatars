@@ -2,10 +2,22 @@
 local parts    = require("lib.PartsAPI")
 local typeData = require("scripts.TypeData")
 
--- Optional script
+-- Optional scripts
 -- This allows the textures to update if shiny was toggled
 local s, shiny = pcall(require, "scripts.Shiny")
 if not s then shiny = {} end
+
+-- This allows the type to swap if the pokeball script doesnt exist/doesnt function (due to no model)
+local s, pokeball = pcall(require, "scripts.Pokeball")
+if not s or pokeball == {} then
+	
+	function events.RENDER(delta, context)
+		
+		typeData.curType = typeData.setType
+		
+	end
+	
+end
 
 -- Variables
 local _type = nil
