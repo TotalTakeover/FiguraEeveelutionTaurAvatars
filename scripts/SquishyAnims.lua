@@ -53,8 +53,10 @@ if parts.group.Ears then
 	for _, group in ipairs(parts.group.Ears:getChildren()) do
 		local dir = group:getName():find("Left") and "left" or "right"
 		for _, v in ipairs(group:getChildren()) do
-			local name = v:getName()
-			ears[dir][matchType(name)] = v
+			local match = matchType(v:getName())
+			if match then
+				ears[dir][match] = v
+			end
 		end
 	end
 	
@@ -84,7 +86,10 @@ if parts.group.Tails then
 	
 	for _, v in ipairs(parts.group.Tails:getChildren()) do
 		local name = v:getName()
-		tails[matchType(name)] = parts:createChain(name, eeveeType == "espeon" and 5 or nil)
+		local match = matchType(name)
+		if match then
+			tails[match] = parts:createChain(name)
+		end
 	end
 	
 end
