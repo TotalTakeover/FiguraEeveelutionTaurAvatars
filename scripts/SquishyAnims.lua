@@ -44,6 +44,40 @@ end
 local leftArmLerp  = lerp:new(0.5, armsMove and 1 or 0)
 local rightArmLerp = lerp:new(0.5, armsMove and 1 or 0)
 
+-- Find ears
+local ears = {}
+ears.left = {}
+ears.right = {}
+if parts.group.Ears then
+	
+	for _, group in ipairs(parts.group.Ears:getChildren()) do
+		local dir = group:getName():find("Left") and "left" or "right"
+		for _, v in ipairs(group:getChildren()) do
+			local name = v:getName()
+			ears[dir][matchType(name)] = v
+		end
+	end
+	
+end
+
+-- Setup squishy ears
+-- Setup is based on left ear; if it's not found, it will not set it up
+local squishyEars = {}
+for k, ear in pairs(ears.left) do
+	squishyEars[k] = squapi.ear:new(
+		ear,
+		ears.right[k],
+		0.25, --(1) rangeMultiplier
+		k == "vaporeon" or
+		k == "espeon", --(false) horizontalEars
+		2,    --(2) bendStrength
+		true, --(true) doEarFlick
+		400,  --(400) earFlickChance
+		0.1,  --(0.1) earStiffness
+		0.9   --(0.8) earBounce
+	)
+end
+
 -- Find tails
 local tails = {}
 if parts.group.Tails then
@@ -187,6 +221,11 @@ function events.RENDER(delta, context)
 	-- Control tail activity
 	for k, tail in pairs(squishyTails) do
 		tail.enabled = k == typeData.types[typeData.curType]
+	end
+	
+	-- Control ear activity
+	for k, ear in pairs(squishyEars) do
+		ear.enabled = k == typeData.types[typeData.curType]
 	end
 	
 end
