@@ -3,9 +3,10 @@ local s, squapi = pcall(require, "lib.SquAPI")
 if not s then return {} end
 
 -- Required scripts
-local parts = require("lib.PartsAPI")
-local lerp  = require("lib.LerpAPI")
-local pose  = require("scripts.Posing")
+local parts    = require("lib.PartsAPI")
+local typeData = require("scripts.TypeData")
+local lerp     = require("lib.LerpAPI")
+local pose     = require("scripts.Posing")
 
 -- Config setup
 config:name("EeveelutionTaur")
@@ -20,6 +21,47 @@ local function calculateParentRot(m)
 	end
 	return calculateParentRot(parent) + m:getOffsetRot()
 	
+end
+
+-- Lerp tables
+local leftArmLerp  = lerp:new(0.5, armsMove and 1 or 0)
+local rightArmLerp = lerp:new(0.5, armsMove and 1 or 0)
+
+-- Find tails
+local tails = {}
+if parts.group.Tails then
+	
+	for _, v in ipairs(parts.group.Tails:getChildren()) do
+		local name = v:getName()
+		for _, eeveeType in ipairs(typeData.types) do
+			local upper = typeData:upperCase(eeveeType)
+			if name:find(upper) then
+				tails[eeveeType] = parts:createChain(name, eeveeType == "espeon" and 5 or nil)
+				break
+			end
+		end
+	end
+	
+end
+
+-- Setup squishy tails
+local squishyTails = {}
+for k, tail in pairs(tails) do
+	squishyTails[k] = squapi.tail:new(tail,
+		10,   --(15) idleXMovement
+		10,   --(5) idleYMovement
+		0.8,  --(1.2) idleXSpeed
+		1,    --(2) idleYSpeed
+		2,    --(2) bendStrength
+		0,    --(0) velocityPush
+		0,    --(0) initialMovementOffset
+		1,    --(1) offsetBetweenSegments
+		0.01, --(.005) stiffness
+		0.9,  --(.9) bounce
+		nil,  --(90) flyingOffset
+		nil,  --(-90) downLimit
+		nil   --(45) upLimit
+	)
 end
 
 -- Head table
@@ -37,10 +79,6 @@ local head = squapi.smoothHead:new(
 	1,    -- Speed (1)
 	false -- Keep Original Head Pos (false)
 )
-
--- Lerp tables
-local leftArmLerp  = lerp:new(0.5, armsMove and 1 or 0)
-local rightArmLerp = lerp:new(0.5, armsMove and 1 or 0)
 
 -- Squishy vanilla arms
 local leftArm = squapi.arm:new(
@@ -133,6 +171,11 @@ function events.RENDER(delta, context)
 		if group ~= parts.group.Body then
 			group:rot(-calculateParentRot(group:getParent()))
 		end
+	end
+	
+	-- Control tail activity
+	for k, tail in pairs(squishyTails) do
+		tail.enabled = k == typeData.types[typeData.setType]
 	end
 	
 end
