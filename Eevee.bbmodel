@@ -7992,5 +7992,115 @@
 			"name": "Armor Trims",
 			"is_material": false
 		}
+	],
+	"collections": [
+		{
+			"uuid": "33723dee-cec8-95f1-8238-17258827bdad",
+			"name": "VaporeonParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"2fef3389-853a-70ee-2010-2a8cb2e3a414",
+				"63f0b2be-da7b-c112-0abd-5a87927b2dab",
+				"f9e58ea9-3882-7b4c-407b-fcb46598be94",
+				"514123da-7eb4-b442-28a5-5e3c34797932",
+				"9c2da0e5-9f33-759f-ad93-439b18c5c597",
+				"fd1fff37-87e4-fbf7-61a2-49b1667f8f1a"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "0ce90c6b-f07d-91bd-5599-6132ef3f106c",
+			"name": "JolteonParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"69070fa7-9098-31e8-b4f2-9494923c4c70",
+				"b8bbb1a5-bb5f-c1dd-5cad-4b97b4afcba8",
+				"de5e3b32-70df-dddf-fe89-8e14f6369d8a",
+				"3a9d793d-a0da-7138-ab22-5b68b734ba92"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "0e98bd06-ddb9-e561-c88d-6e0386f1f1fa",
+			"name": "FlareonParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"46acde87-2880-48a6-fd6e-563dc91ad1be",
+				"e28c7a20-c056-4c5a-0911-022ba006afec",
+				"76c64c5e-6cea-8b5d-744f-b72f9c0bea56",
+				"7a8bc5e0-42b4-23fd-7641-3f5f9f1a0f3f",
+				"c40bc55d-5b10-bf8d-7694-d1b752ea7974"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "fb182296-f612-33f5-e108-77832073c30f",
+			"name": "EspeonParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"8d803893-2c6d-73ba-0542-8e50304660d1",
+				"581204a3-4c5b-d107-e7ad-0b5576fbab80",
+				"e4abeb65-b0cc-3852-6c00-1d25d94707b4",
+				"e674ae14-590f-cc78-bbbd-50dc0385aea2"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "5bc95d42-a67a-dad3-f59a-fa552df74657",
+			"name": "UmbreonParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": ["e3df6c21-6892-1814-7d78-fd877eb3d983", "e115cbf3-dd6a-b612-797b-10996798e896", "20f2aeaa-95e3-9f01-7706-a8174e104a0f"],
+			"visibility": false
+		},
+		{
+			"uuid": "90075473-ec91-2007-02b2-f08d481aeb40",
+			"name": "LeafeonParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"f303e65b-1a00-c8c3-9fc0-18179819b9d2",
+				"63031303-cf94-2f40-83a6-4a2a45bfab00",
+				"1fb33bf1-f385-b9f2-6054-1addab2680ad",
+				"89ef0cc8-41a1-f310-e8f3-72b8aaa9c9ab",
+				"101a9f89-cc2e-a482-19fb-f657a739faeb",
+				"d858e988-bfa5-a503-b231-01c6ae3b4b74",
+				"a159f8cc-3e9a-e557-0398-89e30c2a5134",
+				"63ab9059-8c91-0c10-b065-742cb10f603a",
+				"c3e9e988-7066-678a-50ab-e0de766155ae"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "48696b35-f134-b647-8f21-3a7574234cde",
+			"name": "GlaceonParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"25589dfc-271e-e93b-8ba0-04a839393662",
+				"a70e4a43-f5cb-953e-6585-532c08de5b25",
+				"802c7bc8-30e8-aaeb-75ba-002d86ecb4b2",
+				"3ca47a08-0c9e-9e26-38f7-e5602001394e"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "37fa1a09-d081-74e4-78ac-ebbcc580d2a4",
+			"name": "SylveonParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"a270c471-3179-6004-f76f-2762098dd55e",
+				"7b708327-b0bf-117d-1296-1ad57ee18fc4",
+				"53dc21cd-b986-d3dd-1103-bdb7b7b3699b",
+				"d9eb7ceb-a76a-9edc-09ed-56f848ed8ec5",
+				"b2c11eca-4397-42af-779a-c2774b411031"
+			],
+			"visibility": false
+		}
 	]
 }
