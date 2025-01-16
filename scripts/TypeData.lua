@@ -8,6 +8,7 @@ local initType = config:load("EeveeType") or 1
 -- Variable setup
 local typeData = {
 	types = types,
+	typesId = {},
 	setType = initType,
 	curType = initType,
 	textures = {
@@ -47,6 +48,13 @@ for i = #typeData.types, 1, -1 do
 		table.remove(typeData.types, i)
 		
 	end
+	
+end
+
+-- Setup typesId
+for k, v in ipairs(typeData.types) do
+	
+	typeData.typesId[v] = k
 	
 end
 

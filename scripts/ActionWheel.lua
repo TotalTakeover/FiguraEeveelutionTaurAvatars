@@ -7,11 +7,8 @@ local itemCheck = require("lib.ItemCheck")
 local s, avatar = pcall(require, "scripts.Player")
 if not s then avatar = {} end
 
-local s, typeSwap, item = pcall(require, "scripts.TypeSwap")
-if not s then
-	typeSwap = {}
-	item = {}
-end
+local s, typeSwap = pcall(require, "scripts.TypeSwap")
+if not s then typeSwap = {} end
 
 local s, squapi = pcall(require, "scripts.SquishyAnims")
 if not s then squapi = {} end
@@ -56,6 +53,7 @@ local pageActs = {
 		:onLeftClick(function() descend(pages.avatar) end),
 	
 	eevee = action_wheel:newAction()
+		:item(itemCheck("rabbit_foot"))
 		:onLeftClick(function() descend(pages.eevee) end),
 	
 	anims = action_wheel:newAction()
@@ -78,7 +76,6 @@ function events.RENDER(delta, context)
 			))
 		
 		pageActs.eevee
-			:item(item.typeItem or itemCheck("rabbit_foot"))
 			:title(toJson(
 				{text = "Pokemon Settings", bold = true, color = c.primary}
 			))
@@ -133,6 +130,7 @@ pages.eevee
 -- Type actions
 pages.types
 	:action( -1, typeSwap.setTypeAct)
+	:action( -1, typeSwap.setStoneAct)
 	:action( -1, backAct)
 
 -- Animation actions
