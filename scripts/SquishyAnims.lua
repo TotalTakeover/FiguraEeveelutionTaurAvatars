@@ -225,12 +225,12 @@ function events.RENDER(delta, context)
 	
 	-- Control tail activity
 	for k, tail in pairs(squishyTails) do
-		tail.enabled = k == typeData.types[typeData.curType]
+		tail.enabled = k == typeData.curString
 	end
 	
 	-- Control ear activity
 	for k, ear in pairs(squishyEars) do
-		ear.enabled = k == typeData.types[typeData.curType]
+		ear.enabled = k == typeData.curString
 	end
 	
 end

@@ -49,14 +49,11 @@ c.typeColors = {
 
 function events.RENDER(delta, context)
 	
-	-- Variables
-	local typeString = typeData.types[typeData.curType]
-	
 	-- Avatar color
-	avatar:color(c.typeColors[typeString].primary)
+	avatar:color(c.typeColors[typeData.curString].primary)
 	
 	-- Glowing outline
-	renderer:outlineColor(c.typeColors[typeString].primary)
+	renderer:outlineColor(c.typeColors[typeData.curString].primary)
 	
 end
 
@@ -65,14 +62,11 @@ if not host:isHost() then return end
 
 function events.RENDER(delta, context)
 	
-	-- Variables
-	local typeString = typeData.types[typeData.curType]
-	
 	-- Action variables
-	c.hover     = c.typeColors[typeString].secondary
-	c.active    = c.typeColors[typeString].primary
-	c.primary   = "#"..vectors.rgbToHex(c.typeColors[typeString].primary)
-	c.secondary = "#"..vectors.rgbToHex(c.typeColors[typeString].secondary)
+	c.hover     = c.typeColors[typeData.curString].secondary
+	c.active    = c.typeColors[typeData.curString].primary
+	c.primary   = "#"..vectors.rgbToHex(c.typeColors[typeData.curString].primary)
+	c.secondary = "#"..vectors.rgbToHex(c.typeColors[typeData.curString].secondary)
 	
 end
 

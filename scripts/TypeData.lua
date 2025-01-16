@@ -1,34 +1,17 @@
 -- Config setup
 config:name("EeveelutionTaur")
+local types = require("TypeConfig")
+
+-- Init variable
+local initType = config:load("EeveeType") or 1
 
 -- Variable setup
 local typeData = {
-	setType = config:load("EeveeType") or 1,
-	curType = config:load("EeveeType") or 1,
-	--[[
-		
-		Notice:
-		If you do not wish to include a specific type to toggle to, you can delete it from this table, or delete its primary texture.
-		TypeSwap.lua will find accessories under the same name (uppercase), and toggle their visibility if the curType matches.
-		Be sure to delete any accessories from the model that you no longer need! You don't need to, but it helps save space!
-		
-		If you wish to add a type to toggle to, all you need to do is add it to the table, and add its primary texture to the model under the same name, lowercase.
-		To add accessories to a specific type, add its name (uppercase) to the group name.
-		
-	--]]
-	types = {
-		"eevee",
-		"vaporeon",
-		"jolteon",
-		"flareon",
-		"espeon",
-		"umbreon",
-		"leafeon",
-		"glaceon",
-		"sylveon"
-	},
-	-- If Shiny.lua is present, it will provide shiny textures to use if it is able, and modify these to show the changes
+	types = types,
+	setType = initType,
+	curType = initType,
 	textures = {
+		-- If Shiny.lua is present, it will provide shiny textures to use if it is able, and modify these to show the changes
 		primary = {},
 		secondary = {}
 	}
@@ -74,6 +57,10 @@ if typeData.setType > #typeData.types then
 	typeData.curType = 1
 	
 end
+
+-- Types as strings
+typeData.setString = typeData.types[typeData.setType]
+typeData.curString = typeData.types[typeData.curType]
 
 -- Find capitalized version of type
 function typeData:upperCase(s)

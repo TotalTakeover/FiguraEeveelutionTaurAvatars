@@ -13,7 +13,8 @@ if not s or pokeball == {} then
 	
 	function events.RENDER(delta, context)
 		
-		typeData.curType = typeData.setType
+		typeData.curType   = typeData.setType
+		typeData.curString = typeData.setString
 		
 	end
 	
@@ -38,9 +39,8 @@ function events.RENDER(delta, context)
 	if _type ~= typeData.curType or _shiny ~= shiny.isShiny then
 		
 		-- Variables
-		local typeString = typeData.types[typeData.curType]
-		local primaryTex = typeData.textures.primary[typeString]
-		local secondaryTex = typeData.textures.secondary[typeString]
+		local primaryTex = typeData.textures.primary[typeData.curString]
+		local secondaryTex = typeData.textures.secondary[typeData.curString]
 		
 		-- If Shiny.lua is present, it will provide shiny textures to use if it is able, and modify these to show the changes
 		for _, part in ipairs(mainParts) do
@@ -60,7 +60,7 @@ function events.RENDER(delta, context)
 		-- Toggle accessories based on type
 		for k, v in pairs(eeveeParts) do
 			
-			local isVisible = typeString == k
+			local isVisible = typeData.curString == k
 			for _, part in ipairs(v) do
 				
 				part:visible(isVisible)
@@ -84,10 +84,14 @@ if #typeData.types == 1 then return {} end
 -- Eevee type
 function pings.setEeveeType(i)
 	
+	-- Update `setType`
 	typeData.setType = typeData.setType + i
 	if typeData.setType > #typeData.types then typeData.setType = 1 end
 	if typeData.setType < 1 then typeData.setType = #typeData.types end
 	config:save("EeveeType", typeData.setType)
+	
+	-- Update `setString`
+	typeData.setString = typeData.types[typeData.setType]
 	
 end
 
@@ -118,7 +122,7 @@ end
 local t = {}
 
 -- Action
-t.typeAct = action_wheel:newAction()
+t.setTypeAct = action_wheel:newAction()
 	:onLeftClick(function() pings.setEeveeType(1) end)
 	:onRightClick(function() pings.setEeveeType(-1) end)
 	:onScroll(pings.setEeveeType)
@@ -126,31 +130,38 @@ t.typeAct = action_wheel:newAction()
 -- Primary info table
 local typeItem = {
 	
-	eevee    = itemCheck("cobblemon:everstone",     "white_glazed_terracotta"),
+	eevee    = itemCheck("cobblemon:everstone",     "brown_glazed_terracotta"),
 	vaporeon = itemCheck("cobblemon:water_stone",   "blue_glazed_terracotta"),
 	jolteon  = itemCheck("cobblemon:thunder_stone", "yellow_glazed_terracotta"),
 	flareon  = itemCheck("cobblemon:fire_stone",    "red_glazed_terracotta"),
-	espeon   = itemCheck("cobblemon:psychic_gem",   "magenta_glazed_terracotta"),
-	umbreon  = itemCheck("cobblemon:dark_gem",      "black_glazed_terracotta"),
+	espeon   = itemCheck("cobblemon:dawn_stone",    "magenta_glazed_terracotta"),
+	umbreon  = itemCheck("cobblemon:dusk_stone",    "black_glazed_terracotta"),
 	leafeon  = itemCheck("cobblemon:leaf_stone",    "lime_glazed_terracotta"),
 	glaceon  = itemCheck("cobblemon:ice_stone",     "blue_glazed_terracotta"),
-	sylveon  = itemCheck("cobblemon:fairy_gem",     "pink_glazed_terracotta")
+	sylveon  = itemCheck("cobblemon:shiny_stone",   "pink_glazed_terracotta")
 	
 }
+
+-- Table setup
+local i = {}
+i.typeItem = nil
 
 -- Update action
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.typeAct
+		-- Set action icon variable
+		i.typeItem = typeItem[typeData.setString]
+		
+		t.setTypeAct
 			:title(toJson(
 				{
 					"",
-					{text = typeData:upperCase(typeData.types[typeData.setType]):gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
-					{text = "Left click, Right click, or scroll to set your type!", color = c.secondary}
+					{text = typeData:upperCase(typeData.setString):gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
+					{text = "Left click, Right click, or Scroll to set your type!", color = c.secondary}
 				}
 			))
-			:item(typeItem[typeData.types[typeData.setType]])
+			:item(i.typeItem)
 		
 		for _, page in pairs(t) do
 			page:color(c.active):hoverColor(c.hover)
@@ -161,4 +172,4 @@ function events.RENDER(delta, context)
 end
 
 -- Return action
-return t
+return t, i

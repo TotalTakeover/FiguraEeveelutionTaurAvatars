@@ -7,8 +7,11 @@ local itemCheck = require("lib.ItemCheck")
 local s, avatar = pcall(require, "scripts.Player")
 if not s then avatar = {} end
 
-local s, typeSwap = pcall(require, "scripts.TypeSwap")
-if not s then typeSwap = {} end
+local s, typeSwap, item = pcall(require, "scripts.TypeSwap")
+if not s then
+	typeSwap = {}
+	item = {}
+end
 
 local s, squapi = pcall(require, "scripts.SquishyAnims")
 if not s then squapi = {} end
@@ -40,7 +43,8 @@ local pages = {
 	main   = action_wheel:newPage("Main"),
 	avatar = action_wheel:newPage("Avatar"),
 	eevee  = action_wheel:newPage("Eevee"),
-	anims  = action_wheel:newPage("Anims")
+	anims  = action_wheel:newPage("Anims"),
+	types  = action_wheel:newPage("Types")
 	
 }
 
@@ -52,12 +56,15 @@ local pageActs = {
 		:onLeftClick(function() descend(pages.avatar) end),
 	
 	eevee = action_wheel:newAction()
-		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
 		:onLeftClick(function() descend(pages.eevee) end),
 	
 	anims = action_wheel:newAction()
 		:item(itemCheck("jukebox"))
-		:onLeftClick(function() descend(pages.anims) end)
+		:onLeftClick(function() descend(pages.anims) end),
+	
+	types = action_wheel:newAction()
+		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
+		:onLeftClick(function() descend(pages.types) end)
 	
 }
 
@@ -71,6 +78,7 @@ function events.RENDER(delta, context)
 			))
 		
 		pageActs.eevee
+			:item(item.typeItem or itemCheck("rabbit_foot"))
 			:title(toJson(
 				{text = "Pokemon Settings", bold = true, color = c.primary}
 			))
@@ -78,6 +86,11 @@ function events.RENDER(delta, context)
 		pageActs.anims
 			:title(toJson(
 				{text = "Animations", bold = true, color = c.primary}
+			))
+		
+		pageActs.types
+			:title(toJson(
+				{text = "Eevee Types", bold = true, color = c.primary}
 			))
 		
 		for _, page in pairs(pageActs) do
@@ -114,7 +127,12 @@ pages.avatar
 
 -- Eevee actions
 pages.eevee
-	:action( -1, typeSwap.typeAct)
+	:action( -1, pageActs.types)
+	:action( -1, backAct)
+
+-- Type actions
+pages.types
+	:action( -1, typeSwap.setTypeAct)
 	:action( -1, backAct)
 
 -- Animation actions
