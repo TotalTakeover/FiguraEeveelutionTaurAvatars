@@ -1,5 +1,5 @@
 -- Required scripts
-local typeData = require("scripts.TypeData")
+local typeData = require("scripts.TypeControl")
 
 -- Table setup
 local c = {}

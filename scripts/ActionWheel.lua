@@ -7,8 +7,11 @@ local itemCheck = require("lib.ItemCheck")
 local s, avatar = pcall(require, "scripts.Player")
 if not s then avatar = {} end
 
-local s, typeSwap = pcall(require, "scripts.TypeSwap")
+local s, typeSwap = pcall(require, "scripts.TypePicker")
 if not s then typeSwap = {} end
+
+local s, stone = pcall(require, "scripts.ElementalStones")
+if not s then stone = {} end
 
 local s, squapi = pcall(require, "scripts.SquishyAnims")
 if not s then squapi = {} end
@@ -130,7 +133,7 @@ pages.eevee
 -- Type actions
 pages.types
 	:action( -1, typeSwap.setTypeAct)
-	:action( -1, typeSwap.setStoneAct)
+	:action( -1, stone.stoneAct)
 	:action( -1, backAct)
 
 -- Animation actions

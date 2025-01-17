@@ -4,7 +4,7 @@ if not s then return {} end
 
 -- Required scripts
 local parts    = require("lib.PartsAPI")
-local typeData = require("scripts.TypeData")
+local typeData = require("scripts.TypeControl")
 local lerp     = require("lib.LerpAPI")
 local pose     = require("scripts.Posing")
 
@@ -29,7 +29,7 @@ local function matchType(n)
 	local m = nil
 	
 	for _, t in ipairs(typeData.types) do
-		local u = typeData:upperCase(t)
+		local u = t:gsub("^%l", string.upper)
 		if n:find(u) then
 			m = t
 			break
