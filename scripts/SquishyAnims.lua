@@ -10,7 +10,9 @@ local pose     = require("scripts.Posing")
 
 -- Config setup
 config:name("EeveelutionTaur")
+local earFlick = config:load("SquapiEarFlick")
 local armsMove = config:load("SquapiArmsMove") or false
+if earFlick == nil then earFlick = true end
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
@@ -73,7 +75,7 @@ for k, ear in pairs(ears.left) do
 		k == "vaporeon" or
 		k == "espeon", --(false) horizontalEars
 		2,    --(2) bendStrength
-		true, --(true) doEarFlick
+		earFlick, --(true) doEarFlick
 		400,  --(400) earFlickChance
 		0.1,  --(0.1) earStiffness
 		0.9   --(0.8) earBounce
@@ -231,7 +233,16 @@ function events.RENDER(delta, context)
 	-- Control ear activity
 	for k, ear in pairs(squishyEars) do
 		ear.enabled = k == typeData.curString
+		ear.doEarFlick = earFlick
 	end
+	
+end
+
+-- Ear flick toggle
+function pings.setSquapiEarFlick(boolean)
+	
+	earFlick = boolean
+	config:save("SquapiEarFlick", earFlick)
 	
 end
 
@@ -243,10 +254,11 @@ function pings.setSquapiArmsMove(boolean)
 	
 end
 
--- Sync variable
-function pings.syncSquapi(a)
+-- Sync variables
+function pings.syncSquapi(a, b)
 	
-	armsMove = a
+	earFlick = a
+	armsMove = b
 	
 end
 
@@ -262,7 +274,7 @@ if not s then c = {} end
 function events.TICK()
 	
 	if world.getTime() % 200 == 0 then
-		pings.syncSquapi(armsMove)
+		pings.syncSquapi(earFlick, armsMove)
 	end
 	
 end
@@ -270,17 +282,32 @@ end
 -- Table setup
 local t = {}
 
--- Action
+-- Actions
+t.earsAct = action_wheel:newAction()
+	:item(itemCheck("bone"))
+	:toggleItem(itemCheck("feather"))
+	:onToggle(pings.setSquapiEarFlick)
+	:toggled(earFlick)
+
 t.armsAct = action_wheel:newAction()
 	:item(itemCheck("red_dye"))
 	:toggleItem(itemCheck("rabbit_foot"))
 	:onToggle(pings.setSquapiArmsMove)
 	:toggled(armsMove)
 
--- Update action
+-- Update actions
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
+		t.earsAct
+			:title(toJson(
+				{
+					"",
+					{text = "Ear Flick Toggle\n\n", bold = true, color = c.primary},
+					{text = "Toggles the ability for the ears to flick.", color = c.secondary}
+				}
+			))
+		
 		t.armsAct
 			:title(toJson(
 				{
@@ -298,5 +325,5 @@ function events.RENDER(delta, context)
 	
 end
 
--- Return action
+-- Return actions
 return t
