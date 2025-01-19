@@ -9,8 +9,8 @@ local c = {}
 c.typeColors = {
 	
 	eevee = {
-		primary = vectors.hexToRGB("FFFFFF"),
-		secondary = vectors.hexToRGB("FFFFFF")
+		primary = vectors.hexToRGB("AE6C44"),
+		secondary = vectors.hexToRGB("F0E3B0")
 	},
 	vaporeon = {
 		primary = vectors.hexToRGB("61A5C5"),

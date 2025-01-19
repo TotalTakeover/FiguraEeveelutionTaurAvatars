@@ -108,7 +108,7 @@ local stones = {
 for _, v in ipairs(typeData.types) do
 	
 	-- Parts
-	typeData.data[v].parts = parts:createTable(function(part) return part:getName():find(v:gsub("^%l", string.upper)) end)
+	typeData.data[v].parts = parts:createTable(function(part) return part:getName() ~= "Eevee" and part:getName():find(v:gsub("^%l", string.upper)) end)
 	
 	-- Textures
 	typeData.data[v].textures.primary = textures["textures."..v] or textures["Eevee."..v]
