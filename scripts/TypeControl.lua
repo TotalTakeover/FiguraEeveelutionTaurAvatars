@@ -34,7 +34,7 @@ local types = {
 -- Deletes type if texture cannot be found
 for i = #types, 1, -1 do
 	
-	if not (textures["textures."..types[i]] or textures["Eevee."..types[i]]) then
+	if not (textures["textures."..types[i]] or textures["EeveeTaur."..types[i]]) then
 		
 		-- Remove type if primary is not found
 		table.remove(types, i)
@@ -108,11 +108,11 @@ local stones = {
 for _, v in ipairs(typeData.types) do
 	
 	-- Parts
-	typeData.data[v].parts = parts:createTable(function(part) return part:getName() ~= "Eevee" and part:getName():find(v:gsub("^%l", string.upper)) end)
+	typeData.data[v].parts = parts:createTable(function(part) return part:getName() ~= "EeveeTaur" and part:getName():find(v:gsub("^%l", string.upper)) end)
 	
 	-- Textures
-	typeData.data[v].textures.primary = textures["textures."..v] or textures["Eevee."..v]
-	typeData.data[v].textures.secondary = textures["textures."..v.."_e"] or textures["Eevee."..v.."_e"]
+	typeData.data[v].textures.primary = textures["textures."..v] or textures["EeveeTaur."..v]
+	typeData.data[v].textures.secondary = textures["textures."..v.."_e"] or textures["EeveeTaur."..v.."_e"]
 	
 	-- Stones
 	typeData.data[v].stone = stones[v]
