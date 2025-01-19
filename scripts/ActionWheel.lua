@@ -16,6 +16,9 @@ if not s then stone = {} end
 local s, squapi = pcall(require, "scripts.SquishyAnims")
 if not s then squapi = {} end
 
+local s, pokeball = pcall(require, "scripts.Pokeball")
+if not s then pokeball = {} end
+
 local s, c = pcall(require, "scripts.ColorProperties")
 if not s then c = {} end
 
@@ -127,6 +130,7 @@ pages.avatar
 
 -- Eevee actions
 pages.eevee
+	:action( -1, pokeball.toggleAct)
 	:action( -1, pageActs.types)
 	:action( -1, backAct)
 
