@@ -35,7 +35,7 @@ t.setTypeAct = action_wheel:newAction()
 	:onRightClick(function() pings.setEeveeType(-1) end)
 	:onScroll(pings.setEeveeType)
 
--- Update actions
+-- Update action
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
@@ -48,7 +48,6 @@ function events.RENDER(delta, context)
 				}
 			))
 			:item(typeData.data[typeData.tarString].stone)
-			:color(c.active)
 		
 		for _, page in pairs(t) do
 			page:hoverColor(c.hover)
@@ -58,5 +57,5 @@ function events.RENDER(delta, context)
 	
 end
 
--- Return actions
+-- Return action
 return t
