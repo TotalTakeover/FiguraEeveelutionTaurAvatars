@@ -47,7 +47,9 @@ function events.RENDER(delta, context)
 			-- Update type
 			typeData:setTarget(typeData:getIndex(pickedStone))
 			
+			-- TEMP PLZ DELETE LATER
 			typeData:syncCurType()
+			
 			typeData:updateParts()
 			typeData:updateTexture()
 			
@@ -102,7 +104,6 @@ function events.RENDER(delta, context)
 				}
 			))
 			:toggleItem(typeData.data[typeData.types[math.floor(world.getTime() * 0.05) % #typeData.types + 1]].stone)
-			:toggleColor(c.active)
 		
 		for _, page in pairs(t) do
 			page:hoverColor(c.hover):toggleColor(c.active)
@@ -112,5 +113,5 @@ function events.RENDER(delta, context)
 	
 end
 
--- Return actions
+-- Return action
 return t
