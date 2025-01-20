@@ -13,6 +13,9 @@ if not s then typeSwap = {} end
 local s, stone = pcall(require, "scripts.ElementalStones")
 if not s then stone = {} end
 
+local s, _, origin = pcall(require, "scripts.OriginsType")
+if not s then origin = {} end
+
 local s, squapi = pcall(require, "scripts.SquishyAnims")
 if not s then squapi = {} end
 
@@ -138,6 +141,7 @@ pages.eevee
 pages.types
 	:action( -1, typeSwap.setTypeAct)
 	:action( -1, stone.stoneAct)
+	:action( -1, origin.originAct)
 	:action( -1, backAct)
 
 -- Animation actions
