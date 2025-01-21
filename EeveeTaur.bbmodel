@@ -6587,7 +6587,7 @@
 															"mirror_uv": false,
 															"isOpen": false,
 															"locked": false,
-															"visibility": true,
+															"visibility": false,
 															"autouv": 0,
 															"children": ["a5b3ef71-9456-bd11-8887-8efda732fc2e", "6df122b5-e6e4-4c9e-e901-6a03bb9d4eea"]
 														}
