@@ -4,10 +4,6 @@ local typeData = require("scripts.TypeControl")
 -- Kills script early if only one type was found in the types table
 if #typeData.types == 1 then return {} end
 
--- Optional script
-local s, origin = pcall(require, "scripts.OriginsType")
-if not s then origin = {} end
-
 -- Config setup
 config:name("EeveelutionTaur")
 local stone = config:load("TypeStone")
@@ -34,7 +30,7 @@ end
 function events.RENDER(delta, context)
 	
 	-- Disable stone if origin override is active
-	if stone and origin.setType then
+	if stone and typeData.origin then
 		stone = false
 	end
 	
@@ -97,7 +93,7 @@ local t = {}
 -- Action
 t.stoneAct = action_wheel:newAction()
 	:item(itemCheck("terracotta"))
-	:onToggle(function(boolean) if not origin.setType then pings.setStone(boolean) end end)
+	:onToggle(function(boolean) if not typeData.origin then pings.setStone(boolean) end end)
 	:toggled(stone)
 
 -- Update action
@@ -110,7 +106,7 @@ function events.RENDER(delta, context)
 					"",
 					{text = "Toggle Stone Type Changing\n\n", bold = true, color = c.primary},
 					{text = "Allow various stones to change your typing when held.\nThis expects Cobblemon items, but if they are not present, glazed terracotta works too.", color = c.secondary},
-					{text = origin.setType and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
+					{text = typeData.origin and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
 				}
 			))
 			:toggleItem(typeData.data[typeData.types[math.floor(world.getTime() * 0.05) % #typeData.types + 1]].stone)

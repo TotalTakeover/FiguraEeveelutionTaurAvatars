@@ -5,17 +5,14 @@ local typeData  = require("scripts.TypeControl")
 -- Kills script early if only one type was found in the types table
 if #typeData.types == 1 then return {} end
 
--- Table setup
-local origin = {}
-
 -- Config setup
 config:name("EeveelutionTaur")
-origin.setType = config:load("OriginType")
-if origin.setType == nil then origin.setType = true end
+typeData.origin = config:load("OriginType")
+if typeData.origin == nil then typeData.origin = true end
 
 function events.TICK()
 	
-	if origin.setType then
+	if typeData.origin then
 		for _, v in ipairs(typeData.types) do
 			if typeData.tarString ~= v and originAPI.hasOrigin(player,  "eeveelutiontaurs:"..v.."taur") then
 				
@@ -37,15 +34,15 @@ end
 -- Stone toggle
 function pings.setOrigin(boolean)
 	
-	origin.setType = boolean
-	config:save("OriginType", origin.setType)
+	typeData.origin = boolean
+	config:save("OriginType", typeData.origin)
 	
 end
 
 -- Sync variable
 function pings.syncOrigin(a)
 	
-	origin.setType = a
+	typeData.origin = a
 	
 end
 
@@ -65,7 +62,7 @@ t.originAct = action_wheel:newAction()
 	:item(itemCheck("ender_pearl"))
 	:toggleItem(itemCheck("origins:orb_of_origin"))
 	:onToggle(pings.setOrigin)
-	:toggled(origin.setType)
+	:toggled(typeData.origin)
 
 -- Update action
 function events.RENDER(delta, context)
@@ -88,5 +85,5 @@ function events.RENDER(delta, context)
 	
 end
 
--- Return variable and action
-return origin, t
+-- Return action
+return t

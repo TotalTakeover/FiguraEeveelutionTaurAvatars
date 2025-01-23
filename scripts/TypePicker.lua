@@ -4,10 +4,6 @@ local typeData = require("scripts.TypeControl")
 -- Kills script early if only one type was found in the types table
 if #typeData.types == 1 then return {} end
 
--- Optional script
-local s, origin = pcall(require, "scripts.OriginsType")
-if not s then origin = {} end
-
 -- Eevee type
 function pings.setEeveeType(i)
 	
@@ -34,7 +30,7 @@ if not s then c = {} end
 local function allowPing(x)
 	
 	-- Let ping through if origin override is not active
-	if not origin.setType then
+	if not typeData.origin then
 		pings.setEeveeType(x)
 	end
 	
@@ -59,7 +55,7 @@ function events.RENDER(delta, context)
 					"",
 					{text = typeData.tarString:gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
 					{text = "Left click, Right click, or Scroll to set your type!", color = c.secondary},
-					{text = origin.setType and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
+					{text = typeData.origin and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
 				}
 			))
 			:item(typeData.data[typeData.tarString].stone)
