@@ -112,8 +112,8 @@ function events.RENDER(delta, context)
 			:toggleItem(typeData.data[typeData.types[math.floor(world.getTime() * 0.05) % #typeData.types + 1]].stone)
 			:toggled(stone)
 		
-		for _, page in pairs(t) do
-			page:hoverColor(c.hover):toggleColor(c.active)
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end

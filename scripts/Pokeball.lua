@@ -279,8 +279,8 @@ function events.RENDER(delta, context)
 			))
 			:toggled(toggle)
 		
-		for _, page in pairs(t) do
-			page:hoverColor(c.hover):toggleColor(c.active)
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end
