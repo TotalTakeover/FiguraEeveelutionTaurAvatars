@@ -100,10 +100,10 @@ end
 local squishyTails = {}
 for k, tail in pairs(tails) do
 	squishyTails[k] = squapi.tail:new(tail,
-		10,   --(15) idleXMovement
-		10,   --(5) idleYMovement
-		0.8,  --(1.2) idleXSpeed
-		1,    --(2) idleYSpeed
+		0,    --(0) idleXMovement
+		0,    --(0) idleYMovement
+		0,    --(0) idleXSpeed
+		0,    --(0) idleYSpeed
 		2,    --(2) bendStrength
 		0,    --(0) velocityPush
 		0,    --(0) initialMovementOffset
