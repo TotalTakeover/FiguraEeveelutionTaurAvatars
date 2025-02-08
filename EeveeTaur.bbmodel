@@ -7720,7 +7720,23 @@
 															"visibility": true,
 															"autouv": 0,
 															"selected": false,
-															"children": ["7f851fd3-2864-8c8e-3402-3dd078c1a824"]
+															"children": [
+																"7f851fd3-2864-8c8e-3402-3dd078c1a824",
+																{
+																	"name": "BackLeftGround",
+																	"origin": [-3.5, -0.5, 6.75],
+																	"color": 0,
+																	"uuid": "ac711e19-9fb3-1ec3-3960-48b2eb76487d",
+																	"export": true,
+																	"mirror_uv": false,
+																	"isOpen": false,
+																	"locked": false,
+																	"visibility": true,
+																	"autouv": 0,
+																	"selected": false,
+																	"children": []
+																}
+															]
 														}
 													]
 												}
@@ -7798,7 +7814,23 @@
 															"visibility": true,
 															"autouv": 0,
 															"selected": false,
-															"children": ["8ae96ad8-df74-eb55-3c89-210678a69662"]
+															"children": [
+																"8ae96ad8-df74-eb55-3c89-210678a69662",
+																{
+																	"name": "BackRightGround",
+																	"origin": [3.5, -0.5, 6.75],
+																	"color": 0,
+																	"uuid": "d1520300-dc7a-d1b7-93a8-9eab95b7d82a",
+																	"export": true,
+																	"mirror_uv": false,
+																	"isOpen": false,
+																	"locked": false,
+																	"visibility": true,
+																	"autouv": 0,
+																	"selected": false,
+																	"children": []
+																}
+															]
 														}
 													]
 												}
@@ -8363,7 +8395,23 @@
 													"visibility": true,
 													"autouv": 0,
 													"selected": false,
-													"children": ["b8194246-61e8-4de6-457d-671140350c75"]
+													"children": [
+														"b8194246-61e8-4de6-457d-671140350c75",
+														{
+															"name": "FrontLeftGround",
+															"origin": [-3.5, -1, -6.25],
+															"color": 0,
+															"uuid": "edef7eac-b911-ee60-0615-1498163b1d07",
+															"export": true,
+															"mirror_uv": false,
+															"isOpen": false,
+															"locked": false,
+															"visibility": true,
+															"autouv": 0,
+															"selected": false,
+															"children": []
+														}
+													]
 												}
 											]
 										}
@@ -8441,7 +8489,23 @@
 													"visibility": true,
 													"autouv": 0,
 													"selected": false,
-													"children": ["953fde37-8f7d-7f24-fbd7-fbdd3b70d5b8"]
+													"children": [
+														"953fde37-8f7d-7f24-fbd7-fbdd3b70d5b8",
+														{
+															"name": "FrontRightGround",
+															"origin": [3.5, -1, -6.25],
+															"color": 0,
+															"uuid": "018f4148-d9e9-9786-7b01-43978cff0023",
+															"export": true,
+															"mirror_uv": false,
+															"isOpen": false,
+															"locked": false,
+															"visibility": true,
+															"autouv": 0,
+															"selected": false,
+															"children": []
+														}
+													]
 												}
 											]
 										}
