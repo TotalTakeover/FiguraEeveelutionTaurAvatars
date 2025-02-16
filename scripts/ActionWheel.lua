@@ -146,6 +146,7 @@ pages.types
 	:action( -1, typeSwap.setTypeAct)
 	:action( -1, stone.stoneAct)
 	:action( -1, origin.originAct)
+	:action( -1, pokeball.typeHideAct)
 	:action( -1, backAct)
 
 -- Animation actions

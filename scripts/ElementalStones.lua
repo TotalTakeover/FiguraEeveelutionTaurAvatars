@@ -51,12 +51,7 @@ function events.RENDER(delta, context)
 			
 			-- Update type
 			typeData:setTarget(typeData:getIndex(pickedStone))
-			
-			-- TEMP PLZ DELETE LATER
-			typeData:syncCurType()
-			
-			typeData:updateParts()
-			typeData:updateTexture()
+			typeData:updateAll()
 			
 		end
 		

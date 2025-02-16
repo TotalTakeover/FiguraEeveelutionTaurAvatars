@@ -1,5 +1,6 @@
--- Required script
+-- Required scripts
 local parts = require("lib.PartsAPI")
+local typeData = require("scripts.TypeControl")
 
 -- Pokeball part
 local pokeBall = parts.group.PokeBall
@@ -14,9 +15,12 @@ local closeAnim = anims.pokeballClose
 
 -- Config setup
 config:name("EeveelutionTaur")
-local toggle = config:load("PokeballToggle") or false
+local toggle   = config:load("PokeballToggle") or false
+local typeHide = config:load("PokeballTypeHide")
+if typeHide == nil then typeHide = true end
 
 -- Variables
+local swapping = false
 local isInBall  = toggle
 local wasInBall = toggle
 local staticYaw = 0
@@ -83,13 +87,13 @@ function events.RENDER(delta, context)
 	local menu = context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL"
 	
 	-- Pokeball state
-	isInBall = toggle and not hasRider
+	isInBall = swapping or (toggle and not hasRider)
 	
 	-- Activate pokeball
 	if isInBall ~= wasInBall then
 		
-		anims.pokeballOpen:playing(not isInBall)
-		anims.pokeballClose:playing(isInBall)
+		openAnim:playing(not isInBall)
+		closeAnim:playing(isInBall)
 		
 		pokeballSound(isInBall)
 		
@@ -124,6 +128,63 @@ function events.RENDER(delta, context)
 	
 end
 
+-- Modifies the update function to allow the player to enter their pokeball before changing types
+local prevUpdateAll = typeData.updateAll
+function typeData:updateAll()
+	
+	if typeHide then
+		
+		if not swapping then
+			
+			-- Check if player is already in the ball, and do a fast swap in place
+			if toggle and parts.group.Player:getAnimScale():length() == 0 then
+				
+				prevUpdateAll()
+				return
+				
+			end
+			
+			-- Variables
+			local timer = 0
+			local _type = typeData.tarType
+			swapping = true
+			
+			-- Create new tick event
+			events.TICK:register(function(delta, context)
+				
+				if _type ~= typeData.tarType then
+					
+					timer = 0
+					
+				elseif parts.group.Player:getAnimScale():length() == 0 then
+					
+					timer = timer + 1
+					
+				end
+				
+				if timer >= 10 then
+					
+					prevUpdateAll()
+					swapping = false
+					events.TICK:remove("PokeballTypeHide")
+					
+				end
+				
+				-- Store last state
+				_type = typeData.tarType
+				
+			end, "PokeballTypeHide")
+			
+		end
+		
+	else
+		
+		prevUpdateAll()
+		
+	end
+	
+end
+
 -- Pokeball toggle
 function pings.setPokeball(boolean)
 	
@@ -134,6 +195,14 @@ function pings.setPokeball(boolean)
 		toggle = boolean
 		config:save("PokeballToggle", toggle)
 	end
+	
+end
+
+-- Type hide toggle
+function pings.setPokeballTypeHide(boolean)
+	
+	typeHide = boolean
+	config:save("PokeballTypeHide", typeHide)
 	
 end
 
@@ -179,9 +248,10 @@ function pings.playPokeballInteract()
 end
 
 -- Sync variable
-function pings.syncPokeball(a)
+function pings.syncPokeball(a, b)
 	
 	toggle = a
+	typeHide = b
 	
 end
 
@@ -250,7 +320,7 @@ end
 function events.TICK()
 	
 	if world.getTime() % 200 == 0 then
-		pings.syncPokeball(toggle)
+		pings.syncPokeball(toggle, typeHide)
 	end
 	
 end
@@ -258,12 +328,18 @@ end
 -- Table setup
 local t = {}
 
--- Action
+-- Actions
 t.toggleAct = action_wheel:newAction()
 	:item(itemCheck("cobblemon:poke_ball", "ender_pearl"))
 	:onToggle(pings.setPokeball)
 
--- Update action
+t.typeHideAct = action_wheel:newAction()
+	:item(itemCheck("player_head{SkullOwner:"..avatar:getEntityName().."}"))
+	:toggleItem(itemCheck("cobblemon:poke_ball", "snowball"))
+	:onToggle(pings.setPokeballTypeHide)
+	:toggled(typeHide)
+
+-- Update actions
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
@@ -273,11 +349,21 @@ function events.RENDER(delta, context)
 					"",
 					{text = "Toggle Pokeball\n\n", bold = true, color = c.primary},
 					{text = "Toggle the usage of your pokeball.\n\n", color = c.secondary},
+					{text = swapping and "Currently swapping types, please wait!\n\n" or "", color = "gold"},
 					{text = "Notice:\n", bold = true, color = "gold"},
 					{text = "Various factors can prevent this feature from being active.\nAdditionally, when inside your pokeball, you are unable to move or preform actions.", color = "yellow"}
 				}
 			))
 			:toggled(toggle)
+		
+		t.typeHideAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Pokeball Hiding\n\n", bold = true, color = c.primary},
+					{text = "Hide inside your pokeball before swapping types.", color = c.secondary}
+				}
+			))
 		
 		for _, act in pairs(t) do
 			act:hoverColor(c.hover):toggleColor(c.active)
@@ -287,5 +373,5 @@ function events.RENDER(delta, context)
 	
 end
 
--- Return action
+-- Return actions
 return t

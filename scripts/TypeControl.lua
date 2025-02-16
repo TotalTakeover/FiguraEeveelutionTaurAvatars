@@ -140,6 +140,14 @@ function typeData:setTarget(i)
 	
 end
 
+-- Syncs type variables
+function typeData:syncCurType()
+	
+	typeData.curType = typeData.tarType
+	typeData.curString = typeData.tarString
+	
+end
+
 -- Texture swap parts
 local mainParts = parts:createTable(function(part) return part:getName():find("_Type") end)
 
@@ -188,17 +196,18 @@ function typeData:updateParts()
 	
 end
 
--- Syncs type variables
-function typeData:syncCurType()
+-- Updates all data to match
+-- This function will be modified by Pokeball.lua, as it will have its own methods
+function typeData:updateAll()
 	
-	typeData.curType = typeData.tarType
-	typeData.curString = typeData.tarString
+	typeData:syncCurType()
+	typeData:updateTexture()
+	typeData:updateParts()
 	
 end
 
 -- Init type setup
-typeData:updateParts()
-typeData:updateTexture()
+typeData:updateAll()
 
 -- Sync variable
 function pings.syncEeveeType(i)

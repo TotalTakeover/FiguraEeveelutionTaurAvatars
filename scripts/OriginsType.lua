@@ -18,12 +18,7 @@ function events.TICK()
 				
 				-- Update type
 				typeData:setTarget(typeData:getIndex(v))
-				
-				-- TEMP PLZ DELETE LATER
-				typeData:syncCurType()
-				
-				typeData:updateParts()
-				typeData:updateTexture()
+				typeData:updateAll()
 				
 			end
 		end
