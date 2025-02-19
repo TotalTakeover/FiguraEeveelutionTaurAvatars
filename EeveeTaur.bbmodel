@@ -782,22 +782,28 @@
 			"origin": [0, 26, -5.5],
 			"faces": {
 				"north": {
-					"uv": [1, 1, 11, 17]
+					"uv": [1, 1, 11, 17],
+					"texture": 10
 				},
 				"east": {
-					"uv": [0, 1, 1, 17]
+					"uv": [0, 1, 1, 17],
+					"texture": 10
 				},
 				"south": {
-					"uv": [12, 1, 22, 17]
+					"uv": [12, 1, 22, 17],
+					"texture": 10
 				},
 				"west": {
-					"uv": [11, 1, 12, 17]
+					"uv": [11, 1, 12, 17],
+					"texture": 10
 				},
 				"up": {
-					"uv": [11, 1, 1, 0]
+					"uv": [11, 1, 1, 0],
+					"texture": 10
 				},
 				"down": {
-					"uv": [21, 0, 11, 1]
+					"uv": [21, 0, 11, 1],
+					"texture": 10
 				}
 			},
 			"type": "cube",
@@ -5931,27 +5937,27 @@
 			"faces": {
 				"north": {
 					"uv": [8, 8, 16, 12],
-					"texture": 10
+					"texture": 11
 				},
 				"east": {
 					"uv": [0, 8, 8, 12],
-					"texture": 10
+					"texture": 11
 				},
 				"south": {
 					"uv": [24, 8, 32, 12],
-					"texture": 10
+					"texture": 11
 				},
 				"west": {
 					"uv": [16, 8, 24, 12],
-					"texture": 10
+					"texture": 11
 				},
 				"up": {
 					"uv": [16, 8, 8, 0],
-					"texture": 10
+					"texture": 11
 				},
 				"down": {
 					"uv": [24, 0, 16, 8],
-					"texture": 10
+					"texture": 11
 				}
 			},
 			"type": "cube",
@@ -5976,27 +5982,27 @@
 			"faces": {
 				"north": {
 					"uv": [8, 28, 16, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"east": {
 					"uv": [0, 28, 8, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"south": {
 					"uv": [24, 28, 32, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"west": {
 					"uv": [16, 28, 24, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"up": {
 					"uv": [16, 28, 8, 20],
-					"texture": 10
+					"texture": 11
 				},
 				"down": {
 					"uv": [24, 20, 16, 28],
-					"texture": 10
+					"texture": 11
 				}
 			},
 			"type": "cube",
@@ -6019,7 +6025,7 @@
 			"faces": {
 				"north": {
 					"uv": [0, 0, 2, 2],
-					"texture": 10
+					"texture": 11
 				},
 				"east": {
 					"uv": [0, 0, 0, 0],
@@ -6063,27 +6069,27 @@
 			"faces": {
 				"north": {
 					"uv": [40, 8, 48, 12],
-					"texture": 10
+					"texture": 11
 				},
 				"east": {
 					"uv": [32, 8, 40, 12],
-					"texture": 10
+					"texture": 11
 				},
 				"south": {
 					"uv": [56, 8, 64, 12],
-					"texture": 10
+					"texture": 11
 				},
 				"west": {
 					"uv": [48, 8, 56, 12],
-					"texture": 10
+					"texture": 11
 				},
 				"up": {
 					"uv": [48, 8, 40, 0],
-					"texture": 10
+					"texture": 11
 				},
 				"down": {
 					"uv": [56, 0, 48, 8],
-					"texture": 10
+					"texture": 11
 				}
 			},
 			"type": "cube",
@@ -6108,27 +6114,27 @@
 			"faces": {
 				"north": {
 					"uv": [40, 28, 48, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"east": {
 					"uv": [32, 28, 40, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"south": {
 					"uv": [56, 28, 64, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"west": {
 					"uv": [48, 28, 56, 32],
-					"texture": 10
+					"texture": 11
 				},
 				"up": {
 					"uv": [48, 28, 40, 20],
-					"texture": 10
+					"texture": 11
 				},
 				"down": {
 					"uv": [56, 20, 48, 28],
-					"texture": 10
+					"texture": 11
 				}
 			},
 			"type": "cube",
@@ -12534,6 +12540,35 @@
 			"uuid": "b924d48a-fd0f-8614-5e9c-24284bd62351",
 			"relative_path": "textures/sylveon.png",
 			"source": "data:image/png;base64,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"
+		},
+		{
+			"path": "D:\\Total\\OneDrive\\Documents\\Misc Docs\\Video Game Assets\\Modding Assets\\Minecraft Assets\\Figura Avatars\\avatars\\GitHubRepos\\FiguraEeveelutionTaurAvatars\\textures\\misc\\cape.png",
+			"name": "cape.png",
+			"folder": "",
+			"namespace": "",
+			"id": "20",
+			"group": "a874ec0f-81e0-efb4-0926-973395a68e86",
+			"width": 64,
+			"height": 32,
+			"uv_width": 64,
+			"uv_height": 32,
+			"particle": false,
+			"use_as_default": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"pbr_channel": "color",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "50ad6b82-6d8c-4669-60d3-93ad32dc79f0",
+			"relative_path": "textures/misc/cape.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAgCAYAAACinX6EAAAAAXNSR0IArs4c6QAAAFBJREFUaEPt1QERADAMArHi33SFfOagHBm7+Fv8/hOABsQTQCBeAJ8gAgjEE0AgXgArgAAC8QQQiBfACiCAQDwBBOIFsAIIIBBPAIF4AazAAzJOACHu+VYgAAAAAElFTkSuQmCC"
 		},
 		{
 			"path": "D:\\Total\\OneDrive\\Documents\\Misc Docs\\Video Game Assets\\Modding Assets\\Minecraft Assets\\Figura Avatars\\avatars\\GitHubRepos\\FiguraEeveelutionTaurAvatars\\textures\\misc\\poke_ball.png",
