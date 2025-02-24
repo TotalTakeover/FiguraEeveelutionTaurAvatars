@@ -7,6 +7,9 @@ local itemCheck = require("lib.ItemCheck")
 local s, avatar = pcall(require, "scripts.Player")
 if not s then avatar = {} end
 
+local s, camera = pcall(require, "scripts.CameraControl")
+if not s then camera = {} end
+
 local s, typeSwap = pcall(require, "scripts.TypePicker")
 if not s then typeSwap = {} end
 
@@ -51,6 +54,7 @@ local pages = {
 	
 	main   = action_wheel:newPage("Main"),
 	avatar = action_wheel:newPage("Avatar"),
+	camera = action_wheel:newPage("Camera"),
 	eevee  = action_wheel:newPage("Eevee"),
 	anims  = action_wheel:newPage("Anims"),
 	types  = action_wheel:newPage("Types")
@@ -74,7 +78,11 @@ local pageActs = {
 	
 	types = action_wheel:newAction()
 		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
-		:onLeftClick(function() descend(pages.types) end)
+		:onLeftClick(function() descend(pages.types) end),
+	
+	camera = action_wheel:newAction()
+		:item(itemCheck("redstone"))
+		:onLeftClick(function() descend(pages.camera) end)
 	
 }
 
@@ -100,6 +108,11 @@ function events.RENDER(delta, context)
 		pageActs.types
 			:title(toJson(
 				{text = "Eevee Types", bold = true, color = c.primary}
+			))
+		
+		pageActs.camera
+			:title(toJson(
+				{text = "Camera Settings", bold = true, color = c.primary}
 			))
 		
 		for _, act in pairs(pageActs) do
@@ -132,6 +145,13 @@ pages.main
 pages.avatar
 	:action( -1, avatar.vanillaSkinAct)
 	:action( -1, avatar.modelAct)
+	:action( -1, pageActs.camera)
+	:action( -1, backAct)
+
+-- Camera actions
+pages.camera
+	:action( -1, camera.posAct)
+	:action( -1, camera.eyeAct)
 	:action( -1, backAct)
 
 -- Eevee actions
