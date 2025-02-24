@@ -11607,6 +11607,20 @@
 											]
 										}
 									]
+								},
+								{
+									"name": "Seat1",
+									"origin": [0, 16, 2],
+									"color": 0,
+									"uuid": "30a33a7a-256b-a727-1665-c0a85a273a16",
+									"export": true,
+									"mirror_uv": false,
+									"isOpen": false,
+									"locked": false,
+									"visibility": true,
+									"autouv": 0,
+									"selected": false,
+									"children": []
 								}
 							]
 						},
