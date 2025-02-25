@@ -5,7 +5,7 @@ local typeData = require("scripts.TypeControl")
 function pings.playPokemonCry()
 	
 	if player:isLoaded() then
-		sounds:playSound("cobblemon:pokemon."..typeData.curString..".cry", player:getPos(), 0.6, math.random()*0.35+0.85)
+		sounds:playSound("cobblemon:pokemon."..typeData.curString..".cry", player:getPos(), 0.5, math.random()*0.35+0.85)
 	end
 	
 end
