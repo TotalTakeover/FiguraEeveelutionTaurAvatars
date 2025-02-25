@@ -21,7 +21,7 @@ if typeHide == nil then typeHide = true end
 
 -- Variables
 local swapping = false
-local isInBall  = toggle
+local isInBall = toggle
 local wasInBall = toggle
 local staticYaw = 0
 
