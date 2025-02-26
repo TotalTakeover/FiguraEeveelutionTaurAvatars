@@ -28,6 +28,9 @@ if not s then pokeball = {} end
 local s, shiny = pcall(require, "scripts.Shiny")
 if not s then shiny = {} end
 
+local s, gender = pcall(require, "scripts.EeveeGender")
+if not s then gender = {} end
+
 local s, c = pcall(require, "scripts.ColorProperties")
 if not s then c = {} end
 
@@ -158,6 +161,7 @@ pages.camera
 pages.eevee
 	:action( -1, pokeball.toggleAct)
 	:action( -1, shiny.shinyAct)
+	:action( -1, gender.genderAct)
 	:action( -1, pageActs.types)
 	:action( -1, backAct)
 

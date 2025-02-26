@@ -23,7 +23,7 @@ end
 
 -- Config setup
 config:name("EeveelutionTaur")
-local shiny = config:load("ShinyToggle") or false
+typeData.shiny = config:load("ShinyToggle") or false
 
 -- Store data
 local initTex = {}
@@ -67,20 +67,20 @@ for k, v in pairs(typeData.data) do
 end
 
 -- Variables
-local wasShiny = not shiny
+local wasShiny = not typeData.shiny
 local _type = typeData.curType
 
 function events.RENDER(delta, context)
 	
 	-- Shiny textures
-	if shiny ~= wasShiny or _type ~= typeData.curType then
+	if typeData.shiny ~= wasShiny or _type ~= typeData.curType then
 		
 		-- Current type
 		local curType = typeData.curString
 		
 		-- Textures
-		local primary = shiny and shinyTex[curType].primary or initTex[curType].primary
-		local secondary = shiny and shinyTex[curType].secondary or initTex[curType].secondary
+		local primary = typeData.shiny and shinyTex[curType].primary or initTex[curType].primary
+		local secondary = typeData.shiny and shinyTex[curType].secondary or initTex[curType].secondary
 		
 		-- Set textures
 		typeData.data[curType].textures.primary = primary
@@ -109,14 +109,14 @@ function events.RENDER(delta, context)
 		-- Update colors
 		if allowColor then
 			
-			c.typeColors[curType] = shiny and shinyColors[curType] or initColors[curType]
+			c.typeColors[curType] = typeData.shiny and shinyColors[curType] or initColors[curType]
 			
 		end
 		
 	end
 	
 	-- Store data
-	wasShiny = shiny
+	wasShiny = typeData.shiny
 	_type = typeData.curType
 	
 end
@@ -124,9 +124,9 @@ end
 -- Shiny toggle
 function pings.setShinyToggle(boolean)
 	
-	shiny = boolean
-	config:save("ShinyToggle", shiny)
-	if player:isLoaded() and shiny then
+	typeData.shiny = boolean
+	config:save("ShinyToggle", typeData.shiny)
+	if player:isLoaded() and typeData.shiny then
 		sounds:playSound("block.amethyst_block.chime", player:getPos())
 	end
 	
@@ -135,7 +135,7 @@ end
 -- Sync variable
 function pings.syncShiny(a)
 	
-	shiny = a
+	typeData.shiny = a
 	
 end
 
@@ -164,7 +164,7 @@ end
 function events.TICK()
 	
 	if world.getTime() % 200 == 0 then
-		pings.syncShiny(shiny)
+		pings.syncShiny(typeData.shiny)
 	end
 	
 end
@@ -190,7 +190,7 @@ function events.RENDER(delta, context)
 					{text = "Toggles the usage of shiny textures for your pokemon parts.", color = c.secondary}
 				}
 			))
-			:toggled(shiny)
+			:toggled(typeData.shiny)
 		
 		for _, act in pairs(t) do
 			act:hoverColor(c.hover):toggleColor(c.active)
