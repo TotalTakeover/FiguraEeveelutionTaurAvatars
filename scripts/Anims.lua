@@ -20,7 +20,7 @@ for _, v in ipairs(typeData.types) do
 	
 	-- Store anims
 	typeAnims.groundIdles[v] = anims["groundIdle_"..v]
-	--typeAnims.groundWalks[v] = anims["groundWalk_"..v]
+	typeAnims.groundWalks[v] = anims["groundWalk_"..v]
 	
 end
 
@@ -63,7 +63,7 @@ function events.TICK()
 	
 	-- Animation states
 	local groundIdle = not sprinting and not player:getVehicle() and not pose.sleep
-	local groundWalk = groundIdle and vel:length() ~= 0
+	local groundWalk = groundIdle and vel.xz:length() ~= 0
 	
 	-- Animations
 	-- Ground Idle
@@ -71,13 +71,12 @@ function events.TICK()
 	if typeAnims.groundIdles[typeData.curString] then
 		typeAnims.groundIdles[typeData.curString]:playing(groundIdle):setTime(anims.groundIdle:getTime())
 	end
-	--[[
+	
 	-- Ground Walk
 	anims.groundWalk:playing(groundWalk)
 	if typeAnims.groundWalks[typeData.curString] then
 		typeAnims.groundWalks[typeData.curString]:playing(groundWalk):setTime(anims.groundWalk:getTime())
 	end
-	--]]
 	
 	-- Store data
 	_type = typeData.curType
@@ -85,6 +84,22 @@ function events.TICK()
 end
 
 function events.RENDER(delta, context)
+	
+	-- Variables
+	local vel = player:getVelocity(delta)
+	local dir = player:getLookDir()
+	
+	-- Directional velocity
+	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
+	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
+	
+	-- Animation speeds
+	-- Ground Walk
+	local groundSpeed = math.clamp(fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) * 8 or math.max(fbVel, math.abs(lrVel)) * 8, -2, 2)
+	anims.groundWalk:speed(groundSpeed)
+	if typeAnims.groundWalks[typeData.curString] then
+		typeAnims.groundWalks[typeData.curString]:speed(groundSpeed)
+	end
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
@@ -104,10 +119,8 @@ end
 local blendAnims = {
 	{ anim = anims.groundIdle,      ticks = {7,7} },
 	{ anim = typeAnims.groundIdles, ticks = {7,7} },
-	--[[
-	{ anim = anims.groundWalk,      ticks = {7,7} },
-	{ anim = typeAnims.groundWalks, ticks = {7,7} }
-	--]]
+	{ anim = anims.groundWalk,      ticks = {3,7} },
+	{ anim = typeAnims.groundWalks, ticks = {3,7} }
 }
 
 -- Apply GS Blending
