@@ -5,6 +5,7 @@ local typeData = require("scripts.TypeControl")
 local parts    = require("lib.PartsAPI")
 local ground   = require("lib.GroundCheck")
 local pose     = require("scripts.Posing")
+local effects  = require("scripts.SyncedVariables")
 
 -- Variable
 local _type = nil
@@ -48,6 +49,7 @@ function events.TICK()
 	-- Variables
 	local vel       = player:getVelocity()
 	local sprinting = player:isSprinting()
+	local onGround  = ground()
 	
 	-- Check for type change
 	if _type ~= typeData.curType then
@@ -63,7 +65,7 @@ function events.TICK()
 	
 	-- Animation states
 	local groundIdle = not sprinting and not player:getVehicle() and not pose.sleep
-	local groundWalk = groundIdle and vel.xz:length() ~= 0
+	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or effects.cF)
 	
 	-- Animations
 	-- Ground Idle

@@ -6,7 +6,9 @@ if not s then return {} end
 local parts    = require("lib.PartsAPI")
 local typeData = require("scripts.TypeControl")
 local lerp     = require("lib.LerpAPI")
+local ground  = require("lib.GroundCheck")
 local pose     = require("scripts.Posing")
+local effects = require("scripts.SyncedVariables")
 
 -- Config setup
 config:name("EeveelutionTaur")
@@ -151,7 +153,17 @@ local rightArm = squapi.arm:new(
 local leftArmStrength  = leftArm.strength
 local rightArmStrength = rightArm.strength
 
+-- Squishy taur
+local taur = squapi.taur:new(
+	parts.group.LowerBody,
+	parts.group.FrontLegs,
+	parts.group.BackLegs
+)
+
 function events.TICK()
+	
+	-- Variable
+	local onGround = ground()
 	
 	-- Arm variables
 	local handedness  = player:isLeftHanded()
@@ -175,6 +187,7 @@ function events.TICK()
 	-- Control targets based on variables
 	leftArmLerp.target  = (armsMove or armShouldMove or leftSwing  or bow or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
 	rightArmLerp.target = (armsMove or armShouldMove or rightSwing or bow or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
+	taur.target         = (onGround or effects.cF) and 0 or taur.target
 	
 end
 
