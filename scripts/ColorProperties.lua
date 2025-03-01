@@ -31,7 +31,7 @@ function events.RENDER(delta, context)
 end
 
 -- Host only instructions
-if not host:isHost() then return end
+if not host:isHost() then return c end
 
 -- Secondary colors
 c.typeColors.eevee.secondary    = vectors.hexToRGB("F0E3B0")
