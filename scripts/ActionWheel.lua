@@ -16,7 +16,7 @@ if not s then typeSwap = {} end
 local s, stone = pcall(require, "scripts.ElementalStones")
 if not s then stone = {} end
 
-local s, origin = pcall(require, "scripts.OriginsType")
+local s, origin = pcall(require, "scripts.TypeOrigins")
 if not s then origin = {} end
 
 local s, squapi = pcall(require, "scripts.SquishyAnims")
