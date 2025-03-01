@@ -149,17 +149,18 @@ function typeData:syncCurType()
 end
 
 -- Texture swap parts
-local mainParts = parts:createTable(function(part) return part:getName():find("_Type") end)
+typeData.mainParts = parts:createTable(function(part) return part:getName():find("_Type") end)
 
 -- Updates textures on all texture swapping parts
--- These textures are modified by `Shiny.lua` to use shiny textures instead, if able
+-- This function will be modified by the following scripts, if able:
+-- Shiny.lua
 function typeData:updateTexture()
 	
 	-- Texture path
 	local texData = typeData.data[typeData.curString].textures
 	
 	-- Apply
-	for _, part in ipairs(mainParts) do
+	for _, part in ipairs(typeData.mainParts) do
 		
 		-- Set primary
 		part:primaryTexture("CUSTOM", texData.primary)
@@ -197,7 +198,8 @@ function typeData:updateParts()
 end
 
 -- Updates all data to match
--- This function will be modified by Pokeball.lua, as it will have its own methods
+-- This function will be modified by the following scripts, if able:
+-- Pokeball.lua
 function typeData:updateAll()
 	
 	typeData:syncCurType()
