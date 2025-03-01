@@ -150,7 +150,7 @@ function typeData:updateAll()
 			swapping = true
 			
 			-- Create new tick event
-			events.TICK:register(function(delta, context)
+			events.TICK:register(function()
 				
 				if _type ~= typeData.tarType then
 					
