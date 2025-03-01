@@ -14816,7 +14816,7 @@
 								{
 									"x": "0",
 									"y": "0",
-									"z": "q(...) +\nmath.sin(q.anim_time*360+90)-1"
+									"z": "q(...) +\nMath.sin(q.anim_time*360+90)-1"
 								}
 							],
 							"uuid": "859aa28e-dbe0-4bcc-65f1-051d4a5c70f3",
