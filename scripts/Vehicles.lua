@@ -15,6 +15,6 @@ carrier.vehicle.addTag("gscarrier:taur", "gscarrier:land")
 
 -- Seat 1
 carrier.vehicle.newSeat("Seat1", parts.group.Seat1, {
-	priority = 2,
+	priority = 1,
 	tags = {["gscarrier:mounted"] = true}
 })
