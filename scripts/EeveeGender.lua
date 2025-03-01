@@ -2,7 +2,7 @@
 local parts = require("lib.PartsAPI")
 local typeData = require("scripts.TypeControl")
 
--- Kills script early if eevee couldnt be found in the types table
+-- Kills script early if Eevee couldnt be found in the types table
 if not typeData.data["eevee"] then return {} end
 
 -- Config setup
