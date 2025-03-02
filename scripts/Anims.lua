@@ -113,7 +113,6 @@ function events.RENDER(delta, context)
 	local crouchPos = vec(0, -math.sin(math.rad(bodyRot.x)) * 2, -math.sin(math.rad(bodyRot.x)) * 12)
 	parts.group.UpperBody:offsetPivot(crouchPos):pos(crouchPos.xy_ * 2)
 	parts.group.LowerTorso:pos(crouchPos)
-	parts.group.FrontLegs:pos(crouchPos)
 	
 end
 
