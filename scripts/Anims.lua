@@ -64,8 +64,10 @@ function events.TICK()
 	end
 	
 	-- Animation states
-	local groundIdle = not sprinting and not player:getVehicle() and not pose.sleep
-	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or effects.cF)
+	local vaporeonIdle = typeData.curString == "vaporeon" and player:isInWater() and not (onGround or pose.swim)
+	local vaporeonSwim = typeData.curString == "vaporeon" and pose.swim
+	local groundIdle = not (player:getVehicle() or pose.sleep or vaporeonIdle or vaporeonSwim)
+	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim)
 	
 	-- Animations
 	-- Ground Idle
@@ -78,6 +80,11 @@ function events.TICK()
 	anims.groundWalk:playing(groundWalk)
 	if typeAnims.groundWalks[typeData.curString] then
 		typeAnims.groundWalks[typeData.curString]:playing(groundWalk):setTime(anims.groundWalk:getTime())
+	end
+	
+	if typeData.data["vaporeon"] then
+		anims.waterIdle:playing(vaporeonIdle)
+		anims.waterSwim:playing(vaporeonSwim)
 	end
 	
 	-- Store data
@@ -102,6 +109,11 @@ function events.RENDER(delta, context)
 	if typeAnims.groundWalks[typeData.curString] then
 		typeAnims.groundWalks[typeData.curString]:speed(groundSpeed)
 	end
+	-- Swim Speed
+	if typeData.curString == "vaporeon" then
+		anims.waterIdle:speed(math.clamp(1 + vel:length() * 3, 1, 1.5))
+		anims.waterSwim:speed(math.clamp(vel:length() * 3, 0, 2))
+	end
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
@@ -121,11 +133,14 @@ local blendAnims = {
 	{ anim = anims.groundIdle,      ticks = {7,7} },
 	{ anim = typeAnims.groundIdles, ticks = {7,7} },
 	{ anim = anims.groundWalk,      ticks = {3,7} },
-	{ anim = typeAnims.groundWalks, ticks = {3,7} }
+	{ anim = typeAnims.groundWalks, ticks = {3,7} },
+	{ anim = anims.waterIdle,       ticks = {7,7} },
+	{ anim = anims.waterSwim,       ticks = {7,7} }
 }
 
 -- Apply GS Blending
 for _, blend in ipairs(blendAnims) do
+	if blend.anim == nil then return end
 	if type(blend.anim) == "table" then
 		for _, anim in pairs(blend.anim) do
 			anim:blendTime(table.unpack(blend.ticks)):blendCurve("easeOutQuad")

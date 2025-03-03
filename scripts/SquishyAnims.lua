@@ -47,6 +47,7 @@ end
 -- Lerp tables
 local leftArmLerp  = lerp:new(0.5, armsMove and 1 or 0)
 local rightArmLerp = lerp:new(0.5, armsMove and 1 or 0)
+local taurLerp     = lerp:new(0.2, 1)
 
 -- Find ears
 local ears = {}
@@ -112,9 +113,9 @@ for k, tail in pairs(tails) do
 		1,    --(1) offsetBetweenSegments
 		0.01, --(.005) stiffness
 		0.9,  --(.9) bounce
-		nil,  --(90) flyingOffset
-		nil,  --(-90) downLimit
-		nil   --(45) upLimit
+		0,    --(90) flyingOffset
+		-25,  --(-90) downLimit
+		25    --(45) upLimit
 	)
 end
 
@@ -182,12 +183,13 @@ function events.TICK()
 	local crossR      = rightItem.tag and rightItem.tag["Charged"] == 1
 	
 	-- Arm movement overrides
-	local armShouldMove = pose.swim or pose.elytra or pose.crawl or pose.climb
+	local armShouldMove = (pose.swim and typeData.curString ~= "vaporeon") or pose.elytra or pose.crawl or pose.climb
 	
 	-- Control targets based on variables
 	leftArmLerp.target  = (armsMove or armShouldMove or leftSwing  or bow or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
 	rightArmLerp.target = (armsMove or armShouldMove or rightSwing or bow or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
 	taur.target         = (onGround or effects.cF) and 0 or taur.target
+	taurLerp.target     = not (typeData.curString == "vaporeon" and player:isInWater() and (not onGround or pose.swim) and not pose.elytra) and 1 or 0
 	
 end
 
@@ -225,11 +227,6 @@ function events.RENDER(delta, context)
 	--parts.group.LeftArmFP:visible(firstPerson)
 	--parts.group.RightArmFP:visible(firstPerson)
 	
-	-- Set upperbody to offset rot and crouching pivot point
-	parts.group.UpperBody
-		:rot(-parts.group.LowerBody:getRot())
-		--:offsetPivot(anims.crouch:isPlaying() and -parts.group.UpperBody:getAnimPos() or 0)
-	
 	-- Offset smooth torso in various parts
 	-- Note: acts strangely with `parts.group.body`
 	for _, group in ipairs(parts.group.UpperBody:getChildren()) do
@@ -248,6 +245,20 @@ function events.RENDER(delta, context)
 		ear.enabled = k == typeData.curString
 		ear.doEarFlick = earFlick
 	end
+	
+	-- Control taur activity
+	if taur.taurBody then
+		taur.taurBody:rot(taur.taurBody:getRot() * taurLerp.currPos)
+	end
+	if taur.frontLegs then
+		taur.frontLegs:rot(taur.frontLegs:getRot() * taurLerp.currPos)
+	end
+	if taur.backLegs then
+		taur.backLegs:rot(taur.backLegs:getRot() * taurLerp.currPos)
+	end
+	
+	-- Set upperbody to offset rot
+	parts.group.UpperBody:rot(-parts.group.LowerBody:getRot())
 	
 end
 
