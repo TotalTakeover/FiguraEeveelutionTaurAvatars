@@ -6,9 +6,9 @@ if not s then return {} end
 local parts    = require("lib.PartsAPI")
 local typeData = require("scripts.TypeControl")
 local lerp     = require("lib.LerpAPI")
-local ground  = require("lib.GroundCheck")
+local ground   = require("lib.GroundCheck")
 local pose     = require("scripts.Posing")
-local effects = require("scripts.SyncedVariables")
+local effects  = require("scripts.SyncedVariables")
 
 -- Config setup
 config:name("EeveelutionTaur")
