@@ -210,12 +210,17 @@ function typeData:updateAll()
 end
 
 -- Init type setup
-typeData:updateAll()
+function events.ENTITY_INIT()
+	typeData:updateAll()
+end
 
 -- Sync variable
-function pings.syncEeveeType(i)
+function pings.syncEeveeType(a)
 	
-	typeData:setTarget(i)
+	typeData:setTarget(a)
+	if typeData.curType ~= typeData.tarType then
+		typeData:updateAll()
+	end
 	
 end
 
