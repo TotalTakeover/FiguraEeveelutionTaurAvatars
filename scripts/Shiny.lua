@@ -66,58 +66,46 @@ for k, v in pairs(typeData.data) do
 	
 end
 
--- Variables
-local wasShiny = not typeData.shiny
-local _type = typeData.curType
-
-function events.RENDER(delta, context)
+-- Modifies the update function to allow the player to enter their pokeball before changing types
+local prevUpdateTexture = typeData.updateTexture
+function typeData:updateTexture()
 	
-	-- Shiny textures
-	if typeData.shiny ~= wasShiny or _type ~= typeData.curType then
+	-- Current type
+	local curType = typeData.curString
+	
+	-- Textures
+	local primary = typeData.shiny and shinyTex[curType].primary or initTex[curType].primary
+	local secondary = typeData.shiny and shinyTex[curType].secondary or initTex[curType].secondary
+	
+	-- Set textures
+	typeData.data[curType].textures.primary = primary
+	typeData.data[curType].textures.secondary = secondary
+	
+	-- Set part textures
+	for _, part in ipairs(shinyParts[curType]) do
 		
-		-- Current type
-		local curType = typeData.curString
+		part:primaryTexture("CUSTOM", primary)
 		
-		-- Textures
-		local primary = typeData.shiny and shinyTex[curType].primary or initTex[curType].primary
-		local secondary = typeData.shiny and shinyTex[curType].secondary or initTex[curType].secondary
-		
-		-- Set textures
-		typeData.data[curType].textures.primary = primary
-		typeData.data[curType].textures.secondary = secondary
-		
-		-- Set part textures
-		for _, part in ipairs(shinyParts[curType]) do
+		if typeData.data[curType].textures.secondary then
 			
-			part:primaryTexture("CUSTOM", primary)
+			part:secondaryTexture("CUSTOM", secondary)
 			
-			if typeData.data[curType].textures.secondary then
-				
-				part:secondaryTexture("CUSTOM", secondary)
-				
-			else
-				
-				part:secondaryTexture("SECONDARY")
-				
-			end
+		else
 			
-		end
-		
-		-- Update textures
-		typeData:updateTexture()
-		
-		-- Update colors
-		if allowColor then
-			
-			c.typeColors[curType] = typeData.shiny and shinyColors[curType] or initColors[curType]
+			part:secondaryTexture("SECONDARY")
 			
 		end
 		
 	end
 	
-	-- Store data
-	wasShiny = typeData.shiny
-	_type = typeData.curType
+	prevUpdateTexture()
+	
+	-- Update colors
+	if allowColor then
+		
+		c.typeColors[curType] = typeData.shiny and shinyColors[curType] or initColors[curType]
+		
+	end
 	
 end
 
@@ -126,6 +114,9 @@ function pings.setShinyToggle(boolean)
 	
 	typeData.shiny = boolean
 	config:save("ShinyToggle", typeData.shiny)
+	
+	typeData:updateTexture()
+	
 	if player:isLoaded() and typeData.shiny then
 		sounds:playSound("block.amethyst_block.chime", player:getPos())
 	end
