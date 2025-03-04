@@ -154,6 +154,7 @@ typeData.mainParts = parts:createTable(function(part) return part:getName():find
 -- Updates textures on all texture swapping parts
 -- This function will be modified by the following scripts, if able:
 -- Shiny.lua
+-- EeveeGender.lua
 function typeData:updateTexture()
 	
 	-- Texture path
