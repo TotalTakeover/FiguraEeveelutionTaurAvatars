@@ -159,10 +159,10 @@ pages.camera
 
 -- Eevee actions
 pages.eevee
+	:action( -1, pageActs.types)
 	:action( -1, pokeball.toggleAct)
 	:action( -1, shiny.shinyAct)
 	:action( -1, gender.genderAct)
-	:action( -1, pageActs.types)
 	:action( -1, backAct)
 
 -- Type actions
