@@ -15877,7 +15877,7 @@
 								{
 									"x": "0",
 									"y": "-5",
-									"z": "q(...) +\n-Math.sin(q.anim_time*720+90)*2\n"
+									"z": "q(...) +\n-Math.sin(q.anim_time*720+90)*2"
 								}
 							],
 							"uuid": "aac9e3c3-80cc-a690-c4b6-fc18f2ab9fb7",
@@ -15897,7 +15897,7 @@
 								{
 									"x": "0",
 									"y": "5",
-									"z": "q(...) +\nMath.sin(q.anim_time*720+90)*2\n"
+									"z": "q(...) +\nMath.sin(q.anim_time*720+90)*2"
 								}
 							],
 							"uuid": "a1c78b53-83e4-7d4d-3220-9489747d4f7f",
@@ -16058,7 +16058,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "q(...) +\nMath.sin(q.anim_time*720+60)*2\n",
+									"x": "q(...) +\nMath.sin(q.anim_time*720+60)*2",
 									"y": "q(...) +\nMath.sin(q.anim_time*720-120)",
 									"z": "0"
 								}
