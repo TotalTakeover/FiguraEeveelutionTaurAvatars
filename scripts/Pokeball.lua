@@ -20,7 +20,6 @@ local typeHide = config:load("PokeballTypeHide")
 if typeHide == nil then typeHide = true end
 
 -- Variables
-local swapping = false
 local isInBall = toggle
 local wasInBall = toggle
 local staticYaw = 0
@@ -87,7 +86,7 @@ function events.RENDER(delta, context)
 	local menu = context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL"
 	
 	-- Pokeball state
-	isInBall = (swapping or toggle) and not hasRider
+	isInBall = (typeData.swapping or toggle) and not hasRider
 	
 	-- Activate pokeball
 	if isInBall ~= wasInBall then
@@ -134,48 +133,44 @@ function typeData:updateAll()
 	
 	if typeHide then
 		
-		if not swapping then
+		-- Check if player is already in the ball, and do a fast swap in place
+		if toggle and parts.group.Player:getAnimScale():length() == 0 then
 			
-			-- Check if player is already in the ball, and do a fast swap in place
-			if toggle and parts.group.Player:getAnimScale():length() == 0 then
+			prevUpdateAll()
+			return
+			
+		end
+		
+		-- Variables
+		local timer = 0
+		local _type = typeData.tarType
+		typeData.swapping = true
+		
+		-- Create new tick event
+		events.TICK:register(function()
+			
+			if _type ~= typeData.tarType then
 				
-				prevUpdateAll()
-				return
+				timer = 0
+				
+			elseif parts.group.Player:getAnimScale():length() == 0 then
+				
+				timer = timer + 1
 				
 			end
 			
-			-- Variables
-			local timer = 0
-			local _type = typeData.tarType
-			swapping = true
+			if timer >= 10 then
+				
+				prevUpdateAll()
+				typeData.swapping = false
+				events.TICK:remove("PokeballTypeHide")
+				
+			end
 			
-			-- Create new tick event
-			events.TICK:register(function()
-				
-				if _type ~= typeData.tarType then
-					
-					timer = 0
-					
-				elseif parts.group.Player:getAnimScale():length() == 0 then
-					
-					timer = timer + 1
-					
-				end
-				
-				if timer >= 10 then
-					
-					prevUpdateAll()
-					swapping = false
-					events.TICK:remove("PokeballTypeHide")
-					
-				end
-				
-				-- Store last state
-				_type = typeData.tarType
-				
-			end, "PokeballTypeHide")
+			-- Store last state
+			_type = typeData.tarType
 			
-		end
+		end, "PokeballTypeHide")
 		
 	else
 		

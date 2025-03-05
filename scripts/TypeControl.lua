@@ -210,8 +210,18 @@ function typeData:updateAll()
 end
 
 -- Init type setup
+local prevUpdateAll = typeData.updateAll
 function events.ENTITY_INIT()
-	typeData:updateAll()
+	prevUpdateAll()
+end
+
+-- Sync current to target if they do not match
+function events.RENDER(delta, context)
+	
+	if not typeData.swapping and typeData.curType ~= typeData.tarType then
+		typeData:updateAll()
+	end
+	
 end
 
 -- Sync variable

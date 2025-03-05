@@ -51,7 +51,6 @@ function events.RENDER(delta, context)
 			
 			-- Update type
 			typeData:setTarget(typeData:getIndex(pickedStone))
-			typeData:updateAll()
 			
 		end
 		

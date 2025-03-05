@@ -9,7 +9,6 @@ function pings.setEeveeType(i)
 	
 	-- Update type
 	typeData:setTarget(((typeData.tarType + i - 1) % #typeData.types) + 1)
-	typeData:updateAll()
 	
 end
 

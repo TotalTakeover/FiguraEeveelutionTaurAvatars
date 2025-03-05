@@ -18,7 +18,6 @@ function events.TICK()
 				
 				-- Update type
 				typeData:setTarget(typeData:getIndex(v))
-				typeData:updateAll()
 				
 			end
 		end
