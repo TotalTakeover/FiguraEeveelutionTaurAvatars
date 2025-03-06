@@ -4,24 +4,30 @@ require("lib.Molang")
 local typeData = require("scripts.TypeControl")
 local parts    = require("lib.PartsAPI")
 local ground   = require("lib.GroundCheck")
+local lerp     = require("lib.LerpAPI")
 local pose     = require("scripts.Posing")
 local effects  = require("scripts.SyncedVariables")
 
 -- Variable
 local _type = nil
 
+-- Sprint lerp
+local sprintLerp = lerp:new(0.2, 1)
+
 -- Animations setup
 local anims = animations.EeveeTaur
 
 -- Animation types
 local typeAnims = {}
-typeAnims.groundIdles = {}
-typeAnims.groundWalks = {}
+typeAnims.groundIdles   = {}
+typeAnims.groundWalks   = {}
+typeAnims.groundSprints = {}
 for _, v in ipairs(typeData.types) do
 	
 	-- Store anims
-	typeAnims.groundIdles[v] = anims["groundIdle_"..v]
-	typeAnims.groundWalks[v] = anims["groundWalk_"..v]
+	typeAnims.groundIdles[v]   = anims["groundIdle_"..v]
+	typeAnims.groundWalks[v]   = anims["groundWalk_"..v]
+	typeAnims.groundSprints[v] = anims["groundSprint_"..v]
 	
 end
 
@@ -66,8 +72,9 @@ function events.TICK()
 	-- Animation states
 	local vaporeonIdle = typeData.curString == "vaporeon" and player:isInWater() and not (onGround or pose.swim)
 	local vaporeonSwim = typeData.curString == "vaporeon" and pose.swim
-	local groundIdle = not (player:getVehicle() or pose.sleep or vaporeonIdle or vaporeonSwim)
+	local groundIdle = not (player:getVehicle() or pose.sleep or (sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim)
 	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim)
+	local groundSprint = sprinting and not pose.swim
 	
 	-- Animations
 	-- Ground Idle
@@ -82,10 +89,19 @@ function events.TICK()
 		typeAnims.groundWalks[typeData.curString]:playing(groundWalk):setTime(anims.groundWalk:getTime())
 	end
 	
+	-- Ground Sprint
+	anims.groundSprint:playing(groundSprint)
+	if typeAnims.groundSprints[typeData.curString] then
+		typeAnims.groundSprints[typeData.curString]:playing(groundSprint):setTime(anims.groundSprint:getTime())
+	end
+	
 	if typeData.data["vaporeon"] then
 		anims.waterIdle:playing(vaporeonIdle)
 		anims.waterSwim:playing(vaporeonSwim)
 	end
+	
+	-- Set targets
+	sprintLerp.target = onGround and 1 or 0
 	
 	-- Store data
 	_type = typeData.curType
@@ -104,16 +120,25 @@ function events.RENDER(delta, context)
 	
 	-- Animation speeds
 	-- Ground Walk
-	local groundSpeed = math.clamp(fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) * 8 or math.max(fbVel, math.abs(lrVel)) * 8, -2, 2)
-	anims.groundWalk:speed(groundSpeed)
+	local walkSpeed = math.clamp(fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) * 6 or math.max(fbVel, math.abs(lrVel)) * 6, -3, 3)
+	anims.groundWalk:speed(walkSpeed)
 	if typeAnims.groundWalks[typeData.curString] then
-		typeAnims.groundWalks[typeData.curString]:speed(groundSpeed)
+		typeAnims.groundWalks[typeData.curString]:speed(walkSpeed)
 	end
-	-- Swim Speed
+	-- Ground Sprint
+	local sprintSpeed = math.min(vel.xz:length() + 1, 2)
+	anims.groundSprint:speed(sprintSpeed)
+	if typeAnims.groundSprints[typeData.curString] then
+		typeAnims.groundSprints[typeData.curString]:speed(sprintSpeed)
+	end
+	-- Swim
 	if typeData.curString == "vaporeon" then
-		anims.waterIdle:speed(math.clamp(1 + vel:length() * 3, 1, 1.5))
-		anims.waterSwim:speed(math.clamp(vel:length() * 3, 0, 2))
+		anims.waterIdle:speed(math.min(1 + vel:length() * 3, 1.5))
+		anims.waterSwim:speed(math.min(vel:length() * 3, 2))
 	end
+	
+	-- Animation blending
+	anims.groundSprint:blend(sprintLerp.currPos)
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
@@ -130,12 +155,14 @@ end
 
 -- GS Blending Setup
 local blendAnims = {
-	{ anim = anims.groundIdle,      ticks = {7,7} },
-	{ anim = typeAnims.groundIdles, ticks = {7,7} },
-	{ anim = anims.groundWalk,      ticks = {3,7} },
-	{ anim = typeAnims.groundWalks, ticks = {3,7} },
-	{ anim = anims.waterIdle,       ticks = {7,7} },
-	{ anim = anims.waterSwim,       ticks = {7,7} }
+	{ anim = anims.groundIdle,        ticks = {7,7} },
+	{ anim = typeAnims.groundIdles,   ticks = {7,7} },
+	{ anim = anims.groundWalk,        ticks = {3,7} },
+	{ anim = typeAnims.groundWalks,   ticks = {3,7} },
+	{ anim = anims.groundSprint,      ticks = {3,7} },
+	{ anim = typeAnims.groundSprints, ticks = {3,7} },
+	{ anim = anims.waterIdle,         ticks = {7,7} },
+	{ anim = anims.waterSwim,         ticks = {7,7} }
 }
 
 -- Apply GS Blending
