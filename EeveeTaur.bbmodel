@@ -14465,26 +14465,6 @@
 			"start_delay": "",
 			"loop_delay": "",
 			"animators": {
-				"b3fb9d00-02e1-495c-ee41-2a3e8e30013c": {
-					"name": "Player",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "position",
-							"data_points": [
-								{
-									"x": "0",
-									"y": "q(...) +\n-Math.sin(q.anim_time*720)*0.2",
-									"z": "0"
-								}
-							],
-							"uuid": "4d0ff670-cbc2-0b78-f08a-7627c68f3ba2",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				},
 				"91c628a2-b25f-7666-9263-dc5772ba3857": {
 					"name": "FrontLeftLeg",
 					"type": "bone",
@@ -14759,6 +14739,26 @@
 								}
 							],
 							"uuid": "86db9e6d-f583-fb4a-01b7-000ab4d09975",
+							"time": 0,
+							"color": -1,
+							"interpolation": "linear"
+						}
+					]
+				},
+				"c6f234ff-cb73-8280-c15d-1960bd8d3a42": {
+					"name": "LowerBody",
+					"type": "bone",
+					"keyframes": [
+						{
+							"channel": "position",
+							"data_points": [
+								{
+									"x": "0",
+									"y": "q(...) +\n-Math.sin(q.anim_time*720)*0.2",
+									"z": "0"
+								}
+							],
+							"uuid": "1db3b618-baba-12f8-2969-7c94933c52b8",
 							"time": 0,
 							"color": -1,
 							"interpolation": "linear"
