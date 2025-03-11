@@ -1,3 +1,14 @@
+--[[
+	
+	Yo! Total here!
+	If you plan on deleting this script, just remember to add the eevee tail texture's & UVs back to its base textures!
+	I was unable to have both tail types on the base texture without breaking foundation, so I opted for a separate texture.
+	It's expecting 1 (2 if shiny) textures, but this script specifically overrides that, and preforms changes after all others. 
+	
+	This script is kinda hard coded, please go easy on me!
+	
+--]]
+
 -- Required scripts
 local parts = require("lib.PartsAPI")
 local typeData = require("scripts.TypeControl")
