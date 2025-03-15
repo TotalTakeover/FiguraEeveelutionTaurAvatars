@@ -20,7 +20,28 @@ end
 
 function events.TICK()
 	
-	glow.target = typeData.tarString == "umbreon" and math.map(world.getLightLevel(player:getPos()), 0, 15, 1, 0) or 1
+	if typeData.tarString == "umbreon" then
+		
+		-- Variables
+		local pos = player:getPos()
+		local sky = world.getSkyLightLevel(pos)
+		local time = world.getDayTime()
+		local moon = world.getMoonPhase()
+		
+		-- Strengths
+		local skyStr = sky / 15
+		local timeStr = math.max(1 - math.abs((time - 18000) / 6000), 0)
+		local moonStr = math.abs(1 - moon / 4)
+		
+		-- Set target
+		glow.target = skyStr * timeStr * moonStr
+		
+	else
+		
+		-- Set target
+		glow.target = 1
+		
+	end
 	
 end
 
