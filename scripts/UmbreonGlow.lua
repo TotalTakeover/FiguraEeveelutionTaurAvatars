@@ -6,7 +6,7 @@ local lerp     = require("lib.LerpAPI")
 if not typeData.data["umbreon"] then return {} end
 
 -- Glow lerp
-local glow = lerp:new(0.05)
+local glow = lerp:new(0.1)
 
 -- Glow Parts
 local glowParts = {table.unpack(typeData.mainParts), table.unpack(typeData.data.umbreon.parts)}
