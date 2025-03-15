@@ -11,6 +11,13 @@ local glow = lerp:new(0.1)
 -- Glow Parts
 local glowParts = {table.unpack(typeData.mainParts), table.unpack(typeData.data.umbreon.parts)}
 
+-- Remove skull parts from table
+for i = #glowParts, 1, -1 do
+	if glowParts[i]:getName():find("Skull") then
+		table.remove(glowParts, i)
+	end
+end
+
 function events.TICK()
 	
 	glow.target = typeData.tarString == "umbreon" and math.map(world.getLightLevel(player:getPos()), 0, 15, 1, 0) or 1
