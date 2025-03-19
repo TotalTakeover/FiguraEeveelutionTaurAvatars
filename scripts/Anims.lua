@@ -9,7 +9,9 @@ local pose     = require("scripts.Posing")
 local effects  = require("scripts.SyncedVariables")
 
 -- Variable
-local _type = nil
+local _type  = nil
+local canAct = false
+local canSit = false
 
 -- Sprint lerp
 local sprintLerp = lerp:new(0.2, 1)
@@ -75,6 +77,16 @@ function events.TICK()
 	local groundIdle = not (player:getVehicle() or pose.sleep or (sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim)
 	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim)
 	local groundSprint = sprinting and not pose.swim
+	local isAct = anims.sit:isPlaying()
+	
+	-- Animation actions
+	canAct = pose.stand and not(vel:length() ~= 0 or player:getVehicle())
+	canSit = canAct and (not isAct or anims.sit:isPlaying())
+	
+	-- Stop Sit animation
+	if not canSit then
+		anims.sit:stop()
+	end
 	
 	-- Animations
 	-- Ground Idle
@@ -155,14 +167,15 @@ end
 
 -- GS Blending Setup
 local blendAnims = {
-	{ anim = anims.groundIdle,        ticks = {7,7} },
-	{ anim = typeAnims.groundIdles,   ticks = {7,7} },
-	{ anim = anims.groundWalk,        ticks = {3,7} },
-	{ anim = typeAnims.groundWalks,   ticks = {3,7} },
-	{ anim = anims.groundSprint,      ticks = {3,7} },
-	{ anim = typeAnims.groundSprints, ticks = {3,7} },
-	{ anim = anims.waterIdle,         ticks = {7,7} },
-	{ anim = anims.waterSwim,         ticks = {7,7} }
+	{ anim = anims.groundIdle,        ticks = {7,7}  },
+	{ anim = typeAnims.groundIdles,   ticks = {7,7}  },
+	{ anim = anims.groundWalk,        ticks = {3,7}  },
+	{ anim = typeAnims.groundWalks,   ticks = {3,7}  },
+	{ anim = anims.groundSprint,      ticks = {3,7}  },
+	{ anim = typeAnims.groundSprints, ticks = {3,7}  },
+	{ anim = anims.waterIdle,         ticks = {7,7}  },
+	{ anim = anims.waterSwim,         ticks = {7,7}  },
+	{ anim = anims.sit,               ticks = {14,7} },
 }
 
 -- Apply GS Blending
@@ -186,3 +199,63 @@ function events.RENDER(delta, context)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end
+
+-- Play sit anim
+function pings.setAnimToggleSit(boolean)
+	
+	anims.sit:playing(canSit and boolean)
+	
+end
+
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
+
+-- Sit keybind
+local sitBind   = config:load("AnimSitKeybind") or "key.keyboard.keypad.3"
+local setSitKey = keybinds:newKeybind("Sit Animation"):onPress(function() pings.setAnimToggleSit(not anims.sit:isPlaying()) end):key(sitBind)
+
+-- Keybind updaters
+function events.TICK()
+	
+	local sitKey = setSitKey:getKey()
+	if sitKey ~= sitBind then
+		sitBind = sitKey
+		config:save("AnimSitKeybind", sitKey)
+	end
+	
+end
+
+-- Table setup
+local t = {}
+
+-- Actions
+t.sitAct = action_wheel:newAction()
+	:item(itemCheck("scaffolding"))
+	:toggleItem(itemCheck("saddle"))
+	:onToggle(pings.setAnimToggleSit)
+
+-- Update actions
+function events.RENDER(delta, context)
+	
+	if action_wheel:isEnabled() then
+		t.sitAct
+			:title(toJson(
+				{text = "Play Sit animation", bold = true, color = c.primary}
+			))
+			:toggled(anims.sit:isPlaying())
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
+		end
+		
+	end
+	
+end
+
+-- Returns actions
+return t

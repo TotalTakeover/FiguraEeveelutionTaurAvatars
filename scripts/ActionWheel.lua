@@ -22,6 +22,9 @@ if not s then stone = {} end
 local s, origin = pcall(require, "scripts.TypeOrigins")
 if not s then origin = {} end
 
+local s, anims = pcall(require, "scripts.Anims")
+if not s then anims = {} end
+
 local s, squapi = pcall(require, "scripts.SquishyAnims")
 if not s then squapi = {} end
 
@@ -198,6 +201,7 @@ pages.types
 
 -- Animation actions
 pages.anims
+	:action( -1, anims.sitAct)
 	:action( -1, squapi.earsAct)
 	:action( -1, squapi.armsAct)
 	:action( -1, backAct)
