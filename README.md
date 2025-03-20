@@ -6,11 +6,20 @@ A Figura Avatar template designed to give the user a customizable taur body base
 - Total
 
 ### Credits:
+- Irri
+- Psycho Breadstick
+- Jimmy
+- PoolloverNathan
 - The Cobblemon Team
 - The Pokemon Company
 
 ### Libraries:
-
+- Grandpa Scout (GSAnimBlend, GSCarrier)
+- Squishy (SquAPI)
+- Katt (OriginsAPI, KattArmor, DynamicCrosshair)
+- 4P5 (GroundCheck)
+- Manuel (Molang Conversions)
+- Auria (Molang Conversions)
 
 ## Features
 Section under construction
