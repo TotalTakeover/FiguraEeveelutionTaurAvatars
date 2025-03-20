@@ -74,14 +74,14 @@ for k, ear in pairs(ears.left) do
 	squishyEars[k] = squapi.ear:new(
 		ear,
 		ears.right[k],
-		0.25, --(1) rangeMultiplier
+		0.25,          -- Range Multiplier (0.25)
 		k == "vaporeon" or
-		k == "espeon", --(false) horizontalEars
-		2,    --(2) bendStrength
-		earFlick, --(true) doEarFlick
-		400,  --(400) earFlickChance
-		0.1,  --(0.1) earStiffness
-		0.9   --(0.8) earBounce
+		k == "espeon", -- Horizontal (Based on type)
+		2,             -- Bend Strength (2)
+		earFlick,      -- Do Flick (earFlick)
+		400,           -- Flick Chance (400)
+		0.1,           -- Stiffness (0.1)
+		0.9            -- Bounce (0.9)
 	)
 end
 
@@ -103,19 +103,19 @@ end
 local squishyTails = {}
 for k, tail in pairs(tails) do
 	squishyTails[k] = squapi.tail:new(tail,
-		0,    --(0) idleXMovement
-		0,    --(0) idleYMovement
-		0,    --(0) idleXSpeed
-		0,    --(0) idleYSpeed
-		2,    --(2) bendStrength
-		0,    --(0) velocityPush
-		0,    --(0) initialMovementOffset
-		1,    --(1) offsetBetweenSegments
-		0.01, --(.005) stiffness
-		0.9,  --(.9) bounce
-		0,    --(90) flyingOffset
-		-25,  --(-90) downLimit
-		25    --(45) upLimit
+		0,    -- Intensity X (0)
+		0,    -- Intensity Y (0)
+		0,    -- Speed X (0)
+		0,    -- Speed Y (0)
+		2,    -- Bend (2)
+		0,    -- Velocity Push (0)
+		0,    -- Initial Offset (0)
+		1,    -- Seg Offset (1)
+		0.01, -- Stiffness (0.01)
+		0.9,  -- Bounce (0.9)
+		0,    -- Fly Offset (0)
+		-25,  -- Down Limit (-25)
+		25    -- Up Limit (25)
 	)
 end
 
@@ -140,14 +140,14 @@ local leftArm = squapi.arm:new(
 	parts.group.LeftArm,
 	1,     -- Strength (1)
 	false, -- Right Arm (false)
-	true   -- Keep Position (false)
+	true   -- Keep Position (true)
 )
 
 local rightArm = squapi.arm:new(
 	parts.group.RightArm,
 	1,    -- Strength (1)
 	true, -- Right Arm (true)
-	true  -- Keep Position (false)
+	true  -- Keep Position (true)
 )
 
 -- Arm strength variables
