@@ -12,6 +12,7 @@ local effects  = require("scripts.SyncedVariables")
 local _type  = nil
 local canAct = false
 local canSit = false
+local canLie = false
 
 -- Sprint lerp
 local sprintLerp = lerp:new(0.2, 1)
@@ -77,16 +78,22 @@ function events.TICK()
 	local groundIdle = not (player:getVehicle() or pose.sleep or (sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim) or player:getVehicle()
 	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim or player:getVehicle())
 	local groundSprint = sprinting and not (pose.swim or player:getVehicle())
-	local isAct = anims.sit:isPlaying()
+	local isAct = anims.sit:isPlaying() or anims.lying:isPlaying()
 	local ride  = player:getVehicle()
 	
 	-- Animation actions
 	canAct = pose.stand and not(vel:length() ~= 0 or player:getVehicle())
 	canSit = canAct and (not isAct or anims.sit:isPlaying())
+	canLie = canAct and (not isAct or anims.lying:isPlaying())
 	
 	-- Stop Sit animation
 	if not canSit then
 		anims.sit:stop()
+	end
+	
+	-- Stop Lying animation
+	if not canLie then
+		anims.lying:stop()
 	end
 	
 	-- Animations
@@ -179,7 +186,8 @@ local blendAnims = {
 	{ anim = anims.waterIdle,         ticks = {7,7}  },
 	{ anim = anims.waterSwim,         ticks = {7,7}  },
 	{ anim = anims.ride,              ticks = {7,7}  },
-	{ anim = anims.sit,               ticks = {14,7} }
+	{ anim = anims.sit,               ticks = {14,7} },
+	{ anim = anims.lying,             ticks = {14,7} }
 }
 
 -- Apply GS Blending
@@ -211,6 +219,13 @@ function pings.setAnimToggleSit(boolean)
 	
 end
 
+-- Play lying anim
+function pings.setAnimToggleLying(boolean)
+	
+	anims.lying:playing(canLie and boolean)
+	
+end
+
 -- Host only instructions
 if not host:isHost() then return end
 
@@ -223,13 +238,22 @@ if not s then c = {} end
 local sitBind   = config:load("AnimSitKeybind") or "key.keyboard.keypad.3"
 local setSitKey = keybinds:newKeybind("Sit Animation"):onPress(function() pings.setAnimToggleSit(not anims.sit:isPlaying()) end):key(sitBind)
 
+-- Lie keybind
+local lieBind   = config:load("AnimLieKeybind") or "key.keyboard.keypad.4"
+local setLieKey = keybinds:newKeybind("Lie Down Animation"):onPress(function() pings.setAnimToggleLying(not anims.lying:isPlaying()) end):key(lieBind)
+
 -- Keybind updaters
 function events.TICK()
 	
 	local sitKey = setSitKey:getKey()
+	local lieKey = setLieKey:getKey()
 	if sitKey ~= sitBind then
 		sitBind = sitKey
 		config:save("AnimSitKeybind", sitKey)
+	end
+	if lieKey ~= lieBind then
+		lieBind = lieKey
+		config:save("AnimLieKeybind", lieKey)
 	end
 	
 end
@@ -243,6 +267,11 @@ t.sitAct = action_wheel:newAction()
 	:toggleItem(itemCheck("saddle"))
 	:onToggle(pings.setAnimToggleSit)
 
+t.lieAct = action_wheel:newAction()
+	:item(itemCheck("red_bed"))
+	:toggleItem(itemCheck("saddle"))
+	:onToggle(pings.setAnimToggleLying)
+
 -- Update actions
 function events.RENDER(delta, context)
 	
@@ -252,6 +281,12 @@ function events.RENDER(delta, context)
 				{text = "Play Sit animation", bold = true, color = c.primary}
 			))
 			:toggled(anims.sit:isPlaying())
+		
+		t.lieAct
+			:title(toJson(
+				{text = "Play Lie Down animation", bold = true, color = c.primary}
+			))
+			:toggled(anims.lying:isPlaying())
 		
 		for _, act in pairs(t) do
 			act:hoverColor(c.hover):toggleColor(c.active)
