@@ -74,10 +74,11 @@ function events.TICK()
 	-- Animation states
 	local vaporeonIdle = typeData.curString == "vaporeon" and player:isInWater() and not (onGround or pose.swim)
 	local vaporeonSwim = typeData.curString == "vaporeon" and pose.swim
-	local groundIdle = not (player:getVehicle() or pose.sleep or (sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim)
-	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim)
-	local groundSprint = sprinting and not pose.swim
+	local groundIdle = not (player:getVehicle() or pose.sleep or (sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim) or player:getVehicle()
+	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim or player:getVehicle())
+	local groundSprint = sprinting and not (pose.swim or player:getVehicle())
 	local isAct = anims.sit:isPlaying()
+	local ride  = player:getVehicle()
 	
 	-- Animation actions
 	canAct = pose.stand and not(vel:length() ~= 0 or player:getVehicle())
@@ -111,6 +112,8 @@ function events.TICK()
 		anims.waterIdle:playing(vaporeonIdle)
 		anims.waterSwim:playing(vaporeonSwim)
 	end
+	
+	anims.ride:playing(ride)
 	
 	-- Set targets
 	sprintLerp.target = onGround and 1 or 0
@@ -175,7 +178,8 @@ local blendAnims = {
 	{ anim = typeAnims.groundSprints, ticks = {3,7}  },
 	{ anim = anims.waterIdle,         ticks = {7,7}  },
 	{ anim = anims.waterSwim,         ticks = {7,7}  },
-	{ anim = anims.sit,               ticks = {14,7} },
+	{ anim = anims.ride,              ticks = {7,7}  },
+	{ anim = anims.sit,               ticks = {14,7} }
 }
 
 -- Apply GS Blending
