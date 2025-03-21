@@ -14,7 +14,7 @@ function events.TICK()
 	
 	if typeData.origin then
 		for _, v in ipairs(typeData.types) do
-			if typeData.tarString ~= v and originAPI.hasOrigin(player,  "eeveelutiontaurs:"..v.."taur") then
+			if typeData.tarString ~= v and originAPI.hasOrigin(player, "eeveelutiontaurs:"..v.."taur") then
 				
 				-- Update type
 				typeData:setTarget(typeData:getIndex(v))
