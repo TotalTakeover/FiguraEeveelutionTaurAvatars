@@ -21,5 +21,8 @@ A Figura Avatar template designed to give the user a customizable taur body base
 - Manuel (Molang Conversions)
 - Auria (Molang Conversions)
 
+### Origin Datapack:
+- [EeveelutionTaur Origins](https://github.com/PsychoBreadstick/Eeveelutiontaurs-Origins) (Created by Psycho Breadstick)
+
 ## Features
 Section under construction
