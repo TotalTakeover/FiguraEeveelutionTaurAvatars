@@ -1,8 +1,8 @@
 -- Required scripts
-local parts     = require("lib.PartsAPI")
-local originAPI = require("lib.OriginsAPI")
-local typeData  = require("scripts.TypeControl")
-local lerp      = require("lib.LerpAPI")
+local parts    = require("lib.PartsAPI")
+local origins  = require("lib.OriginsAPI")
+local typeData = require("scripts.TypeControl")
+local lerp     = require("lib.LerpAPI")
 
 -- Config setup
 config:name("EeveelutionTaur")
@@ -43,7 +43,7 @@ function events.TICK()
 			local timeStr = math.max(1 - math.abs((time - 6000) / 6000), 0)
 			
 			-- Set target
-			glowLerp.target = math.max(originAPI.getPowerData(player, "eeveelutiontaurs:sixth_sense_toggle") or 0, skyStr * timeStr)
+			glowLerp.target = math.max(origins.getPowerData(player, "eeveelutiontaurs:sixth_sense_toggle") or 0, skyStr * timeStr)
 			
 		elseif curType == "umbreon" then
 			

@@ -1,6 +1,6 @@
 -- Required scripts
-local originAPI = require("lib.OriginsAPI")
-local typeData  = require("scripts.TypeControl")
+local origins  = require("lib.OriginsAPI")
+local typeData = require("scripts.TypeControl")
 
 -- Kills script early if only one type was found in the types table
 if #typeData.types == 1 then return {} end
@@ -14,7 +14,7 @@ function events.TICK()
 	
 	if typeData.origin then
 		for _, v in ipairs(typeData.types) do
-			if typeData.tarString ~= v and originAPI.hasOrigin(player, "eeveelutiontaurs:"..v.."taur") then
+			if typeData.tarString ~= v and origins.hasOrigin(player, "eeveelutiontaurs:"..v.."taur") then
 				
 				-- Update type
 				typeData:setTarget(typeData:getIndex(v))
