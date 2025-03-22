@@ -15,7 +15,7 @@ if special == nil then special = true end
 local glowParts = parts:createTable(function(part) return part:getName():find("_[gG]low") end)
 
 -- Glow lerp
-local glowLerp = lerp:new(0.1)
+local glowLerp = lerp:new(0.1, toggle and 1 or 0)
 
 function events.TICK()
 	
