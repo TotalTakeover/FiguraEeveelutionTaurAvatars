@@ -25,6 +25,9 @@ if not s then origin = {} end
 local s, glow = pcall(require, "scripts.Glowing")
 if not s then glow = {} end
 
+local s, eyes = pcall(require, "scripts.GlowingEyes")
+if not s then eyes = {} end
+
 local s, anims = pcall(require, "scripts.Anims")
 if not s then anims = {} end
 
@@ -70,6 +73,7 @@ local pages = {
 	camera = action_wheel:newPage("Camera"),
 	eevee  = action_wheel:newPage("Eevee"),
 	glow   = action_wheel:newPage("Glow"),
+	eyes   = action_wheel:newPage("Eyes"),
 	anims  = action_wheel:newPage("Anims"),
 	types  = action_wheel:newPage("Types")
 	
@@ -104,7 +108,11 @@ local pageActs = {
 	
 	camera = action_wheel:newAction()
 		:item(itemCheck("redstone"))
-		:onLeftClick(function() descend(pages.camera) end)
+		:onLeftClick(function() descend(pages.camera) end),
+	
+	eyes = action_wheel:newAction()
+		:item(itemCheck("ender_eye"))
+		:onLeftClick(function() descend(pages.eyes) end)
 	
 }
 
@@ -145,6 +153,11 @@ function events.RENDER(delta, context)
 		pageActs.camera
 			:title(toJson(
 				{text = "Camera Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.eyes
+			:title(toJson(
+				{text = "Glowing Eyes Settings", bold = true, color = c.primary}
 			))
 		
 		for _, act in pairs(pageActs) do
@@ -217,6 +230,14 @@ pages.types
 pages.glow
 	:action( -1, glow.toggleAct)
 	:action( -1, glow.specialAct)
+	:action( -1, pageActs.eyes)
+	:action( -1, backAct)
+
+-- Eye glow actions
+pages.eyes
+	:action( -1, eyes.toggleAct)
+	:action( -1, eyes.powerAct)
+	:action( -1, eyes.nightVisionAct)
 	:action( -1, backAct)
 
 -- Animation actions
