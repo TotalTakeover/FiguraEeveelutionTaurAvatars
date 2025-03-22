@@ -22,6 +22,9 @@ if not s then stone = {} end
 local s, origin = pcall(require, "scripts.TypeOrigins")
 if not s then origin = {} end
 
+local s, glow = pcall(require, "scripts.Glowing")
+if not s then glow = {} end
+
 local s, anims = pcall(require, "scripts.Anims")
 if not s then anims = {} end
 
@@ -66,6 +69,7 @@ local pages = {
 	armor  = action_wheel:newPage("Armor"),
 	camera = action_wheel:newPage("Camera"),
 	eevee  = action_wheel:newPage("Eevee"),
+	glow   = action_wheel:newPage("Glow"),
 	anims  = action_wheel:newPage("Anims"),
 	types  = action_wheel:newPage("Types")
 	
@@ -81,6 +85,10 @@ local pageActs = {
 	eevee = action_wheel:newAction()
 		:item(itemCheck("rabbit_foot"))
 		:onLeftClick(function() descend(pages.eevee) end),
+	
+	glow = action_wheel:newAction()
+		:item(itemCheck("glow_ink_sac"))
+		:onLeftClick(function() descend(pages.glow) end),
 	
 	anims = action_wheel:newAction()
 		:item(itemCheck("jukebox"))
@@ -112,6 +120,11 @@ function events.RENDER(delta, context)
 		pageActs.eevee
 			:title(toJson(
 				{text = "Pokemon Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.glow
+			:title(toJson(
+				{text = "Glowing Settings", bold = true, color = c.primary}
 			))
 		
 		pageActs.anims
@@ -158,6 +171,7 @@ action_wheel:setPage(pages.main)
 pages.main
 	:action( -1, pageActs.avatar)
 	:action( -1, pageActs.eevee)
+	:action( -1, pageActs.glow)
 	:action( -1, pageActs.anims)
 
 -- Avatar actions
@@ -197,6 +211,12 @@ pages.types
 	:action( -1, stone.stoneAct)
 	:action( -1, origin.originAct)
 	:action( -1, pokeball.typeHideAct)
+	:action( -1, backAct)
+
+-- Glowing actions
+pages.glow
+	:action( -1, glow.toggleAct)
+	:action( -1, glow.specialAct)
 	:action( -1, backAct)
 
 -- Animation actions
