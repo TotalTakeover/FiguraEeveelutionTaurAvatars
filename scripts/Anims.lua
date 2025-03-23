@@ -75,7 +75,7 @@ function events.TICK()
 	-- Animation states
 	local vaporeonIdle = typeData.curString == "vaporeon" and player:isInWater() and not (onGround or pose.swim)
 	local vaporeonSwim = typeData.curString == "vaporeon" and pose.swim
-	local groundIdle = not (player:getVehicle() or pose.sleep or (sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim) or player:getVehicle()
+	local groundIdle = not (pose.sleep or (sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim)
 	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim or player:getVehicle())
 	local groundSprint = sprinting and not (pose.swim or player:getVehicle())
 	local isAct = anims.sit:isPlaying() or anims.lying:isPlaying()
@@ -123,7 +123,7 @@ function events.TICK()
 	anims.ride:playing(ride)
 	
 	-- Set targets
-	sprintLerp.target = onGround and 1 or 0
+	sprintLerp.target = (onGround or effects.cF) and 1 or 0
 	
 	-- Store data
 	_type = typeData.curType
