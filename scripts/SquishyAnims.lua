@@ -212,7 +212,7 @@ function events.RENDER(delta, context)
 			+ (parts.group.LeftArm:getAnimRot() * math.map(leftArmLerp.currPos, 0, 1, 0, -2))
 		)
 		:pos(parts.group.LeftArm:getPos() * vec(1, 1, -1))
-		--:visible(not firstPerson)
+		:visible(not firstPerson)
 	
 	parts.group.RightArm
 		:offsetRot(
@@ -221,11 +221,11 @@ function events.RENDER(delta, context)
 			+ (parts.group.RightArm:getAnimRot() * math.map(rightArmLerp.currPos, 0, 1, 0, -2))
 		)
 		:pos(parts.group.RightArm:getPos() * vec(1, 1, -1))
-		--:visible(not firstPerson)
+		:visible(not firstPerson)
 	
 	-- Set visible if in first person
-	--parts.group.LeftArmFP:visible(firstPerson)
-	--parts.group.RightArmFP:visible(firstPerson)
+	parts.group.LeftArmFP:visible(firstPerson)
+	parts.group.RightArmFP:visible(firstPerson)
 	
 	-- Offset smooth torso in various parts
 	-- Note: acts strangely with `parts.group.body`
