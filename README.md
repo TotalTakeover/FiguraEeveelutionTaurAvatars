@@ -1,5 +1,5 @@
 # [Eeveelution Taur Avatars](https://github.com/TotalTakeover/FiguraEeveelutionTaurAvatars)
-### Version: v0.0.1
+### Version: v1.0.0
 A Figura Avatar template designed to give the user a customizable taur body based on the Eeveelutions.
 
 ### Authors:
