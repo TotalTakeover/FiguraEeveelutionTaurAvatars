@@ -1,4 +1,4 @@
--- Required scripts
+-- Required script
 local typeData = require("scripts.TypeControl")
 
 -- Table setup
