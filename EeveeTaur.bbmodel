@@ -14680,7 +14680,7 @@
 			"uuid": "0e17d41e-7409-8200-53ac-e53785102b82",
 			"export": true,
 			"mirror_uv": false,
-			"isOpen": false,
+			"isOpen": true,
 			"locked": false,
 			"visibility": false,
 			"autouv": 0,
