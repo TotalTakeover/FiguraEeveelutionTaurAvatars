@@ -87,20 +87,63 @@ end
 	Note:
 	This is used for action wheel icons.
 	In addition, `ElementalStones.lua` will pick which stones will transform the player to what type!
-
+	
+	Each type has 3 entries, which it will select the highest entry it can, dependent on the item's existance.
+	If the item does not exist, the next item in the table is chosen, if able.
+	The item choices follow the format of:
+	1. Cobblemon item that relates to the type.
+	2. Minecraft item that origins can utilize.
+	3. Minecraft item that is guarenteed to exist by 1.16.5.
+	
 --]]
 -- Stones
 local stones = {
 	
-	eevee    = itemCheck("cobblemon:everstone",     "brown_glazed_terracotta"),
-	vaporeon = itemCheck("cobblemon:water_stone",   "blue_glazed_terracotta"),
-	jolteon  = itemCheck("cobblemon:thunder_stone", "yellow_glazed_terracotta"),
-	flareon  = itemCheck("cobblemon:fire_stone",    "red_glazed_terracotta"),
-	espeon   = itemCheck("cobblemon:dawn_stone",    "magenta_glazed_terracotta"),
-	umbreon  = itemCheck("cobblemon:dusk_stone",    "black_glazed_terracotta"),
-	leafeon  = itemCheck("cobblemon:leaf_stone",    "lime_glazed_terracotta"),
-	glaceon  = itemCheck("cobblemon:ice_stone",     "blue_glazed_terracotta"),
-	sylveon  = itemCheck("cobblemon:shiny_stone",   "pink_glazed_terracotta")
+	eevee = itemCheck(
+		"cobblemon:everstone",
+		"rabbit_hide", -- This is filler/consistency, origin will not use this
+		"brown_glazed_terracotta"
+	),
+	vaporeon = itemCheck(
+		"cobblemon:water_stone",
+		"heart_of_the_sea",
+		"blue_glazed_terracotta"
+	),
+	jolteon = itemCheck(
+		"cobblemon:thunder_stone",
+		"waxed_copper_block",
+		"yellow_glazed_terracotta"
+	),
+	flareon = itemCheck(
+		"cobblemon:fire_stone",
+		"blaze_rod",
+		"red_glazed_terracotta"
+	),
+	espeon = itemCheck(
+		"cobblemon:dawn_stone",
+		"phantom_membrane",
+		"magenta_glazed_terracotta"
+	),
+	umbreon = itemCheck(
+		"cobblemon:dusk_stone",
+		"echo_shard",
+		"black_glazed_terracotta"
+	),
+	leafeon = itemCheck(
+		"cobblemon:leaf_stone",
+		"glistering_melon_slice",
+		"lime_glazed_terracotta"
+	),
+	glaceon = itemCheck(
+		"cobblemon:ice_stone",
+		"blue_ice",
+		"blue_glazed_terracotta"
+	),
+	sylveon = itemCheck(
+		"cobblemon:shiny_stone",
+		"amethyst_shard",
+		"pink_glazed_terracotta"
+	)
 	
 }
 
