@@ -76,7 +76,7 @@ function events.TICK()
 	local vaporeonIdle = typeData.curString == "vaporeon" and player:isInWater() and not (onGround or pose.swim or pose.crawl)
 	local vaporeonSwim = typeData.curString == "vaporeon" and pose.swim and not pose.crawl
 	local groundIdle = not ((sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim)
-	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim or player:getVehicle())
+	local groundWalk = groundIdle and (vel.xz:length() ~= 0 or (pose.climb and vel:length() ~= 0)) and (onGround or pose.swim or pose.climb or effects.cF) and not (sprinting and not pose.swim or player:getVehicle())
 	local groundSprint = sprinting and not (pose.swim or player:getVehicle())
 	local isAct = anims.sit:isPlaying() or anims.lying:isPlaying()
 	local ride  = player:getVehicle()
@@ -144,7 +144,7 @@ function events.RENDER(delta, context)
 	
 	-- Animation speeds
 	-- Ground Walk
-	local walkSpeed = math.clamp(fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) * 6 or math.max(fbVel, math.abs(lrVel)) * 6, -3, 3)
+	local walkSpeed = math.clamp(pose.climb and vel:length() * 6 or fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) * 6 or math.max(fbVel, math.abs(lrVel)) * 6, -3, 3)
 	anims.groundWalk:speed(walkSpeed)
 	if typeAnims.groundWalks[typeData.curString] then
 		typeAnims.groundWalks[typeData.curString]:speed(walkSpeed)
