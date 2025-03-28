@@ -73,8 +73,8 @@ function events.TICK()
 	end
 	
 	-- Animation states
-	local vaporeonIdle = typeData.curString == "vaporeon" and player:isInWater() and not (onGround or pose.swim)
-	local vaporeonSwim = typeData.curString == "vaporeon" and pose.swim
+	local vaporeonIdle = typeData.curString == "vaporeon" and player:isInWater() and not (onGround or pose.swim or pose.crawl)
+	local vaporeonSwim = typeData.curString == "vaporeon" and pose.swim and not pose.crawl
 	local groundIdle = not ((sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim)
 	local groundWalk = groundIdle and vel.xz:length() ~= 0 and (onGround or pose.swim or effects.cF) and not (sprinting and not pose.swim or player:getVehicle())
 	local groundSprint = sprinting and not (pose.swim or player:getVehicle())
