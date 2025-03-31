@@ -162,12 +162,20 @@ local helmetHides = {
 -- Parts hidden by leggings
 local leggingsHides = {
 	
-	parts.group.LowerTorsoAccs,
-	parts.group.VaporeonTail.Fin_Shiny_Flat,
-	parts.group.VaporeonTail2.Fin_Shiny_Flat,
-	parts.group.VaporeonTail3.Fin_Shiny_Flat
+	parts.group.LowerTorsoAccs
 	
 }
+
+-- Gets vaporeon tail fins
+for _, part in pairs(parts.group) do
+	if part:getName():find("VaporeonTail") then
+		for _, child in ipairs(part:getChildren()) do
+			if child:getName():find("Fin") then
+				table.insert(leggingsHides, child)
+			end
+		end
+	end
+end
 
 -- Parts hidden by boots
 local bootsHides = {
