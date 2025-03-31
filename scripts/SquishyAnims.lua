@@ -64,6 +64,14 @@ if parts.group.Ears then
 			end
 		end
 	end
+	-- This is checking for espeons fur specifically
+	if typeData.data.espeon and parts.group.EspeonHeadAccs then
+		for _, v in ipairs(parts.group.EspeonHeadAccs:getChildren()) do
+			if v:getName():find("Fur") then
+				ears[v:getName():find("Left") and "left" or "right"].espeonFur = v
+			end
+		end
+	end
 	
 end
 
@@ -74,14 +82,15 @@ for k, ear in pairs(ears.left) do
 	squishyEars[k] = squapi.ear:new(
 		ear,
 		ears.right[k],
-		0.25,          -- Range Multiplier (0.25)
-		k == "vaporeon" or
-		k == "espeon", -- Horizontal (Based on type)
-		2,             -- Bend Strength (2)
-		earFlick,      -- Do Flick (earFlick)
-		400,           -- Flick Chance (400)
-		0.1,           -- Stiffness (0.1)
-		0.9            -- Bounce (0.9)
+		0.25,             -- Range Multiplier (0.25)
+		k:find("vaporeon") or
+		k:find("espeon"), -- Horizontal (Based on type)
+		2,                -- Bend Strength (2)
+		earFlick and not
+		k:find("Fur"),    -- Do Flick (earFlick)
+		400,              -- Flick Chance (400)
+		0.1,              -- Stiffness (0.1)
+		0.9               -- Bounce (0.9)
 	)
 end
 
@@ -237,13 +246,13 @@ function events.RENDER(delta, context)
 	
 	-- Control tail activity
 	for k, tail in pairs(squishyTails) do
-		tail.enabled = k == typeData.curString
+		tail.enabled = k:find(typeData.curString) and true or false
 	end
 	
 	-- Control ear activity
 	for k, ear in pairs(squishyEars) do
-		ear.enabled = k == typeData.curString
-		ear.doEarFlick = earFlick
+		ear.enabled = k:find(typeData.curString) and true or false
+		ear.doEarFlick = earFlick and not k:find("Fur")
 	end
 	
 	-- Control taur activity
