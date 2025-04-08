@@ -26,3 +26,5 @@ A Figura Avatar template designed to give the user a customizable taur body base
 
 ## Features
 Section under construction
+
+[<img src="https://img.youtube.com/vi/bkpK2bZ1iMk/maxresdefault.jpg" alt="image" width="300" height="auto">](https://youtu.be/bkpK2bZ1iMk)
