@@ -9,6 +9,7 @@ A Figura Avatar template designed to give the user a customizable taur body base
 - Irri
 - Psycho Breadstick
 - Vlad_Nuke
+- Dragonearuss
 - Jimmy
 - PoolloverNathan
 - The Cobblemon Team
