@@ -194,13 +194,13 @@ local blendAnims = {
 
 -- Apply GS Blending
 for _, blend in ipairs(blendAnims) do
-	if blend.anim == nil then return end
-	if type(blend.anim) == "table" then
+	if blend.anim ~= nil then
+		if type(blend.anim) ~= "table" then
+			blend.anim = {blend.anim}
+		end
 		for _, anim in pairs(blend.anim) do
 			anim:blendTime(table.unpack(blend.ticks)):blendCurve("easeOutQuad")
 		end
-	else
-		blend.anim:blendTime(table.unpack(blend.ticks)):blendCurve("easeOutQuad")
 	end
 end
 
