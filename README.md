@@ -8,6 +8,7 @@ A Figura Avatar template designed to give the user a customizable taur body base
 ### Credits:
 - Irri
 - Psycho Breadstick
+- Vlad_Nuke
 - Jimmy
 - PoolloverNathan
 - The Cobblemon Team
