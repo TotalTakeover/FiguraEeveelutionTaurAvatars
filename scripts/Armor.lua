@@ -40,77 +40,34 @@ eeveeArmor.Materials.netherite
 	:setTexture(textures["textures.armor.netheriteArmor"] or textures["EeveeTaur.netheriteArmor"])
 
 -- Trims
--- Bolt
-eeveeArmor.TrimPatterns.bolt
-	:setTexture(textures["textures.armor.trims.boltTrim"] or textures["EeveeTaur.boltTrim"])
+local trims = {
+	"bolt",
+	"coast",
+	"dune",
+	"eye",
+	"flow",
+	"host",
+	"raiser",
+	"rib",
+	"sentry",
+	"shaper",
+	"silence",
+	"snout",
+	"spire",
+	"tide",
+	"vex",
+	"ward",
+	"wayfinder",
+	"wild"
+}
 
--- Coast
-eeveeArmor.TrimPatterns.coast
-	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["EeveeTaur.coastTrim"])
-
--- Dune
-eeveeArmor.TrimPatterns.dune
-	:setTexture(textures["textures.armor.trims.duneTrim"] or textures["EeveeTaur.duneTrim"])
-
--- Eye
-eeveeArmor.TrimPatterns.eye
-	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["EeveeTaur.eyeTrim"])
-
--- Flow
-eeveeArmor.TrimPatterns.flow
-	:setTexture(textures["textures.armor.trims.flowTrim"] or textures["EeveeTaur.flowTrim"])
-
--- Host
-eeveeArmor.TrimPatterns.host
-	:setTexture(textures["textures.armor.trims.hostTrim"] or textures["EeveeTaur.hostTrim"])
-
--- Raiser
-eeveeArmor.TrimPatterns.raiser
-	:setTexture(textures["textures.armor.trims.raiserTrim"] or textures["EeveeTaur.raiserTrim"])
-
--- Rib
-eeveeArmor.TrimPatterns.rib
-	:setTexture(textures["textures.armor.trims.ribTrim"] or textures["EeveeTaur.ribTrim"])
-
--- Sentry
-eeveeArmor.TrimPatterns.sentry
-	:setTexture(textures["textures.armor.trims.sentryTrim"] or textures["EeveeTaur.sentryTrim"])
-
--- Shaper
-eeveeArmor.TrimPatterns.shaper
-	:setTexture(textures["textures.armor.trims.shaperTrim"] or textures["EeveeTaur.shaperTrim"])
-
--- Silence
-eeveeArmor.TrimPatterns.silence
-	:setTexture(textures["textures.armor.trims.silenceTrim"] or textures["EeveeTaur.silenceTrim"])
-
--- Snout
-eeveeArmor.TrimPatterns.snout
-	:setTexture(textures["textures.armor.trims.snoutTrim"] or textures["EeveeTaur.snoutTrim"])
-
--- Spire
-eeveeArmor.TrimPatterns.spire
-	:setTexture(textures["textures.armor.trims.spireTrim"] or textures["EeveeTaur.spireTrim"])
-
--- Tide
-eeveeArmor.TrimPatterns.tide
-	:setTexture(textures["textures.armor.trims.tideTrim"] or textures["EeveeTaur.tideTrim"])
-
--- Vex
-eeveeArmor.TrimPatterns.vex
-	:setTexture(textures["textures.armor.trims.vexTrim"] or textures["EeveeTaur.vexTrim"])
-
--- Ward
-eeveeArmor.TrimPatterns.ward
-	:setTexture(textures["textures.armor.trims.wardTrim"] or textures["EeveeTaur.wardTrim"])
-
--- Wayfinder
-eeveeArmor.TrimPatterns.wayfinder
-	:setTexture(textures["textures.armor.trims.wayfinderTrim"] or textures["EeveeTaur.wayfinderTrim"])
-
--- Wild
-eeveeArmor.TrimPatterns.wild
-	:setTexture(textures["textures.armor.trims.wildTrim"] or textures["EeveeTaur.wildTrim"])
+-- Apply trims
+for _, trim in ipairs(trims) do
+	local tex = textures["textures.armor.trims."..trim.."Trim"] or textures["EeveeTaur."..trim.."Trim"] or false
+	if tex then
+		eeveeArmor.TrimPatterns[trim]:setTexture(tex)
+	end
+end
 
 -- Config setup
 config:name("EeveelutionTaur")
