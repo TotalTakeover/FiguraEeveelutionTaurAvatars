@@ -8,6 +8,13 @@ local lerp     = require("lib.LerpAPI")
 local pose     = require("scripts.Posing")
 local effects  = require("scripts.SyncedVariables")
 
+-- Animations setup
+local anims = animations.EeveeTaur
+
+-- Config setup
+config:name("EeveelutionTaur")
+local armsMove = config:load("ArmsMove") or false
+
 -- Variable
 local _type  = nil
 local canAct = false
@@ -16,9 +23,6 @@ local canLie = false
 
 -- Sprint lerp
 local sprintLerp = lerp:new(1)
-
--- Animations setup
-local anims = animations.EeveeTaur
 
 -- Animation types
 local typeAnims = {}
@@ -31,6 +35,17 @@ for _, v in ipairs(typeData.types) do
 	typeAnims.groundIdles[v]   = anims["groundIdle_"..v]
 	typeAnims.groundWalks[v]   = anims["groundWalk_"..v]
 	typeAnims.groundSprints[v] = anims["groundSprint_"..v]
+	
+end
+
+-- Arms setup
+local leftArmLerp  = lerp:new(armsMove and 1 or 0, 0.5)
+local rightArmLerp = lerp:new(armsMove and 1 or 0, 0.5)
+
+-- Gets the origin rotation of a part, clamped
+local function getOriginRot(part, delta)
+	
+	return (vanilla_model[part]:getOriginRot(delta) + 180) % 360 - 180
 	
 end
 
@@ -124,6 +139,27 @@ function events.TICK()
 	anims.ride:playing(ride)
 	anims.sleep:playing(sleep)
 	
+	-- Arm variables
+	local handedness = player:isLeftHanded()
+	local mainL = not handedness and "OFF_HAND" or "MAIN_HAND"
+	local mainR = handedness and "OFF_HAND" or "MAIN_HAND"
+	local swingL = player:getSwingArm() == mainL
+	local swingR = player:getSwingArm() == mainR
+	local using = player:isUsingItem()
+	local active = player:getActiveHand()
+	local itemL = player:getHeldItem(not handedness)
+	local itemR = player:getHeldItem(handedness)
+	local usingL = using and active == mainL and itemL:getUseAction()
+	local usingR = using and active == mainR and itemR:getUseAction()
+	local bow = (usingL or usingR or ""):find("BOW") or (itemL:getTag().Charged or itemR:getTag().Charged) == 1
+	
+	-- Arms movement override
+	local armShouldMove = (pose.swim and typeData.curString ~= "vaporeon") or pose.elytra or pose.crawl or pose.climb
+	
+	-- Arms movement targets
+	leftArmLerp.target  = (armsMove or armShouldMove or swingL or usingL or bow) and 0 or -1
+	rightArmLerp.target = (armsMove or armShouldMove or swingR or usingR or bow) and 0 or -1
+	
 	-- Set targets
 	sprintLerp.target = (onGround or effects.cF) and 1 or 0
 	
@@ -166,19 +202,27 @@ function events.RENDER(delta, context)
 	-- Animation blending
 	anims.groundSprint:blend(sprintLerp.currPos)
 	
+	-- Arm idle rotation
+	local idleTimer = world.getTime(delta)
+	local idleRot   = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
+	
+	-- Apply arm rotations
+	parts.group.LeftArm:offsetRot((getOriginRot("LEFT_ARM", delta) + idleRot) * leftArmLerp.currPos)
+	parts.group.RightArm:offsetRot((getOriginRot("RIGHT_ARM", delta) - idleRot) * rightArmLerp.currPos)
+	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
-		parrot:rot(-calculateParentRot(parrot:getParent()) - vanilla_model.BODY:getOriginRot())
+		parrot:rot(-calculateParentRot(parrot:getParent()) - getOriginRot("BODY", delta))
 	end
 	
 	-- Crouch offset
-	local bodyRot = vanilla_model.BODY:getOriginRot(delta)
+	local bodyRot = getOriginRot("BODY", delta)
 	local crouchPos = vec(0, -math.sin(math.rad(bodyRot.x)) * 2, -math.sin(math.rad(bodyRot.x)) * 12)
 	parts.group.UpperBody:offsetPivot(crouchPos):pos(crouchPos.xy_ * 2)
 	parts.group.LowerTorso:pos(crouchPos)
 	
 	-- Spyglass rotations
-	local headRot = vanilla_model.HEAD:getOriginRot()
+	local headRot = getOriginRot("HEAD", delta)
 	headRot.x = math.clamp(headRot.x, -90, 30)
 	parts.group.Spyglass:offsetRot(headRot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
@@ -226,8 +270,31 @@ function pings.setAnimToggleLying(boolean)
 	
 end
 
+-- Arm movement toggle
+function pings.setAnimsArmsMove(boolean)
+	
+	armsMove = boolean
+	config:save("ArmsMove", armsMove)
+	
+end
+
+-- Sync variable
+function pings.syncAnims(a)
+	
+	armsMove = a
+	
+end
+
 -- Host only instructions
 if not host:isHost() then return end
+
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncAnims(armsMove)
+	end
+	
+end
 
 -- Sit keybind
 local sitBind   = config:load("AnimSitKeybind") or "key.keyboard.keypad.3"
@@ -285,6 +352,12 @@ a.lieAct = animsPage:newAction()
 	:toggleItem(itemCheck("saddle"))
 	:onToggle(pings.setAnimToggleLying)
 
+a.armsAct = animsPage:newAction()
+	:item(itemCheck("red_dye"))
+	:toggleItem(itemCheck("rabbit_foot"))
+	:onToggle(pings.setAnimsArmsMove)
+	:toggled(armsMove)
+
 -- Update actions
 function events.RENDER(delta, context)
 	
@@ -307,6 +380,16 @@ function events.RENDER(delta, context)
 				{text = "Play Lie Down animation", bold = true, color = c.primary}
 			))
 			:toggled(anims.lying:isPlaying())
+		
+		a.armsAct
+			:title(toJson(
+				{
+					"",
+					{text = "Arm Movement Toggle\n\n", bold = true, color = c.primary},
+					{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = c.secondary}
+				}
+			))
+		
 		
 		for _, act in pairs(a) do
 			act:hoverColor(c.hover):toggleColor(c.active)
