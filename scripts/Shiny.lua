@@ -123,10 +123,10 @@ function pings.setShinyToggle(boolean)
 	
 end
 
--- Sync variable
-function pings.syncShiny(a)
+-- Sync variables
+function pings.syncShiny(...)
 	
-	typeData.shiny = a
+	typeData.shiny = ...
 	
 end
 

@@ -76,10 +76,10 @@ function pings.setGenderToggle(boolean)
 	
 end
 
--- Sync variable
-function pings.syncGender(a)
+-- Sync variables
+function pings.syncGender(...)
 	
-	gender = a
+	gender = ...
 	
 end
 

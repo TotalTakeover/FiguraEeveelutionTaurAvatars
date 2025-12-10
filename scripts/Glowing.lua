@@ -102,10 +102,9 @@ function pings.setGlowSpecial(boolean)
 end
 
 -- Sync variables
-function pings.syncGlow(a, b)
+function pings.syncGlow(...)
 	
-	toggle  = a
-	special = b
+	toggle, special = ...
 	
 end
 

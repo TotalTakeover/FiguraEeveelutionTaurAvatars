@@ -267,10 +267,10 @@ function events.RENDER(delta, context)
 	
 end
 
--- Sync variable
-function pings.syncEeveeType(a)
+-- Sync variables
+function pings.syncEeveeType(...)
 	
-	typeData:setTarget(a)
+	typeData:setTarget(...)
 	if typeData.curType ~= typeData.tarType then
 		typeData:updateAll()
 	end

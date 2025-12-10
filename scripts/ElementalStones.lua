@@ -66,10 +66,10 @@ function pings.setStone(boolean)
 	
 end
 
--- Sync variable
-function pings.syncStone(a)
+-- Sync variables
+function pings.syncStone(...)
 	
-	stone = a
+	stone = ...
 	
 end
 

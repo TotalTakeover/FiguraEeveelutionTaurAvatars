@@ -242,16 +242,24 @@ function pings.playPokeballInteract()
 	
 end
 
--- Sync variable
-function pings.syncPokeball(a, b)
+-- Sync variables
+function pings.syncPokeball(...)
 	
-	toggle = a
-	typeHide = b
+	toggle, typeHide = ...
 	
 end
 
 -- Host only instructions
 if not host:isHost() then return end
+
+-- Sync on tick
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncPokeball(toggle, typeHide)
+	end
+	
+end
 
 -- Check if any bob animations are playing
 local function checkBob()
@@ -303,15 +311,6 @@ function events.TICK()
 	setCrouchKey :key(keybinds:getVanillaKey("key.sneak"))  :enabled(isInBall)
 	setAttackKey :key(keybinds:getVanillaKey("key.attack")) :enabled(isInBall)
 	setUseKey    :key(keybinds:getVanillaKey("key.use"))    :enabled(isInBall)
-	
-end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncPokeball(toggle, typeHide)
-	end
 	
 end
 

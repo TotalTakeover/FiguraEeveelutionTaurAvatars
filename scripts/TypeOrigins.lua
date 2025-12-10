@@ -33,10 +33,10 @@ function pings.setOrigin(boolean)
 	
 end
 
--- Sync variable
-function pings.syncOrigin(a)
+-- Sync variables
+function pings.syncOrigin(...)
 	
-	typeData.origin = a
+	typeData.origin = ...
 	
 end
 
