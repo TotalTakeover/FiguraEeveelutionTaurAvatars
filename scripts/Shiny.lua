@@ -143,7 +143,7 @@ function events.TICK()
 end
 
 -- Required scripts
-local s, wheel, itemCheck = pcall(require, "scripts.ActionWheel")
+local s, wheel = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 
@@ -175,13 +175,13 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
+		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() wheel:descend(eeveelutionPage) end)
 end
 
 a.shinyAct = eeveelutionPage:newAction()
-	:item(itemCheck("gunpowder"))
-	:toggleItem(itemCheck("glowstone_dust"))
+	:item("gunpowder")
+	:toggleItem("glowstone_dust")
 	:onToggle(pings.setShinyToggle)
 
 -- Update actions

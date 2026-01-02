@@ -121,7 +121,7 @@ function events.TICK()
 end
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 
@@ -134,18 +134,18 @@ local a = {}
 
 -- Actions
 a.pageAct = parentPage:newAction()
-	:item(itemCheck("glow_ink_sac"))
+	:item("glow_ink_sac")
 	:onLeftClick(function() wheel:descend(glowPage) end)
 
 a.toggleAct = glowPage:newAction()
-	:item(itemCheck("ink_sac"))
-	:toggleItem(itemCheck("glow_ink_sac"))
+	:item("ink_sac")
+	:toggleItem("glow_ink_sac")
 	:onToggle(pings.setGlowToggle)
 	:toggled(toggle)
 
 a.specialAct = glowPage:newAction()
-	:item(itemCheck("amethyst_shard"))
-	:toggleItem(itemCheck("amethyst_cluster"))
+	:item("amethyst_shard")
+	:toggleItem("amethyst_cluster")
 	:onToggle(pings.setGlowSpecial)
 	:toggled(special)
 

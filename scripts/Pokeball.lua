@@ -315,7 +315,7 @@ function events.TICK()
 end
 
 -- Required script
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 
 -- Check for if page already exists
@@ -331,17 +331,17 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
+		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() wheel:descend(eeveelutionPage) end)
 end
 
 a.toggleAct = eeveelutionPage:newAction()
-	:item(itemCheck("cobblemon:poke_ball", "ender_pearl"))
+	:item("cobblemon:poke_ball", "ender_pearl")
 	:onToggle(pings.setPokeball)
 
 a.typeHideAct = eeveelutionPage:newAction()
-	:item(itemCheck("player_head{SkullOwner:"..avatar:getEntityName().."}"))
-	:toggleItem(itemCheck("cobblemon:poke_ball", "snowball"))
+	:item("player_head{SkullOwner:"..avatar:getEntityName().."}")
+	:toggleItem("cobblemon:poke_ball", "snowball")
 	:onToggle(pings.setPokeballTypeHide)
 	:toggled(typeHide)
 

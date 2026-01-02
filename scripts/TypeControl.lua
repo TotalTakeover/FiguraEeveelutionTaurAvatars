@@ -2,9 +2,8 @@
  --- Initial Setup ---
   -------------------
 
--- Required scripts
-local parts     = require("lib.PartsAPI")
-local itemCheck = require("lib.ItemCheck")
+-- Required script
+local parts = require("lib.PartsAPI")
 
 --[[
 	
@@ -99,51 +98,51 @@ end
 -- Stones
 local stones = {
 	
-	eevee = itemCheck(
+	eevee = {
 		"cobblemon:everstone",
 		"rabbit_hide", -- This is filler/consistency, origin will not use this
 		"brown_glazed_terracotta"
-	),
-	vaporeon = itemCheck(
+	},
+	vaporeon = {
 		"cobblemon:water_stone",
 		"heart_of_the_sea",
 		"blue_glazed_terracotta"
-	),
-	jolteon = itemCheck(
+	},
+	jolteon = {
 		"cobblemon:thunder_stone",
 		"waxed_copper_block",
 		"yellow_glazed_terracotta"
-	),
-	flareon = itemCheck(
+	},
+	flareon = {
 		"cobblemon:fire_stone",
 		"blaze_rod",
 		"red_glazed_terracotta"
-	),
-	espeon = itemCheck(
+	},
+	espeon = {
 		"cobblemon:dawn_stone",
 		"phantom_membrane",
 		"magenta_glazed_terracotta"
-	),
-	umbreon = itemCheck(
+	},
+	umbreon = {
 		"cobblemon:dusk_stone",
 		"echo_shard",
 		"black_glazed_terracotta"
-	),
-	leafeon = itemCheck(
+	},
+	leafeon = {
 		"cobblemon:leaf_stone",
 		"glistering_melon_slice",
 		"lime_glazed_terracotta"
-	),
-	glaceon = itemCheck(
+	},
+	glaceon = {
 		"cobblemon:ice_stone",
 		"blue_ice",
 		"blue_glazed_terracotta"
-	),
-	sylveon = itemCheck(
+	},
+	sylveon = {
 		"cobblemon:shiny_stone",
 		"amethyst_shard",
 		"pink_glazed_terracotta"
-	)
+	}
 	
 }
 

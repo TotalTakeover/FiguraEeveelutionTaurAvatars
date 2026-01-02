@@ -15,11 +15,6 @@ end
 -- Host only instructions
 if not host:isHost() then return end
 
--- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local s, c = pcall(require, "scripts.ColorProperties")
-if not s then c = {} end
-
 -- Ping function
 local function allowPing(x)
 	
@@ -31,7 +26,7 @@ local function allowPing(x)
 end
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 local s, pokeballActs = pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 if not s then pokeballActs = {} end
@@ -50,7 +45,7 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
+		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() wheel:descend(typePage) end)
 end
 
@@ -88,7 +83,7 @@ function events.RENDER(delta, context)
 					{text = typeData.origin and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
 				}
 			))
-			:item(typeData.data[typeData.tarString].stone)
+			:item(table.unpack(typeData.data[typeData.tarString].stone))
 		
 		for _, act in pairs(a) do
 			act:hoverColor(c.hover)

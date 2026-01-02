@@ -53,7 +53,7 @@ function events.TICK()
 end
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.TypeOrigins") -- Tries to find script, not required
 
@@ -70,13 +70,13 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
+		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() wheel:descend(typePage) end)
 end
 
 a.originAct = typePage:newAction()
-	:item(itemCheck("ender_pearl"))
-	:toggleItem(itemCheck("origins:orb_of_origin", "snowball"))
+	:item("ender_pearl")
+	:toggleItem("origins:orb_of_origin", "snowball")
 	:onToggle(pings.setOrigin)
 	:toggled(typeData.origin)
 

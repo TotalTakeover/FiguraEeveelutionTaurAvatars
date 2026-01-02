@@ -96,7 +96,7 @@ function events.TICK()
 end
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
@@ -113,13 +113,13 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
+		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() wheel:descend(eeveelutionPage) end)
 end
 
 a.genderAct = eeveelutionPage:newAction()
-	:item(itemCheck("blue_dye"))
-	:toggleItem(itemCheck("pink_dye"))
+	:item("blue_dye")
+	:toggleItem("pink_dye")
 	:onToggle(pings.setGenderToggle)
 
 -- Update actions

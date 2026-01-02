@@ -86,7 +86,7 @@ function events.TICK()
 end
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.TypePicker") -- Tries to find script, not required
 
@@ -103,12 +103,12 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("cobblemon:everstone", "rabbit_spawn_egg"))
+		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() wheel:descend(typePage) end)
 end
 
 a.stoneAct = typePage:newAction()
-	:item(itemCheck("terracotta"))
+	:item("terracotta")
 	:onToggle(function(boolean) if not typeData.origin then pings.setStone(boolean) end end)
 	:toggled(stone)
 
@@ -132,7 +132,7 @@ function events.RENDER(delta, context)
 					{text = typeData.origin and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
 				}
 			))
-			:toggleItem(typeData.data[typeData.types[math.floor(world.getTime() * 0.05) % #typeData.types + 1]].stone)
+			:toggleItem(table.unpack(typeData.data[typeData.types[math.floor(world.getTime() * 0.05) % #typeData.types + 1]].stone))
 			:toggled(stone)
 		
 		for _, act in pairs(a) do
