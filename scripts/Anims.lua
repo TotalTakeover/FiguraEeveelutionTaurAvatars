@@ -3,17 +3,19 @@ require("lib.GSAnimBlend")
 require("lib.Molang")
 local typeData = require("scripts.TypeControl")
 local parts    = require("lib.PartsAPI")
-local ground   = require("lib.GroundCheck")
+local sync     = require("lib.LetThatSyncFig")
 local lerp     = require("lib.LerpAPI")
+local ground   = require("lib.GroundCheck")
 local pose     = require("scripts.Posing")
 local effects  = require("scripts.SyncedVariables")
 
 -- Animations setup
 local anims = animations.EeveeTaur
 
--- Config setup
-config:name("EeveelutionTaur")
-local armsMove = config:load("ArmsMove") or false
+-- Synced variables setup
+local armsMove = sync.new("AnimsArms", false):config()
+local isSit    = sync.new("AnimsSit", false)
+local isLie    = sync.new("AnimsLieDown", false)
 
 -- Variable
 local _type  = nil
@@ -22,7 +24,7 @@ local canSit = false
 local canLie = false
 
 -- Sprint lerp
-local sprintLerp = lerp:new(1)
+local sprintLerp = lerp.new(1)
 
 -- Animation types
 local typeAnims = {}
@@ -39,8 +41,8 @@ for _, v in ipairs(typeData.types) do
 end
 
 -- Arms setup
-local leftArmLerp  = lerp:new(armsMove and 1 or 0, 0.5)
-local rightArmLerp = lerp:new(armsMove and 1 or 0, 0.5)
+local leftArmLerp  = lerp.new(armsMove.curr and 1 or 0, 0.5)
+local rightArmLerp = lerp.new(armsMove.curr and 1 or 0, 0.5)
 
 -- Gets the origin rotation of a part, clamped
 local function getOriginRot(part, delta)
@@ -71,12 +73,13 @@ end
 function events.TICK()
 	
 	-- Variables
+	local currStr   = typeData.getString()
 	local vel       = player:getVelocity()
 	local sprinting = player:isSprinting()
 	local onGround  = ground()
 	
 	-- Check for type change
-	if _type ~= typeData.curType then
+	if _type ~= typeData.type.curr then
 		
 		-- Stop all anims
 		for _, animType in pairs(typeAnims) do
@@ -88,8 +91,8 @@ function events.TICK()
 	end
 	
 	-- Animation states
-	local vaporeonIdle = typeData.curString == "vaporeon" and player:isInWater() and not (onGround or pose.swim or pose.crawl)
-	local vaporeonSwim = typeData.curString == "vaporeon" and pose.swim and not pose.crawl
+	local vaporeonIdle = currStr == "vaporeon" and player:isInWater() and not (onGround or pose.swim or pose.crawl)
+	local vaporeonSwim = currStr == "vaporeon" and pose.swim and not pose.crawl
 	local groundIdle = not ((sprinting and not pose.swim) or vaporeonIdle or vaporeonSwim)
 	local groundWalk = groundIdle and (vel.xz:length() ~= 0 or (pose.climb and vel:length() ~= 0)) and (onGround or pose.swim or pose.climb or effects.cF) and not (sprinting and not pose.swim or player:getVehicle())
 	local groundSprint = sprinting and not (pose.swim or player:getVehicle())
@@ -103,32 +106,32 @@ function events.TICK()
 	canLie = canAct and (not isAct or anims.lying:isPlaying())
 	
 	-- Stop Sit animation
-	if not canSit then
-		anims.sit:stop()
+	if isSit.curr and not canSit then
+		isSit:update(false)
 	end
 	
 	-- Stop Lying animation
-	if not canLie then
-		anims.lying:stop()
+	if isLie.curr and not canLie then
+		isLie:update(false)
 	end
 	
 	-- Animations
 	-- Ground Idle
 	anims.groundIdle:playing(groundIdle)
-	if typeAnims.groundIdles[typeData.curString] then
-		typeAnims.groundIdles[typeData.curString]:playing(groundIdle):setTime(anims.groundIdle:getTime())
+	if typeAnims.groundIdles[currStr] then
+		typeAnims.groundIdles[currStr]:playing(groundIdle):setTime(anims.groundIdle:getTime())
 	end
 	
 	-- Ground Walk
 	anims.groundWalk:playing(groundWalk)
-	if typeAnims.groundWalks[typeData.curString] then
-		typeAnims.groundWalks[typeData.curString]:playing(groundWalk):setTime(anims.groundWalk:getTime())
+	if typeAnims.groundWalks[currStr] then
+		typeAnims.groundWalks[currStr]:playing(groundWalk):setTime(anims.groundWalk:getTime())
 	end
 	
 	-- Ground Sprint
 	anims.groundSprint:playing(groundSprint)
-	if typeAnims.groundSprints[typeData.curString] then
-		typeAnims.groundSprints[typeData.curString]:playing(groundSprint):setTime(anims.groundSprint:getTime())
+	if typeAnims.groundSprints[currStr] then
+		typeAnims.groundSprints[currStr]:playing(groundSprint):setTime(anims.groundSprint:getTime())
 	end
 	
 	if typeData.data["vaporeon"] then
@@ -154,23 +157,24 @@ function events.TICK()
 	local bow = (usingL or usingR or ""):find("BOW") or (itemL:getTag().Charged or itemR:getTag().Charged) == 1
 	
 	-- Arms movement override
-	local armShouldMove = (pose.swim and typeData.curString ~= "vaporeon") or pose.elytra or pose.crawl or pose.climb
+	local armShouldMove = (pose.swim and currStr ~= "vaporeon") or pose.elytra or pose.crawl or pose.climb
 	
 	-- Arms movement targets
-	leftArmLerp.target  = (armsMove or armShouldMove or swingL or usingL or bow) and 0 or -1
-	rightArmLerp.target = (armsMove or armShouldMove or swingR or usingR or bow) and 0 or -1
+	leftArmLerp.target  = (armsMove.curr or armShouldMove or swingL or usingL or bow) and 0 or -1
+	rightArmLerp.target = (armsMove.curr or armShouldMove or swingR or usingR or bow) and 0 or -1
 	
 	-- Set targets
 	sprintLerp.target = (onGround or effects.cF) and 1 or 0
 	
 	-- Store data
-	_type = typeData.curType
+	_type = typeData.type.curr
 	
 end
 
 function events.RENDER(delta, context)
 	
 	-- Variables
+	local currStr = typeData.getString()
 	local vel = player:getVelocity()
 	local yaw = player:getBodyYaw()
 	local dir = vec(math.sin(math.rad(-yaw)), 0, math.cos(math.rad(-yaw)))
@@ -184,17 +188,17 @@ function events.RENDER(delta, context)
 	-- Ground Walk
 	local walkSpeed = math.clamp((pose.climb and udVel or fbVel) * 6, -3, 3)
 	anims.groundWalk:speed(walkSpeed)
-	if typeAnims.groundWalks[typeData.curString] then
-		typeAnims.groundWalks[typeData.curString]:speed(walkSpeed)
+	if typeAnims.groundWalks[currStr] then
+		typeAnims.groundWalks[currStr]:speed(walkSpeed)
 	end
 	-- Ground Sprint
 	local sprintSpeed = math.min(vel.xz:length() + 1, 2)
 	anims.groundSprint:speed(sprintSpeed)
-	if typeAnims.groundSprints[typeData.curString] then
-		typeAnims.groundSprints[typeData.curString]:speed(sprintSpeed)
+	if typeAnims.groundSprints[currStr] then
+		typeAnims.groundSprints[currStr]:speed(sprintSpeed)
 	end
 	-- Swim
-	if typeData.curString == "vaporeon" then
+	if currStr == "vaporeon" then
 		anims.waterIdle:speed(math.min(1 + vel:length() * 3, 1.5))
 		anims.waterSwim:speed(math.min(vel:length() * 3, 2))
 	end
@@ -256,69 +260,39 @@ for _, blend in ipairs(blendAnims) do
 	end
 end
 
--- Play sit anim
-function pings.setAnimToggleSit(boolean)
-	
-	anims.sit:playing(canSit and boolean)
-	
-end
-
--- Play lying anim
-function pings.setAnimToggleLying(boolean)
-	
-	anims.lying:playing(canLie and boolean)
-	
-end
-
--- Arm movement toggle
-function pings.setAnimsArmsMove(boolean)
-	
-	armsMove = boolean
-	config:save("ArmsMove", armsMove)
-	
-end
-
--- Sync variables
-function pings.syncAnims(...)
-	
-	armsMove = ...
-	
-end
+-- Apply functions
+isSit:applyFunc(function()
+	anims.sit:playing(canSit and isSit.curr)
+end)
+isLie:applyFunc(function()
+	anims.lying:playing(canLie and isLie.curr)
+end)
 
 -- Host only instructions
 if not host:isHost() then return end
 
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncAnims(armsMove)
-	end
-	
-end
+-- Required script
+local keybound = require("lib.Keybound")
 
--- Sit keybind
-local sitBind   = config:load("AnimSitKeybind") or "key.keyboard.keypad.3"
-local setSitKey = keybinds:newKeybind("Sit Animation"):onPress(function() pings.setAnimToggleSit(not anims.sit:isPlaying()) end):key(sitBind)
-
--- Lie keybind
-local lieBind   = config:load("AnimLieKeybind") or "key.keyboard.keypad.4"
-local setLieKey = keybinds:newKeybind("Lie Down Animation"):onPress(function() pings.setAnimToggleLying(not anims.lying:isPlaying()) end):key(lieBind)
-
--- Keybind updaters
-function events.TICK()
-	
-	local sitKey = setSitKey:getKey()
-	local lieKey = setLieKey:getKey()
-	if sitKey ~= sitBind then
-		sitBind = sitKey
-		config:save("AnimSitKeybind", sitKey)
-	end
-	if lieKey ~= lieBind then
-		lieBind = lieKey
-		config:save("AnimLieKeybind", lieKey)
-	end
-	
-end
+-- Setup keybinds
+local sitKeybind = keybound.new(
+	keybinds
+		:newKeybind("Sit Animation", "key.keyboard.keypad.3")
+		:onPress(function()
+			if not canSit then return end
+			isSit:update(not isSit.curr)
+		end),
+	"AnimSitKeybind"
+)
+local lieKeybind = keybound.new(
+	keybinds
+		:newKeybind("Lie Down Animation", "key.keyboard.keypad.4")
+		:onPress(function()
+			if not canLie then return end
+			isLie:update(not isLie.curr)
+		end),
+	"AnimLieKeybind"
+)
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -345,18 +319,26 @@ end
 a.sitAct = animsPage:newAction()
 	:item("scaffolding")
 	:toggleItem("saddle")
-	:onToggle(pings.setAnimToggleSit)
+	:onToggle(function(bool)
+		if not canSit then return end
+		isSit:update(bool)
+	end)
 
 a.lieAct = animsPage:newAction()
 	:item("red_bed")
 	:toggleItem("saddle")
-	:onToggle(pings.setAnimToggleLying)
+	:onToggle(function(bool)
+		if not canLie then return end
+		isLie:update(bool)
+	end)
 
 a.armsAct = animsPage:newAction()
 	:item("red_dye")
 	:toggleItem("rabbit_foot")
-	:onToggle(pings.setAnimsArmsMove)
-	:toggled(armsMove)
+	:onToggle(function(bool)
+		armsMove:update(bool)
+	end)
+	:toggled(armsMove.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
@@ -373,13 +355,13 @@ function events.RENDER(delta, context)
 			:title(toJson(
 				{text = "Play Sit animation", bold = true, color = c.primary}
 			))
-			:toggled(anims.sit:isPlaying())
+			:toggled(isSit.curr)
 		
 		a.lieAct
 			:title(toJson(
 				{text = "Play Lie Down animation", bold = true, color = c.primary}
 			))
-			:toggled(anims.lying:isPlaying())
+			:toggled(isLie.curr)
 		
 		a.armsAct
 			:title(toJson(

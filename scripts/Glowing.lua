@@ -1,42 +1,40 @@
 -- Required scripts
 local parts    = require("lib.PartsAPI")
-local origins  = require("lib.OriginsAPI")
 local typeData = require("scripts.TypeControl")
 local lerp     = require("lib.LerpAPI")
+local sync     = require("lib.LetThatSyncFig")
+local origins  = require("lib.OriginsAPI")
 
--- Config setup
-config:name("EeveelutionTaur")
-local toggle  = config:load("GlowToggle")
-local special = config:load("GlowSpecial")
-if toggle  == nil then toggle  = true end
-if special == nil then special = true end
+-- Synced variables setup
+local toggle  = sync.new("GlowToggle", true):config()
+local special = sync.new("GlowSpecial", true):config()
 
 -- Glow Parts
 local glowParts = parts:createTable(function(part) return part:getName():find("_[gG]low") end)
 
 -- Glow lerp
-local glowLerp = lerp:new(toggle and 1 or 0, 0.1)
+local glowLerp = lerp.new(toggle.curr and 1 or 0, 0.1)
 
 function events.TICK()
 	
 	-- Set glow target
 	-- Toggle check
-	if toggle then
+	if toggle.curr then
 		
 		-- Set target
 		glowLerp.target = 1
 		
 		-- Kill event if not using special characteristics
-		if not special then return end
+		if not special.curr then return end
 		
 		-- Variables
-		local curType = typeData.curString
+		local currStr = typeData.getString()
 		local pos = player:getPos()
 		local sky = world.getSkyLightLevel(pos)
 		local time = world.getDayTime()
 		local moon = world.getMoonPhase()
 		
-		if curType == "espeon" then
+		if currStr == "espeon" then
 			
 			-- Strengths
 			local skyStr = sky / 15
@@ -45,7 +43,7 @@ function events.TICK()
 			-- Set target
 			glowLerp.target = math.max(origins.getPowerData(player, "eeveelutiontaurs:sixth_sense_toggle") or 0, skyStr * timeStr)
 			
-		elseif curType == "umbreon" then
+		elseif currStr == "umbreon" then
 			
 			-- Strengths
 			local skyStr = sky / 15
@@ -82,43 +80,15 @@ function events.RENDER(delta, context)
 	
 end
 
--- Glow toggle
-function pings.setGlowToggle(boolean)
-	
-	toggle = boolean
-	config:save("GlowToggle", toggle)
-	if player:isLoaded() and toggle then
+-- Apply sound function
+toggle:applyFunc(function()
+	if player:isLoaded() and toggle.curr then
 		sounds:playSound("entity.glow_squid.ambient", player:getPos(), 0.75)
 	end
-	
-end
-
--- Special toggle
-function pings.setGlowSpecial(boolean)
-	
-	special = boolean
-	config:save("GlowSpecial", special)
-	
-end
-
--- Sync variables
-function pings.syncGlow(...)
-	
-	toggle, special = ...
-	
-end
+end)
 
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncGlow(toggle, special)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -140,14 +110,18 @@ a.pageAct = parentPage:newAction()
 a.toggleAct = glowPage:newAction()
 	:item("ink_sac")
 	:toggleItem("glow_ink_sac")
-	:onToggle(pings.setGlowToggle)
-	:toggled(toggle)
+	:onToggle(function(bool)
+		toggle:update(bool)
+	end)
+	:toggled(toggle.curr)
 
 a.specialAct = glowPage:newAction()
 	:item("amethyst_shard")
 	:toggleItem("amethyst_cluster")
-	:onToggle(pings.setGlowSpecial)
-	:toggled(special)
+	:onToggle(function(bool)
+		special:update(bool)
+	end)
+	:toggled(special.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
@@ -168,7 +142,6 @@ function events.RENDER(delta, context)
 					{text = "This feature has a tendency to not work correctly.\nDue to the rendering properties of emissives, parts may not glow.\nIf it does not work, please reload the avatar. Rinse and Repeat.\nThis is the only fix, I have tried everything.\n\n- Total", color = "red"}
 				}
 			))
-			:toggled(toggle)
 		
 		a.specialAct
 			:title(toJson(

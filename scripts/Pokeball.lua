@@ -1,6 +1,7 @@
 -- Required scripts
-local parts = require("lib.PartsAPI")
+local parts    = require("lib.PartsAPI")
 local typeData = require("scripts.TypeControl")
+local sync     = require("lib.LetThatSyncFig")
 
 -- Pokeball part
 local pokeBall = parts.group.PokeBall
@@ -13,15 +14,13 @@ local anims = animations.EeveeTaur
 local openAnim  = anims.pokeballOpen
 local closeAnim = anims.pokeballClose
 
--- Config setup
-config:name("EeveelutionTaur")
-local toggle   = config:load("PokeballToggle") or false
-local typeHide = config:load("PokeballTypeHide")
-if typeHide == nil then typeHide = true end
+-- Synced variables setup
+local toggle   = sync.new("PokeballToggle", false):config()
+local typeHide = sync.new("PokeballTypeHide", true):config()
 
 -- Variables
-local isInBall = toggle
-local wasInBall = toggle
+local isInBall  = toggle.curr
+local wasInBall = toggle.curr
 local staticYaw = 0
 
 -- Play pokeball sound
@@ -57,7 +56,7 @@ end
 do
 	
 	-- Start with an animation
-	local startAnim = toggle and closeAnim or openAnim
+	local startAnim = toggle.curr and closeAnim or openAnim
 	startAnim:play()
 	
 	-- Set each pokeball animation to be at the end of their length
@@ -86,7 +85,7 @@ function events.RENDER(delta, context)
 	local menu = context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL"
 	
 	-- Pokeball state
-	isInBall = (typeData.swapping or toggle) and not hasRider
+	isInBall = (typeData.swapping or toggle.curr) and not hasRider
 	
 	-- Activate pokeball
 	if isInBall ~= wasInBall then
@@ -129,12 +128,12 @@ end
 
 -- Modifies the update function to allow the player to enter their pokeball before changing types
 local prevUpdateAll = typeData.updateAll
-function typeData:updateAll()
+function typeData.updateAll()
 	
-	if typeHide then
+	if typeHide.curr then
 		
 		-- Check if player is already in the ball, and do a fast swap in place
-		if toggle and parts.group.Player:getAnimScale():length() == 0 then
+		if toggle.curr and parts.group.Player:getAnimScale():length() == 0 then
 			
 			prevUpdateAll()
 			return
@@ -143,13 +142,13 @@ function typeData:updateAll()
 		
 		-- Variables
 		local timer = 0
-		local _type = typeData.tarType
+		local _type = typeData.type.curr
 		typeData.swapping = true
 		
 		-- Create new tick event
 		events.TICK:register(function()
 			
-			if _type ~= typeData.tarType then
+			if _type ~= typeData.type.curr then
 				
 				timer = 0
 				
@@ -168,7 +167,7 @@ function typeData:updateAll()
 			end
 			
 			-- Store last state
-			_type = typeData.tarType
+			_type = typeData.type.curr
 			
 		end, "PokeballTypeHide")
 		
@@ -177,27 +176,6 @@ function typeData:updateAll()
 		prevUpdateAll()
 		
 	end
-	
-end
-
--- Pokeball toggle
-function pings.setPokeball(boolean)
-	
-	-- If animations both animations are done playing, allow the switching of animations
-	local canToggle = openAnim:getTime() == openAnim:getLength() and closeAnim:getTime() == closeAnim:getLength()
-	
-	if canToggle then
-		toggle = boolean
-		config:save("PokeballToggle", toggle)
-	end
-	
-end
-
--- Type hide toggle
-function pings.setPokeballTypeHide(boolean)
-	
-	typeHide = boolean
-	config:save("PokeballTypeHide", typeHide)
 	
 end
 
@@ -231,7 +209,7 @@ function pings.playPokeballBounce()
 	
 end
 
--- Pokeball bounce
+-- Pokeball interact
 function pings.playPokeballInteract()
 	
 	anims.pokeballInteract:restart()
@@ -242,24 +220,8 @@ function pings.playPokeballInteract()
 	
 end
 
--- Sync variables
-function pings.syncPokeball(...)
-	
-	toggle, typeHide = ...
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncPokeball(toggle, typeHide)
-	end
-	
-end
 
 -- Check if any bob animations are playing
 local function checkBob()
@@ -279,11 +241,27 @@ local function checkBob()
 	
 end
 
--- Pokeball Keybind
-local toggleBind   = config:load("PokeballToggleKeybind") or "key.keyboard.keypad.1"
-local setToggleKey = keybinds:newKeybind("Pokeball Toggle"):onPress(function() pings.setPokeball(not toggle) end):key(toggleBind)
+-- If animations both animations are done playing, allow the switching of animations
+local function checkToggle()
+	return openAnim:getTime() == openAnim:getLength() and closeAnim:getTime() == closeAnim:getLength()
+end
+
+-- Required script
+local keybound = require("lib.Keybound")
+
+-- Setup keybind
+local toggleKeybind = keybound.new(
+	keybinds
+		:newKeybind("Pokeball Toggle", "key.keyboard.keypad.1")
+		:onPress(function() if checkToggle() then toggle:update(not toggle.curr) end end),
+	"PokeballToggleKeybind"
+)
 
 -- Movement/Action keybinds
+--[[
+	This section is old code I'm afraid to touch, I plan on swapping it out for something better eventually.
+	For now, admire the foundation of what will eventually be not.
+--]]
 local setForwardKey = keybinds:newKeybind("Pokeball Forward Animation"):onPress(function() if not checkBob() then pings.playPokeballBob(math.random(1,#bobs)) end return true end)
 local setBackKey    = keybinds:newKeybind("Pokeball Back Animation")   :onPress(function() if not checkBob() then pings.playPokeballBob(math.random(1,#bobs)) end return true end)
 local setLeftKey    = keybinds:newKeybind("Pokeball Left Animation")   :onPress(function() if not checkBob() then pings.playPokeballBob(math.random(1,#bobs)) end return true end)
@@ -295,12 +273,6 @@ local setUseKey     = keybinds:newKeybind("Pokeball Use Animation")    :onPress(
 
 -- Keybind updaters
 function events.TICK()
-	
-	local toggleKey = setToggleKey:getKey()
-	if toggleKey ~= toggleBind then
-		toggleBind = toggleKey
-		config:save("PokeballToggleKeybind", toggleKey)
-	end
 	
 	-- Force keybinds
 	setForwardKey:key(keybinds:getVanillaKey("key.forward")):enabled(isInBall)
@@ -337,13 +309,17 @@ end
 
 a.toggleAct = eeveelutionPage:newAction()
 	:item("cobblemon:poke_ball", "ender_pearl")
-	:onToggle(pings.setPokeball)
+	:onToggle(function(bool)
+		if checkToggle() then toggle:update(bool) end
+	end)
 
 a.typeHideAct = eeveelutionPage:newAction()
 	:item("player_head{SkullOwner:"..avatar:getEntityName().."}")
 	:toggleItem("cobblemon:poke_ball", "snowball")
-	:onToggle(pings.setPokeballTypeHide)
-	:toggled(typeHide)
+	:onToggle(function(bool)
+		typeHide:update(bool)
+	end)
+	:toggled(typeHide.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
@@ -367,7 +343,7 @@ function events.RENDER(delta, context)
 					{text = "Various factors can prevent this feature from being active.\nAdditionally, when inside your pokeball, you are unable to move or preform actions.", color = "yellow"}
 				}
 			))
-			:toggled(toggle)
+			:toggled(toggle.curr)
 		
 		a.typeHideAct
 			:title(toJson(

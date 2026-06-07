@@ -2,8 +2,10 @@
  --- Initial Setup ---
   -------------------
 
--- Required script
+-- Required scripts
 local parts = require("lib.PartsAPI")
+local sync  = require("lib.LetThatSyncFig")
+local itemCheck = require("lib.ItemCheck")
 
 --[[
 	
@@ -46,35 +48,21 @@ end
  --- Table Setup ---
   -----------------
 
--- Config setup
-config:name("EeveelutionTaur")
-local initType = config:load("EeveeType") or 1
-
 -- Establish table
 local typeData = {
-	tarType = initType,
-	curType = initType,
-	tarString = types[initType],
-	curString = types[initType],
+	type = sync.new("EeveeType", 1):config(),
 	types = types,
 	data = {}
 }
 
 -- Create data tables
 for k, v in ipairs(typeData.types) do
-	
 	typeData.data[v] = {id = k, parts = {}, textures = {}}
-	
 end
 
 -- Reset if type is out of bounds
-if initType > #typeData.types then
-	
-	typeData.tarType = 1
-	typeData.curType = 1
-	typeData.tarString = typeData.types[1]
-	typeData.curString = typeData.types[1]
-	
+if typeData.type.curr > #typeData.types then
+	typeData.type:update(1)
 end
 
   ----------------
@@ -97,7 +85,6 @@ end
 --]]
 -- Stones
 local stones = {
-	
 	eevee = {
 		"cobblemon:everstone",
 		"rabbit_hide", -- This is filler/consistency, origin will not use this
@@ -143,8 +130,12 @@ local stones = {
 		"amethyst_shard",
 		"pink_glazed_terracotta"
 	}
-	
 }
+
+-- Check stones validity
+for k, v in pairs(stones) do
+	stones[k] = itemCheck(table.unpack(v)).id
+end
 
 -- Store data
 for _, v in ipairs(typeData.types) do
@@ -166,28 +157,13 @@ end
   ---------------
 
 -- Returns index of specifc type, if able
-function typeData:getIndex(s)
-	
+function typeData.getIndex(s)
 	return typeData.data[s] and typeData.data[s].id or nil
-	
 end
 
--- Sets target type, if able, otherwise remains the same
-function typeData:setTarget(i)
-	
-	typeData.tarType = typeData.types[i] and i or typeData.tarType
-	typeData.tarString = typeData.types[i] or typeData.tarString
-	
-	config:save("EeveeType", typeData.tarType)
-	
-end
-
--- Syncs type variables
-function typeData:syncCurType()
-	
-	typeData.curType = typeData.tarType
-	typeData.curString = typeData.tarString
-	
+-- Returns string of current type
+function typeData.getString()
+	return typeData.types[typeData.type.curr]
 end
 
 -- Texture swap parts
@@ -197,10 +173,10 @@ typeData.mainParts = parts:createTable(function(part) return part:getName():find
 -- This function will be modified by the following scripts, if able:
 -- Shiny.lua
 -- EeveeGender.lua
-function typeData:updateTexture()
+function typeData.updateTexture()
 	
 	-- Texture path
-	local texData = typeData.data[typeData.curString].textures
+	local texData = typeData.data[typeData.getString()].textures
 	
 	-- Apply
 	for _, part in ipairs(typeData.mainParts) do
@@ -224,12 +200,12 @@ function typeData:updateTexture()
 end
 
 -- Updates parts shown
-function typeData:updateParts()
+function typeData.updateParts()
 	
 	-- Toggle accessories based on type
 	for k, v in pairs(typeData.data) do
 		
-		local isVisible = typeData.curString == k
+		local isVisible = typeData.getString() == k
 		for _, part in ipairs(v.parts) do
 			
 			part:visible(isVisible)
@@ -243,12 +219,9 @@ end
 -- Updates all data to match
 -- This function will be modified by the following scripts, if able:
 -- Pokeball.lua
-function typeData:updateAll()
-	
-	typeData:syncCurType()
-	typeData:updateTexture()
-	typeData:updateParts()
-	
+function typeData.updateAll()
+	typeData.updateTexture()
+	typeData.updateParts()
 end
 
 -- Init type setup
@@ -257,36 +230,10 @@ function events.ENTITY_INIT()
 	prevUpdateAll()
 end
 
--- Sync current to target if they do not match
-function events.RENDER(delta, context)
-	
-	if not typeData.swapping and typeData.curType ~= typeData.tarType then
-		typeData:updateAll()
-	end
-	
-end
-
--- Sync variables
-function pings.syncEeveeType(...)
-	
-	typeData:setTarget(...)
-	if typeData.curType ~= typeData.tarType then
-		typeData:updateAll()
-	end
-	
-end
-
--- Host only instructions
-if not host:isHost() then return typeData end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncEeveeType(typeData.tarType)
-	end
-	
-end
+-- Apply function
+typeData.type:applyFunc(function()
+	typeData:updateAll()
+end)
 
 -- Return typeData
 return typeData

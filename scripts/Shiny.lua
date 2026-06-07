@@ -1,5 +1,6 @@
--- Required script
+-- Required scripts
 local typeData = require("scripts.TypeControl")
+local sync     = require("lib.LetThatSyncFig")
 
 -- Optional script
 local allowColor, c = pcall(require, "scripts.ColorProperties")
@@ -21,9 +22,8 @@ if allowColor then
 	
 end
 
--- Config setup
-config:name("EeveelutionTaur")
-typeData.shiny = config:load("ShinyToggle") == nil and vec(client.uuidToIntArray(avatar:getUUID())).x % 4096 == 0 or config:load("ShinyToggle")
+-- Synced variable setup
+typeData.shiny = sync.new("ShinyToggle", vec(client.uuidToIntArray(avatar:getUUID())).x % 4096 == 0):config()
 
 -- Store data
 local initTex = {}
@@ -68,25 +68,25 @@ end
 
 -- Modifies the update function to allow the player to enter their pokeball before changing types
 local prevUpdateTexture = typeData.updateTexture
-function typeData:updateTexture()
+function typeData.updateTexture()
 	
 	-- Current type
-	local curType = typeData.curString
+	local currStr = typeData.getString()
 	
 	-- Textures
-	local primary = typeData.shiny and shinyTex[curType].primary or initTex[curType].primary
-	local secondary = typeData.shiny and shinyTex[curType].secondary or initTex[curType].secondary
+	local primary = typeData.shiny.curr and shinyTex[currStr].primary or initTex[currStr].primary
+	local secondary = typeData.shiny.curr and shinyTex[currStr].secondary or initTex[currStr].secondary
 	
 	-- Set textures
-	typeData.data[curType].textures.primary = primary
-	typeData.data[curType].textures.secondary = secondary
+	typeData.data[currStr].textures.primary = primary
+	typeData.data[currStr].textures.secondary = secondary
 	
 	-- Set part textures
-	for _, part in ipairs(shinyParts[curType]) do
+	for _, part in ipairs(shinyParts[currStr]) do
 		
 		part:primaryTexture("CUSTOM", primary)
 		
-		if typeData.data[curType].textures.secondary then
+		if typeData.data[currStr].textures.secondary then
 			
 			part:secondaryTexture("CUSTOM", secondary)
 			
@@ -103,44 +103,22 @@ function typeData:updateTexture()
 	-- Update colors
 	if allowColor then
 		
-		c.typeColors[curType] = typeData.shiny and shinyColors[curType] or initColors[curType]
+		c.typeColors[currStr] = typeData.shiny.curr and shinyColors[currStr] or initColors[currStr]
 		
 	end
 	
 end
 
--- Shiny toggle
-function pings.setShinyToggle(boolean)
-	
-	typeData.shiny = boolean
-	config:save("ShinyToggle", typeData.shiny)
-	
-	typeData:updateTexture()
-	
-	if player:isLoaded() and typeData.shiny then
+-- Apply function
+typeData.shiny:applyFunc(function()
+	typeData.updateTexture()
+	if player:isLoaded() and typeData.shiny.curr then
 		sounds:playSound("block.amethyst_block.chime", player:getPos())
 	end
-	
-end
-
--- Sync variables
-function pings.syncShiny(...)
-	
-	typeData.shiny = ...
-	
-end
+end)
 
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncShiny(typeData.shiny)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel = pcall(require, "scripts.ActionWheel")
@@ -182,7 +160,10 @@ end
 a.shinyAct = eeveelutionPage:newAction()
 	:item("gunpowder")
 	:toggleItem("glowstone_dust")
-	:onToggle(pings.setShinyToggle)
+	:onToggle(function(bool)
+		typeData.shiny:update(bool)
+	end)
+	:toggled(typeData.shiny.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
@@ -203,7 +184,6 @@ function events.RENDER(delta, context)
 					{text = "Toggles the usage of shiny textures for your pokemon parts.", color = c.secondary}
 				}
 			))
-			:toggled(typeData.shiny)
 		
 		for _, act in pairs(a) do
 			act:hoverColor(c.hover):toggleColor(c.active)

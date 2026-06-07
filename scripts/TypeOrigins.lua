@@ -1,23 +1,22 @@
 -- Required scripts
-local origins  = require("lib.OriginsAPI")
 local typeData = require("scripts.TypeControl")
+local sync     = require("lib.LetThatSyncFig")
+local origins  = require("lib.OriginsAPI")
 
 -- Kills script early if only one type was found in the types table
 if #typeData.types == 1 then return {} end
 
--- Config setup
-config:name("EeveelutionTaur")
-typeData.origin = config:load("OriginType")
-if typeData.origin == nil then typeData.origin = true end
+-- Synced variable setup
+typeData.origin = sync.new("OriginType", true):config()
 
 function events.TICK()
 	
-	if typeData.origin then
+	if typeData.origin.curr then
 		for _, v in ipairs(typeData.types) do
-			if typeData.tarString ~= v and origins.hasOrigin(player, "eeveelutiontaurs:"..v.."taur") then
+			if typeData.getString() ~= v and origins.hasOrigin(player, "eeveelutiontaurs:"..v.."taur") then
 				
 				-- Update type
-				typeData:setTarget(typeData:getIndex(v))
+				typeData.type:update(typeData.getIndex(v))
 				
 			end
 		end
@@ -25,32 +24,8 @@ function events.TICK()
 	
 end
 
--- Origin toggle
-function pings.setOrigin(boolean)
-	
-	typeData.origin = boolean
-	config:save("OriginType", typeData.origin)
-	
-end
-
--- Sync variables
-function pings.syncOrigin(...)
-	
-	typeData.origin = ...
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncOrigin(typeData.origin)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -77,8 +52,10 @@ end
 a.originAct = typePage:newAction()
 	:item("ender_pearl")
 	:toggleItem("origins:orb_of_origin", "snowball")
-	:onToggle(pings.setOrigin)
-	:toggled(typeData.origin)
+	:onToggle(function(bool)
+		typeData.origin:update(bool)
+	end)
+	:toggled(typeData.origin.curr)
 
 -- Update actions
 function events.RENDER(delta, context)

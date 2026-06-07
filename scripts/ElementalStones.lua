@@ -1,13 +1,12 @@
--- Required script
+-- Required scripts
 local typeData = require("scripts.TypeControl")
+local sync     = require("lib.LetThatSyncFig")
 
 -- Kills script early if only one type was found in the types table
 if #typeData.types == 1 then return {} end
 
--- Config setup
-config:name("EeveelutionTaur")
-local stone = config:load("TypeStone")
-if stone == nil then stone = true end
+-- Synced variables setup
+local stone = sync.new("TypeStone", true):config()
 
 -- Match hand item to stone, returns nil if no match
 local function matchHand(item)
@@ -16,7 +15,7 @@ local function matchHand(item)
 		
 		-- Stone associated with type
 		local typeStone = typeData.data[v].stone
-		if typeStone and item == typeStone.id then
+		if typeStone and item == typeStone then
 			return v
 		end
 		
@@ -30,60 +29,22 @@ end
 function events.RENDER(delta, context)
 	
 	-- Disable stone if origin override is active
-	if stone and typeData.origin then
-		stone = false
+	if stone.curr and typeData.origin and typeData.origin.curr then
+		stone:update(false)
 	end
 	
 	-- Check main hand for stones, and if verified, toggle to type
-	if stone then
-		
-		-- Variables
-		local match = false
-		local main = player:getHeldItem().id
-		local off  = player:getHeldItem(true).id
-		
-		-- Stone variables
-		local mainStone = matchHand(main)
-		local offStone = matchHand(off)
-		local pickedStone = mainStone or offStone
-		
-		if pickedStone and pickedStone ~= typeData.tarString then
-			
-			-- Update type
-			typeData:setTarget(typeData:getIndex(pickedStone))
-			
+	if stone.curr then
+		local foundStone = matchHand(player:getHeldItem().id) or matchHand(player:getHeldItem(true).id)
+		if foundStone and foundStone ~= typeData.type.curr then
+			typeData.type:update(typeData.getIndex(foundStone))
 		end
-		
 	end
-	
-end
-
--- Stone toggle
-function pings.setStone(boolean)
-	
-	stone = boolean
-	config:save("EeveeStone", stone)
-	
-end
-
--- Sync variables
-function pings.syncStone(...)
-	
-	stone = ...
 	
 end
 
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncStone(stone)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -109,8 +70,12 @@ end
 
 a.stoneAct = typePage:newAction()
 	:item("terracotta")
-	:onToggle(function(boolean) if not typeData.origin then pings.setStone(boolean) end end)
-	:toggled(stone)
+	:onToggle(function(bool)
+		if not (typeData.origin and typeData.origin.curr) then
+			stone:update(bool)
+		end
+	end)
+	:toggled(stone.curr)
 
 -- Update action
 function events.RENDER(delta, context)
@@ -129,11 +94,11 @@ function events.RENDER(delta, context)
 					"",
 					{text = "Toggle Stone Type Changing\n\n", bold = true, color = c.primary},
 					{text = "Allow various stones to change your typing when held.\nThis expects Cobblemon items, but if they are not present, glazed terracotta works too.", color = c.secondary},
-					{text = typeData.origin and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
+					{text = typeData.origin and typeData.origin.curr and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
 				}
 			))
-			:toggleItem(table.unpack(typeData.data[typeData.types[math.floor(world.getTime() * 0.05) % #typeData.types + 1]].stone))
-			:toggled(stone)
+			:toggleItem(typeData.data[typeData.types[math.floor(world.getTime() * 0.05) % #typeData.types + 1]].stone)
+			:toggled(stone.curr)
 		
 		for _, act in pairs(a) do
 			act:hoverColor(c.hover):toggleColor(c.active)

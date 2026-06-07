@@ -16,7 +16,7 @@ function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, cat, path)
 	-- If sound contains ".hurt", play an additional hurt sound along side it
 	if id:find(".hurt") then
 		local scale = parts.group.Player:getAnimScale():lengthSquared() / 3
-		sounds:playSound("cobblemon:"..(scale > 0.5 and "pokemon."..typeData.curString..".cry" or "poke_ball.open"), pos, 0.6)
+		sounds:playSound("cobblemon:"..(scale > 0.5 and "pokemon."..typeData.getString()..".cry" or "poke_ball.open"), pos, 0.6)
 	end
 	
 end

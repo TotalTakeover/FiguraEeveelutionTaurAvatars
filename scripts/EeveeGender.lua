@@ -10,32 +10,32 @@
 --]]
 
 -- Required scripts
-local parts = require("lib.PartsAPI")
+local parts    = require("lib.PartsAPI")
 local typeData = require("scripts.TypeControl")
+local sync     = require("lib.LetThatSyncFig")
 
 -- Kills script early if Eevee couldnt be found in the types table
 if not typeData.data["eevee"] then return {} end
 
--- Config setup
-config:name("EeveelutionTaur")
-local gender = config:load("GenderToggle") or false
+-- Synced variables setup
+local gender = sync.new("GenderToggle", false):config()
 
 -- Modifies the texture function to add an additional step of setting the gender of eevee
 local prevUpdateTexture = typeData.updateTexture
-function typeData:updateTexture()
+function typeData.updateTexture()
 	
 	-- Do all prior instructions
 	prevUpdateTexture()
 	
 	-- Kill script if not eevee
-	if typeData.curString ~= "eevee" then return end
+	if typeData.getString() ~= "eevee" then return end
 	
 	-- Textures
 	local primary = textures["textures.eeveeTail"] or textures["EeveeTaur.eeveeTail"]
 	local secondary = textures["textures.eeveeTail_e"] or textures["EeveeTaur.eeveeTail_e"]
 	
 	-- Shiny check
-	if typeData.shiny then
+	if typeData.shiny and typeData.shiny.curr then
 		primary = textures["textures.eeveeTail_shiny"] or textures["EeveeTaur.eeveeTail_shiny"] or primary
 		secondary = textures["textures.eeveeTail_shiny_e"] or textures["EeveeTaur.eeveeTail_shiny_e"] or secondary
 	end
@@ -50,7 +50,7 @@ function typeData:updateTexture()
 			
 			part
 				:primaryTexture("CUSTOM", primary)
-				:uv(gender and vec(0, 0.5) or 0)
+				:uv(gender.curr and vec(0, 0.5) or 0)
 			
 			if secondary then
 				
@@ -64,36 +64,15 @@ function typeData:updateTexture()
 	
 end
 
--- Gender toggle
-function pings.setGenderToggle(boolean)
-	
-	gender = boolean
-	config:save("GenderToggle", gender)
-	
-	if typeData.curString == "eevee" then
-		typeData:updateTexture()
+-- Apply function
+gender:applyFunc(function()
+	if typeData.getString() == "eevee" then
+		typeData.updateTexture()
 	end
-	
-end
-
--- Sync variables
-function pings.syncGender(...)
-	
-	gender = ...
-	
-end
+end)
 
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncGender(gender)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -120,7 +99,10 @@ end
 a.genderAct = eeveelutionPage:newAction()
 	:item("blue_dye")
 	:toggleItem("pink_dye")
-	:onToggle(pings.setGenderToggle)
+	:onToggle(function(bool)
+		gender:update(bool)
+	end)
+	:toggled(gender.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
@@ -139,11 +121,10 @@ function events.RENDER(delta, context)
 					"",
 					{text = "Toggle Eevee Gender\n\n", bold = true, color = c.primary},
 					{text = "Toggles the gender of Eevee.", color = c.secondary},
-					{text = typeData.curString ~= "eevee" and "\n\nCurrent type is not eevee! No gender will be applied!" or "", color = "gold"}
+					{text = typeData.getString() ~= "eevee" and "\n\nCurrent type is not eevee! No gender will be applied!" or "", color = "gold"}
 					
 				}
 			))
-			:toggled(gender)
 		
 		for _, act in pairs(a) do
 			act:hoverColor(c.hover):toggleColor(c.active)

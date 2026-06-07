@@ -1,29 +1,11 @@
+-- Host only instructions
+if not host:isHost() then return end
+
 -- Required script
 local typeData = require("scripts.TypeControl")
 
 -- Kills script early if only one type was found in the types table
 if #typeData.types == 1 then return {} end
-
--- Eevee type
-function pings.setEeveeType(i)
-	
-	-- Update type
-	typeData:setTarget(((typeData.tarType + i - 1) % #typeData.types) + 1)
-	
-end
-
--- Host only instructions
-if not host:isHost() then return end
-
--- Ping function
-local function allowPing(x)
-	
-	-- Let ping through if origin override is not active
-	if not typeData.origin then
-		pings.setEeveeType(x)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -42,6 +24,15 @@ local typePage   = pageExists or action_wheel:newPage("Type")
 -- Actions table setup
 local a = {}
 
+-- Set type loop
+local function setType(i)
+	if not (typeData.origin and typeData.origin.curr) then
+		return ((typeData.type.curr + i - 1) % #typeData.types) + 1
+	else
+		return typeData.type.curr
+	end
+end
+
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
@@ -50,9 +41,9 @@ if not pageExists then
 end
 
 a.setTypeAct = typePage:newAction()
-	:onLeftClick(function() allowPing(1) end)
-	:onRightClick(function() allowPing(-1) end)
-	:onScroll(function(x) allowPing(x) end)
+	:onLeftClick(function() typeData.type:update(setType(1)) end)
+	:onRightClick(function() typeData.type:update(setType(-1)) end)
+	:onScroll(function(x) typeData.type:update(setType(x), 10) end)
 
 -- This allows this script to move an action made by another, in the event it exists
 local eeveelutionPage = action_wheel:getPage("Eeveelution")
@@ -78,12 +69,12 @@ function events.RENDER(delta, context)
 			:title(toJson(
 				{
 					"",
-					{text = typeData.tarString:gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
+					{text = typeData.getString():gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
 					{text = "Left click, Right click, or Scroll to set your type!", color = c.secondary},
-					{text = typeData.origin and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
+					{text = typeData.origin and typeData.origin.curr and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
 				}
 			))
-			:item(table.unpack(typeData.data[typeData.tarString].stone))
+			:item(typeData.data[typeData.getString()].stone)
 		
 		for _, act in pairs(a) do
 			act:hoverColor(c.hover)

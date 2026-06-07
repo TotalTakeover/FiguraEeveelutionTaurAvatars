@@ -1,21 +1,21 @@
 -- Required scripts
 local parts    = require("lib.PartsAPI")
-local origins  = require("lib.OriginsAPI")
 local typeData = require("scripts.TypeControl")
 local lerp     = require("lib.LerpAPI")
+local sync     = require("lib.LetThatSyncFig")
+local origins  = require("lib.OriginsAPI")
 local effects  = require("scripts.SyncedVariables")
 
--- Config setup
-config:name("EeveelutionTaur")
-local toggle      = config:load("EyesToggle") or false
-local power       = config:load("EyesPower") or false
-local nightVision = config:load("EyesNightVision") or false
+-- Synced variables setup
+local toggle      = sync.new("EyesToggle", false):config()
+local power       = sync.new("EyesPower", false):config()
+local nightVision = sync.new("EyesNightVision", false):config()
 
 -- Glow Parts
 local glowParts = parts:createTable(function(part) return part:getName():find("_[eE]ye[gG]low") end)
 
 -- Eyes lerp
-local eyesLerp = lerp:new(toggle and 1 or 0, 0.1)
+local eyesLerp = lerp.new(toggle.curr and 1 or 0, 0.1)
 
 --[[
 	Power tables:
@@ -77,24 +77,24 @@ function events.TICK()
 	
 	-- Set glow target
 	-- Toggle check
-	if toggle then
+	if toggle.curr then
 		
 		-- Set target
 		eyesLerp.target = 1
 		
 		-- Origins check
-		if power then
+		if power.curr then
 			
 			-- Variables
-			local curType = typeData.curString
+			local currStr = typeData.getString()
 			local passive = 0
 			local active = timer ~= 0 and 1 or 0
 			local bar = 0
 			
-			if powers[curType] then
+			if powers[currStr] then
 				
 				-- Passives
-				for k, v in pairs(powers[curType].passive or {}) do
+				for k, v in pairs(powers[currStr].passive or {}) do
 					if v == "origins:water_vision" and not player:isUnderwater() then goto water end
 					local value = origins.getPowerData(player, v) or 0
 					if value == 1 then
@@ -105,17 +105,17 @@ function events.TICK()
 				end
 				
 				-- Actives
-				for k, v in pairs(powers[curType].active or {}) do
+				for k, v in pairs(powers[currStr].active or {}) do
 					prevActives[k] = v
-					powers[curType].active[k] = origins.getPowerData(player, k) or 0
-					if powers[curType].active[k] ~= prevActives[k] then
+					powers[currStr].active[k] = origins.getPowerData(player, k) or 0
+					if powers[currStr].active[k] ~= prevActives[k] then
 						timer = 60
 						goto stop
 					end
 				end
 				
 				-- Bar
-				for k, v in pairs(powers[curType].bar or {}) do
+				for k, v in pairs(powers[currStr].bar or {}) do
 					local data = origins.getPowerData(player, k) or 0
 					bar = data / v
 				end
@@ -136,13 +136,12 @@ function events.TICK()
 		end
 		
 		-- Night Vision check
-		if nightVision then
+		if nightVision.curr then
 			eyesLerp.target = effects.nV and 1 or eyesLerp.target
 		end
 		
 	else
 		
-		-- Set target
 		eyesLerp.target = 0
 		
 	end
@@ -151,71 +150,48 @@ end
 
 function events.RENDER(delta, context)
 	
-	-- Check render type
+	-- Apply
 	local renderType = context == "RENDER" and "EMISSIVE" or "EYES"
-	
 	for _, part in ipairs(glowParts) do
-		
-		-- Apply
 		part
 			:secondaryColor(eyesLerp.currPos)
 			:secondaryRenderType(renderType)
-		
 	end
 	
 end
 
--- Glowing eyes toggle
-function pings.setEyesToggle(boolean)
-	
-	toggle = boolean
-	config:save("EyesToggle", toggle)
-	if player:isLoaded() and toggle then
+-- Apply sound function
+toggle:applyFunc(function()
+	if player:isLoaded() and toggle.curr then
 		sounds:playSound("entity.glow_squid.ambient", player:getPos(), 0.75)
 	end
-	
-end
-
--- Power toggle
-function pings.setEyesPower(boolean)
-	
-	power = boolean
-	config:save("EyesPower", power)
-	if host:isHost() and player:isLoaded() and power then
-		sounds:playSound("block.amethyst_block.chime", player:getPos())
-	end
-	
-end
-
--- Night vision toggle
-function pings.setEyesNightVision(boolean)
-	
-	nightVision = boolean
-	config:save("EyesNightVision", nightVision)
-	if host:isHost() and player:isLoaded() and nightVision then
-		sounds:playSound("entity.generic.drink", player:getPos(), 0.35)
-	end
-	
-end
-
--- Sync variables
-function pings.syncEyes(...)
-	
-	toggle, power, nightVision = ...
-	
-end
+end)
 
 -- Host only instructions
 if not host:isHost() then return end
 
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncEyes(toggle, power, nightVision)
+-- Apply sound functions
+power:applyFunc(function()
+	if player:isLoaded() and power.curr then
+		sounds:playSound("block.amethyst_block.chime", player:getPos())
 	end
-	
-end
+end)
+nightVision:applyFunc(function()
+	if player:isLoaded() and nightVision.curr then
+		sounds:playSound("entity.generic.drink", player:getPos(), 0.35)
+	end
+end)
+
+-- Required script
+local keybound = require("lib.Keybound")
+
+-- Setup keybind
+local toggleKeybind = keybound.new(
+	keybinds
+		:newKeybind("Glowing Eyes Toggle", "key.keyboard.keypad.5")
+		:onPress(function() toggle:update(not toggle.curr) end),
+	"EyesToggleKeybind"
+)
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -237,18 +213,24 @@ a.pageAct = parentPage:newAction()
 a.toggleAct = glowEyesPage:newAction()
 	:item("ender_pearl")
 	:toggleItem("ender_eye")
-	:onToggle(pings.setEyesToggle)
+	:onToggle(function(bool)
+		toggle:update(bool)
+	end)
 
 a.powerAct = glowEyesPage:newAction()
 	:item("terracotta")
-	:onToggle(pings.setEyesPower)
-	:toggled(power)
+	:onToggle(function(bool)
+		power:update(bool)
+	end)
+	:toggled(power.curr)
 
 a.nightVisionAct = glowEyesPage:newAction()
 	:item("glass_bottle")
 	:toggleItem("potion{CustomPotionColor:" .. tostring(0x96C54F) .. "}")
-	:onToggle(pings.setEyesNightVision)
-	:toggled(nightVision)
+	:onToggle(function(bool)
+		nightVision:update(bool)
+	end)
+	:toggled(nightVision.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
@@ -269,7 +251,7 @@ function events.RENDER(delta, context)
 					{text = "This feature has a tendency to not work correctly.\nDue to the rendering properties of emissives, the eyes may not glow.\nIf it does not work, please reload the avatar. Rinse and Repeat.\nThis is the only fix, I have tried everything.\n\n- Total", color = "red"}
 				}
 			))
-			:toggled(toggle)
+			:toggled(toggle.curr)
 		
 		a.powerAct
 			:title(toJson(
@@ -279,7 +261,7 @@ function events.RENDER(delta, context)
 					{text = "Toggles the glowing based on various Origin powers.\nThe eyes will only glow when powers are activated.", color = c.secondary}
 				}
 			))
-			:toggleItem(table.unpack(typeData.data[typeData.tarString].stone))
+			:toggleItem(typeData.data[typeData.getString()].stone)
 		
 		a.nightVisionAct
 			:title(toJson(

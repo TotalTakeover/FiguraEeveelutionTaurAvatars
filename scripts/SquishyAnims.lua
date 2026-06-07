@@ -6,14 +6,13 @@ if not s then return {} end
 local parts    = require("lib.PartsAPI")
 local typeData = require("scripts.TypeControl")
 local lerp     = require("lib.LerpAPI")
+local sync     = require("lib.LetThatSyncFig")
 local ground   = require("lib.GroundCheck")
 local pose     = require("scripts.Posing")
 local effects  = require("scripts.SyncedVariables")
 
--- Config setup
-config:name("EeveelutionTaur")
-local earFlick = config:load("SquapiEarFlick")
-if earFlick == nil then earFlick = true end
+-- Synced variables setup
+local earFlick = sync.new("AnimsEarFlicks", true):config()
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
@@ -44,7 +43,7 @@ local function matchType(n)
 end
 
 -- Lerp table
-local taurLerp = lerp:new(1)
+local taurLerp = lerp.new(1)
 
 -- Find ears
 local ears = {}
@@ -83,7 +82,7 @@ for k, ear in pairs(ears.left) do
 		k:find("vaporeon") or
 		k:find("espeon"), -- Horizontal (Based on type)
 		2,                -- Bend Strength (2)
-		earFlick and not
+		earFlick.curr and not
 		k:find("Fur"),    -- Do Flick (earFlick)
 		400,              -- Flick Chance (400)
 		0.1,              -- Stiffness (0.1)
@@ -154,11 +153,14 @@ function events.TICK()
 	local onGround = ground()
 	
 	taur.target     = (onGround or player:getVehicle() or effects.cF) and 0 or taur.target
-	taurLerp.target = not (typeData.curString == "vaporeon" and player:isInWater() and (not onGround or pose.swim) and not pose.elytra) and 1 or 0
+	taurLerp.target = not (typeData.getString() == "vaporeon" and player:isInWater() and (not onGround or pose.swim) and not pose.elytra) and 1 or 0
 	
 end
 
 function events.RENDER(delta, context)
+	
+	-- Current type
+	local currStr = typeData.getString()
 	
 	-- Offset smooth torso in various parts
 	-- Note: acts strangely with `parts.group.body`
@@ -170,13 +172,13 @@ function events.RENDER(delta, context)
 	
 	-- Control tail activity
 	for k, tail in pairs(squishyTails) do
-		tail.enabled = k:find(typeData.curString) and true or false
+		tail.enabled = k:find(currStr) and true or false
 	end
 	
 	-- Control ear activity
 	for k, ear in pairs(squishyEars) do
-		ear.enabled = k:find(typeData.curString) and true or false
-		ear.doEarFlick = earFlick and not k:find("Fur")
+		ear.enabled = k:find(currStr) and true or false
+		ear.doEarFlick = earFlick.curr and not k:find("Fur")
 	end
 	
 	-- Control taur activity
@@ -195,32 +197,8 @@ function events.RENDER(delta, context)
 	
 end
 
--- Ear flick toggle
-function pings.setSquapiEarFlick(boolean)
-	
-	earFlick = boolean
-	config:save("SquapiEarFlick", earFlick)
-	
-end
-
--- Sync variables
-function pings.syncSquapi(...)
-	
-	earFlick = ...
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncSquapi(earFlick)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -247,8 +225,10 @@ end
 a.earsAct = animsPage:newAction()
 	:item("bone")
 	:toggleItem("feather")
-	:onToggle(pings.setSquapiEarFlick)
-	:toggled(earFlick)
+	:onToggle(function(bool)
+		earFlick:update(bool)
+	end)
+	:toggled(earFlick.curr)
 
 -- Update actions
 function events.RENDER(delta, context)

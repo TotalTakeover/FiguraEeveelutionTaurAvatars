@@ -22,11 +22,14 @@ c.typeColors = {
 
 function events.RENDER(delta, context)
 	
+	-- Current type
+	local currCol = c.typeColors[typeData.getString()]
+	
 	-- Avatar color
-	avatar:color(c.typeColors[typeData.curString].primary)
+	avatar:color(currCol.primary)
 	
 	-- Glowing outline
-	renderer:outlineColor(c.typeColors[typeData.curString].primary)
+	renderer:outlineColor(currCol.primary)
 	
 end
 
@@ -46,11 +49,14 @@ c.typeColors.sylveon.secondary  = vectors.hexToRGB("85C6EC")
 
 function events.RENDER(delta, context)
 	
+	-- Current type
+	local currCol = c.typeColors[typeData.getString()]
+	
 	-- Action variables
-	c.hover     = c.typeColors[typeData.curString].secondary
-	c.active    = c.typeColors[typeData.curString].primary
-	c.primary   = "#"..vectors.rgbToHex(c.typeColors[typeData.curString].primary)
-	c.secondary = "#"..vectors.rgbToHex(c.typeColors[typeData.curString].secondary)
+	c.hover     = currCol.secondary
+	c.active    = currCol.primary
+	c.primary   = "#"..vectors.rgbToHex(currCol.primary)
+	c.secondary = "#"..vectors.rgbToHex(currCol.secondary)
 	
 end
 
