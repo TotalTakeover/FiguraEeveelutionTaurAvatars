@@ -60,9 +60,12 @@ local powers = {
 local prevActives = {}
 function events.ENTITY_INIT()
 	
+	-- Power data
+	local powerData = origins.getPowerData(player)
+	
 	for t, p in pairs(powers) do
 		for k in pairs(p.active or {}) do
-			local v = origins.getPowerData(player, k) or 0
+			local v = powerData[k] or 0
 			powers[t].active[k] = v
 			prevActives[k] = v
 		end
@@ -87,6 +90,7 @@ function events.TICK()
 			
 			-- Variables
 			local currStr = typeData.getString()
+			local powerData = origins.getPowerData(player)
 			local passive = 0
 			local active = timer ~= 0 and 1 or 0
 			local bar = 0
@@ -96,7 +100,7 @@ function events.TICK()
 				-- Passives
 				for k, v in pairs(powers[currStr].passive or {}) do
 					if v == "origins:water_vision" and not player:isUnderwater() then goto water end
-					local value = origins.getPowerData(player, v) or 0
+					local value = powerData[v] or 0
 					if value == 1 then
 						passive = 1
 						goto stop
@@ -107,7 +111,7 @@ function events.TICK()
 				-- Actives
 				for k, v in pairs(powers[currStr].active or {}) do
 					prevActives[k] = v
-					powers[currStr].active[k] = origins.getPowerData(player, k) or 0
+					powers[currStr].active[k] = powerData[k] or 0
 					if powers[currStr].active[k] ~= prevActives[k] then
 						timer = 60
 						goto stop
@@ -116,7 +120,7 @@ function events.TICK()
 				
 				-- Bar
 				for k, v in pairs(powers[currStr].bar or {}) do
-					local data = origins.getPowerData(player, k) or 0
+					local data = powerData[k] or 0
 					bar = data / v
 				end
 				

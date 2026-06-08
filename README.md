@@ -19,7 +19,7 @@ A Figura Avatar template designed to give the user a customizable taur body base
 - Katt (OriginsAPI, KattArmor)
 - Bitslayn (Gaze API)
 - 4P5 (GroundCheck)
-- Manuel (Molang Conversions)
+- Manuel (Molang Conversions, OriginsAPI)
 - Auria (Molang Conversions)
 
 ### Origin Datapack:

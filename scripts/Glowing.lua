@@ -41,7 +41,7 @@ function events.TICK()
 			local timeStr = math.max(1 - math.abs((time - 6000) / 6000), 0)
 			
 			-- Set target
-			glowLerp.target = math.max(origins.getPowerData(player, "eeveelutiontaurs:sixth_sense_toggle") or 0, skyStr * timeStr)
+			glowLerp.target = math.max(origins.getPowerData(player)["eeveelutiontaurs:sixth_sense_toggle"] or 0, skyStr * timeStr)
 			
 		elseif currStr == "umbreon" then
 			

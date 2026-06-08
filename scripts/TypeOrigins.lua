@@ -7,7 +7,7 @@ local origins  = require("lib.OriginsAPI")
 if #typeData.types == 1 then return {} end
 
 -- Synced variable setup
-typeData.origin = sync.new("OriginType", true):config()
+typeData.origin = sync.new("OriginType", false):config()
 
 function events.TICK()
 	
