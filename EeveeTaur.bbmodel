@@ -17796,6 +17796,75 @@
 			"autouv": 0,
 			"isOpen": false,
 			"primary_selected": false
+		},
+		{
+			"name": "Camera",
+			"uuid": "b5a674b4-1301-9a61-ca53-a1897533435d",
+			"export": true,
+			"locked": false,
+			"scope": 0,
+			"selected": false,
+			"_static": {
+				"properties": {},
+				"temp_data": {}
+			},
+			"origin": [0, 28, -8],
+			"rotation": [0, 0, 0],
+			"color": 0,
+			"children": [],
+			"reset": false,
+			"shade": true,
+			"mirror_uv": false,
+			"visibility": true,
+			"autouv": 0,
+			"isOpen": false,
+			"primary_selected": false
+		},
+		{
+			"name": "NameplatePivot",
+			"uuid": "971946c5-716f-b7e3-3e26-d6462b963863",
+			"export": true,
+			"locked": false,
+			"scope": 0,
+			"selected": false,
+			"_static": {
+				"properties": {},
+				"temp_data": {}
+			},
+			"origin": [0, 30, -8],
+			"rotation": [0, 0, 0],
+			"color": 0,
+			"children": [],
+			"reset": false,
+			"shade": true,
+			"mirror_uv": false,
+			"visibility": true,
+			"autouv": 0,
+			"isOpen": false,
+			"primary_selected": false
+		},
+		{
+			"name": "Nameplate",
+			"uuid": "b66cc196-722c-852a-6d1e-660a356f47cc",
+			"export": true,
+			"locked": false,
+			"scope": 0,
+			"selected": false,
+			"_static": {
+				"properties": {},
+				"temp_data": {}
+			},
+			"origin": [0, 40.6, -8],
+			"rotation": [0, 0, 0],
+			"color": 0,
+			"children": [],
+			"reset": false,
+			"shade": true,
+			"mirror_uv": false,
+			"visibility": true,
+			"autouv": 0,
+			"isOpen": false,
+			"primary_selected": false
 		}
 	],
 	"outliner": [
@@ -18223,6 +18292,22 @@
 										},
 										{
 											"uuid": "d334234b-4b58-fbd8-675c-deeac935930e",
+											"isOpen": false,
+											"children": []
+										}
+									]
+								},
+								{
+									"uuid": "b5a674b4-1301-9a61-ca53-a1897533435d",
+									"isOpen": false,
+									"children": []
+								},
+								{
+									"uuid": "971946c5-716f-b7e3-3e26-d6462b963863",
+									"isOpen": false,
+									"children": [
+										{
+											"uuid": "b66cc196-722c-852a-6d1e-660a356f47cc",
 											"isOpen": false,
 											"children": []
 										}
@@ -21069,7 +21154,7 @@
 			"name": "VanillaSkin",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"62d9336c-ee4e-f654-c2bd-5d18af63d626",
@@ -21104,7 +21189,7 @@
 			"name": "ShinyParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"21c75346-9219-8d85-a078-7bff42fccb4f",
@@ -21277,7 +21362,7 @@
 			"name": "GlowParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"f7340eb1-f52a-096c-d0e5-7a09fad8342c",
@@ -21292,7 +21377,7 @@
 			"name": "FlatParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"21c75346-9219-8d85-a078-7bff42fccb4f",
@@ -21446,7 +21531,7 @@
 			"name": "EeveeParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"f4714ba9-64dd-a434-80ff-2837e3ebed6c",
@@ -21465,7 +21550,7 @@
 			"name": "VaporeonParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"2fef3389-853a-70ee-2010-2a8cb2e3a414",
@@ -21485,7 +21570,7 @@
 			"name": "JolteonParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"69070fa7-9098-31e8-b4f2-9494923c4c70",
@@ -21503,7 +21588,7 @@
 			"name": "FlareonParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"46acde87-2880-48a6-fd6e-563dc91ad1be",
@@ -21523,7 +21608,7 @@
 			"name": "EspeonParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"8d803893-2c6d-73ba-0542-8e50304660d1",
@@ -21542,7 +21627,7 @@
 			"name": "UmbreonParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"e3df6c21-6892-1814-7d78-fd877eb3d983",
@@ -21558,7 +21643,7 @@
 			"name": "LeafeonParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"f303e65b-1a00-c8c3-9fc0-18179819b9d2",
@@ -21582,7 +21667,7 @@
 			"name": "GlaceonParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"25589dfc-271e-e93b-8ba0-04a839393662",
@@ -21601,7 +21686,7 @@
 			"name": "SylveonParts",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"a270c471-3179-6004-f76f-2762098dd55e",
@@ -21620,7 +21705,7 @@
 			"name": "HatLayer",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": ["a48c12b1-15c9-79b6-5669-f0d8ef2ecb87", "cca4ad02-94cc-cfb1-7db4-a94791f06960", "a69520b0-4c01-b542-215b-026d4c53ca07"],
 			"visibility": false
@@ -21630,7 +21715,7 @@
 			"name": "JacketLayer",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": ["2ea2865a-fa0b-6a31-9e91-29b90deb8a5a"],
 			"visibility": false
@@ -21640,7 +21725,7 @@
 			"name": "LeftSleeveLayer",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"fe34435b-d3c5-db8e-8cb8-965bdd5f2034",
@@ -21655,7 +21740,7 @@
 			"name": "RightSleeveLayer",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"e172045a-0aa5-557a-e1c4-dd560aea7788",
@@ -21670,7 +21755,7 @@
 			"name": "LeftPantsLegLayer",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"3644987e-e7b1-32f2-040c-f7f329a1fd40",
@@ -21687,7 +21772,7 @@
 			"name": "RightPantsLegLayer",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"31ae9a2e-87a6-42f4-f71e-bae5d8dbd6b9",
@@ -21704,7 +21789,7 @@
 			"name": "LowerLayer",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": ["f8ea7b74-e6e7-a10a-938e-e24ed82da206"],
 			"visibility": false
@@ -21714,7 +21799,7 @@
 			"name": "Cape",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": ["b23a1863-3bcc-8df0-c439-a445a0192b07"],
 			"visibility": false
@@ -21724,7 +21809,7 @@
 			"name": "ArmorHelmet",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": ["90da5848-975f-ed05-a36f-13fa35dbe192", "c0384af6-f852-d867-6bd2-babf981912f0"],
 			"visibility": false
@@ -21734,7 +21819,7 @@
 			"name": "ArmorChestplate",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"ab0d60cd-c6c0-06cb-4dc0-4470aec70b2b",
@@ -21750,7 +21835,7 @@
 			"name": "ArmorLeggings",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"33f3720e-1969-332a-e052-260d9b5a5cb1",
@@ -21769,7 +21854,7 @@
 			"name": "ArmorBoots",
 			"model_identifier": "",
 			"scope": 0,
-			"saved": true,
+			"saved": false,
 			"export_codec": "",
 			"children": [
 				"952ac85a-eb8a-9f67-00f6-1be1dfdbccd3",
@@ -23408,6 +23493,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -25174,6 +25277,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -26935,6 +27056,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -28650,6 +28789,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -30342,6 +30499,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -32076,6 +32251,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -33788,6 +33981,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -36106,6 +36317,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -38421,6 +38650,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -39992,6 +40239,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -41560,6 +41825,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -43161,6 +43444,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -44797,6 +45098,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -46349,6 +46668,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -47982,6 +48319,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -49839,6 +50194,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -51715,6 +52088,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -53299,6 +53690,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -54889,6 +55298,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -56473,6 +56900,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -58063,6 +58508,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -59631,6 +60094,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -61218,6 +61699,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -62936,6 +63435,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -64520,6 +65037,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -66238,6 +66773,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -67841,6 +68394,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -69393,6 +69964,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -70996,6 +71585,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -72666,6 +73273,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -74234,6 +74859,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -75904,6 +76547,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -77571,6 +78232,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -79187,6 +79866,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -80854,6 +81551,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -82716,6 +83431,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -84275,6 +85008,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -86137,6 +86888,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -87845,6 +88614,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -89536,6 +90323,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -91542,6 +92347,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -93109,6 +93932,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -94673,6 +95514,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -96299,6 +97158,24 @@
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
 				}
 			}
 		},
@@ -97919,6 +98796,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
@@ -99586,6 +100481,24 @@
 				},
 				"5888a7c3-bce9-5028-a35f-b8fb109d8a61": {
 					"name": "GlaceonHairRight2Portrait",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b5a674b4-1301-9a61-ca53-a1897533435d": {
+					"name": "Camera",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"971946c5-716f-b7e3-3e26-d6462b963863": {
+					"name": "NameplatePivot",
+					"type": "bone",
+					"rotation_global": false,
+					"quaternion_interpolation": false
+				},
+				"b66cc196-722c-852a-6d1e-660a356f47cc": {
+					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
 					"quaternion_interpolation": false
