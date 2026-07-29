@@ -8,7 +8,7 @@ local typeData = require("scripts.TypeControl")
 if #typeData.types == 1 then return {} end
 
 -- Required scripts
-local s, wheel, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 local s, pokeballActs = pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 if not s then pokeballActs = {} end
@@ -37,7 +37,7 @@ end
 if not pageExists then
 	a.pageAct = parentPage:newAction()
 		:item("cobblemon:everstone", "rabbit_spawn_egg")
-		:onLeftClick(function() wheel:descend(typePage) end)
+		:onLeftClick(function() pageNav.descend(typePage) end)
 end
 
 a.setTypeAct = typePage:newAction()

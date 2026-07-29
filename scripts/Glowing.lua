@@ -91,7 +91,7 @@ end)
 if not host:isHost() then return end
 
 -- Required scripts
-local s, wheel, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 
@@ -105,7 +105,7 @@ local a = {}
 -- Actions
 a.pageAct = parentPage:newAction()
 	:item("glow_ink_sac")
-	:onLeftClick(function() wheel:descend(glowPage) end)
+	:onLeftClick(function() pageNav.descend(glowPage) end)
 
 a.toggleAct = glowPage:newAction()
 	:item("ink_sac")
