@@ -91,7 +91,7 @@ end)
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 
@@ -99,15 +99,12 @@ pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 local parentPage = action_wheel:getPage("Main")
 local glowPage   = action_wheel:newPage("Glow")
 
--- Actions table setup
-local a = {}
-
 -- Actions
-a.pageAct = parentPage:newAction()
+acts.glowPage = parentPage:newAction()
 	:item("glow_ink_sac")
 	:onLeftClick(function() pageNav.descend(glowPage) end)
 
-a.toggleAct = glowPage:newAction()
+acts.glowToggle = glowPage:newAction()
 	:item("ink_sac")
 	:toggleItem("glow_ink_sac")
 	:onToggle(function(bool)
@@ -115,7 +112,7 @@ a.toggleAct = glowPage:newAction()
 	end)
 	:toggled(toggle.curr)
 
-a.specialAct = glowPage:newAction()
+acts.glowSpecial = glowPage:newAction()
 	:item("amethyst_shard")
 	:toggleItem("amethyst_cluster")
 	:onToggle(function(bool)
@@ -127,12 +124,13 @@ a.specialAct = glowPage:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		a.pageAct
+		acts.glowPage
 			:title(toJson(
 				{text = "Glowing Settings", bold = true, color = c.primary}
 			))
+			:hoverColor(c.hover)
 		
-		a.toggleAct
+		acts.glowToggle
 			:title(toJson(
 				{
 					"",
@@ -142,8 +140,10 @@ function events.RENDER(delta, context)
 					{text = "This feature has a tendency to not work correctly.\nDue to the rendering properties of emissives, parts may not glow.\nIf it does not work, please reload the avatar. Rinse and Repeat.\nThis is the only fix, I have tried everything.\n\n- Total", color = "red"}
 				}
 			))
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
-		a.specialAct
+		acts.glowSpecial
 			:title(toJson(
 				{
 					"",
@@ -151,10 +151,8 @@ function events.RENDER(delta, context)
 					{text = "Toggles glowing to have special properties.\nGlowing will react to specific situations!", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	

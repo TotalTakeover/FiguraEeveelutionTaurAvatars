@@ -121,7 +121,7 @@ end)
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 
@@ -147,17 +147,14 @@ local pageExists = action_wheel:getPage("Eeveelution")
 local parentPage      = action_wheel:getPage("Main")
 local eeveelutionPage = pageExists or action_wheel:newPage("Eeveelution")
 
--- Actions table setup
-local a = {}
-
 -- Actions
 if not pageExists then
-	a.pageAct = parentPage:newAction()
+	acts.eeveePage = parentPage:newAction()
 		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() pageNav.descend(eeveelutionPage) end)
 end
 
-a.shinyAct = eeveelutionPage:newAction()
+acts.shinyToggle = eeveelutionPage:newAction()
 	:item("gunpowder")
 	:toggleItem("glowstone_dust")
 	:onToggle(function(bool)
@@ -169,14 +166,15 @@ a.shinyAct = eeveelutionPage:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		if a.pageAct then
-			a.pageAct
+		if acts.eeveePage then
+			acts.eeveePage
 				:title(toJson(
 					{text = "Eeveelutions Settings", bold = true, color = c.primary}
 				))
+				:hoverColor(c.hover)
 		end
 		
-		a.shinyAct
+		acts.shinyToggle
 			:title(toJson(
 				{
 					"",
@@ -184,10 +182,8 @@ function events.RENDER(delta, context)
 					{text = "Toggles the usage of shiny textures for your pokemon parts.", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	

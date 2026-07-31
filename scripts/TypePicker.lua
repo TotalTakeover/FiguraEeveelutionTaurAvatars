@@ -8,10 +8,9 @@ local typeData = require("scripts.TypeControl")
 if #typeData.types == 1 then return {} end
 
 -- Required scripts
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
-local s, pokeballActs = pcall(require, "scripts.Pokeball") -- Tries to find script, not required
-if not s then pokeballActs = {} end
+pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
 -- Check for if page already exists
@@ -20,9 +19,6 @@ local pageExists = action_wheel:getPage("Type")
 -- Pages
 local parentPage = action_wheel:getPage("Eeveelution") or action_wheel:getPage("Main")
 local typePage   = pageExists or action_wheel:newPage("Type")
-
--- Actions table setup
-local a = {}
 
 -- Set type loop
 local function setType(i)
@@ -35,37 +31,38 @@ end
 
 -- Actions
 if not pageExists then
-	a.pageAct = parentPage:newAction()
+	acts.typesPage = parentPage:newAction()
 		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() pageNav.descend(typePage) end)
 end
 
-a.setTypeAct = typePage:newAction()
+acts.eeveeTypeChange = typePage:newAction()
 	:onLeftClick(function() typeData.type:update(setType(1)) end)
 	:onRightClick(function() typeData.type:update(setType(-1)) end)
 	:onScroll(function(x) typeData.type:update(setType(x), 10) end)
 
 -- This allows this script to move an action made by another, in the event it exists
 local eeveelutionPage = action_wheel:getPage("Eeveelution")
-if eeveelutionPage and pokeballActs.typeHideAct then
+if eeveelutionPage and acts.pokeballTypeHide then
 	for k, v in ipairs(eeveelutionPage:getActions()) do
-		if v == pokeballActs.typeHideAct then eeveelutionPage:setAction(k, nil) break end
+		if v == acts.pokeballTypeHide then eeveelutionPage:setAction(k, nil) break end
 	end
-	typePage:setAction(-1, pokeballActs.typeHideAct)
+	typePage:setAction(-1, acts.pokeballTypeHide)
 end
 
 -- Update actions
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		if a.pageAct then
-			a.pageAct
+		if acts.typesPage then
+			acts.typesPage
 				:title(toJson(
 					{text = "Eeveelutions Types", bold = true, color = c.primary}
 				))
+				:hoverColor(c.hover)
 		end
 		
-		a.setTypeAct
+		acts.eeveeTypeChange
 			:title(toJson(
 				{
 					"",
@@ -75,10 +72,7 @@ function events.RENDER(delta, context)
 				}
 			))
 			:item(typeData.data[typeData.getString()].stone)
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover)
-		end
+			:hoverColor(c.hover)
 		
 	end
 	

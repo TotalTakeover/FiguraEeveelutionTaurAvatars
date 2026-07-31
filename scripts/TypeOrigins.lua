@@ -28,7 +28,7 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.TypeOrigins") -- Tries to find script, not required
 
@@ -39,17 +39,14 @@ local pageExists = action_wheel:getPage("Type")
 local parentPage = action_wheel:getPage("Eeveelution") or action_wheel:getPage("Main")
 local typePage   = pageExists or action_wheel:newPage("Type")
 
--- Actions table setup
-local a = {}
-
 -- Actions
 if not pageExists then
-	a.pageAct = parentPage:newAction()
+	acts.typesPage = parentPage:newAction()
 		:item("cobblemon:everstone", "rabbit_spawn_egg")
 		:onLeftClick(function() pageNav.descend(typePage) end)
 end
 
-a.originAct = typePage:newAction()
+acts.originToggle = typePage:newAction()
 	:item("ender_pearl")
 	:toggleItem("origins:orb_of_origin", "snowball")
 	:onToggle(function(bool)
@@ -61,14 +58,15 @@ a.originAct = typePage:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		if a.pageAct then
-			a.pageAct
+		if acts.typesPage then
+			acts.typesPage
 				:title(toJson(
 					{text = "Eeveelutions Types", bold = true, color = c.primary}
 				))
+				:hoverColor(c.hover)
 		end
 		
-		a.originAct
+		acts.originToggle
 			:title(toJson(
 				{
 					"",
@@ -76,10 +74,8 @@ function events.RENDER(delta, context)
 					{text = "Allow your origin to override your chosen type.", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	
