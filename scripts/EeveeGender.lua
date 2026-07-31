@@ -75,7 +75,7 @@ end)
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
@@ -108,23 +108,23 @@ function events.RENDER(delta, context)
 		if acts.eeveePage then
 			acts.eeveePage
 				:title(toJson(
-					{text = "Eeveelutions Settings", bold = true, color = c.primary}
+					{text = "Eeveelutions Settings", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.genderToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Eevee Gender\n\n", bold = true, color = c.primary},
-					{text = "Toggles the gender of Eevee.", color = c.secondary},
+					{text = "Toggle Eevee Gender\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the gender of Eevee.", color = colors.secondary},
 					{text = typeData.getString() ~= "eevee" and "\n\nCurrent type is not eevee! No gender will be applied!" or "", color = "gold"}
 					
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

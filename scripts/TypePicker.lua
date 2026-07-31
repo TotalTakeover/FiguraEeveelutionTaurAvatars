@@ -8,7 +8,7 @@ local typeData = require("scripts.TypeControl")
 if #typeData.types == 1 then return {} end
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
@@ -57,22 +57,22 @@ function events.RENDER(delta, context)
 		if acts.typesPage then
 			acts.typesPage
 				:title(toJson(
-					{text = "Eeveelutions Types", bold = true, color = c.primary}
+					{text = "Eeveelutions Types", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.eeveeTypeChange
 			:title(toJson(
 				{
 					"",
-					{text = typeData.getString():gsub("^%l", string.upper).."\n\n", bold = true, color = c.primary},
-					{text = "Left click, Right click, or Scroll to set your type!", color = c.secondary},
+					{text = typeData.getString():gsub("^%l", string.upper).."\n\n", bold = true, color = colors.primary},
+					{text = "Left click, Right click, or Scroll to set your type!", color = colors.secondary},
 					{text = typeData.origin and typeData.origin.curr and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
 				}
 			))
 			:item(typeData.data[typeData.getString()].stone)
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 	end
 	

@@ -287,7 +287,7 @@ function events.TICK()
 end
 
 -- Required script
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 
 -- Check for if page already exists
@@ -325,36 +325,36 @@ function events.RENDER(delta, context)
 		if acts.eeveePage then
 			acts.eeveePage
 				:title(toJson(
-					{text = "Eeveelutions Settings", bold = true, color = c.primary}
+					{text = "Eeveelutions Settings", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.pokeballToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Pokeball\n\n", bold = true, color = c.primary},
-					{text = "Toggle the usage of your pokeball.\n\n", color = c.secondary},
+					{text = "Toggle Pokeball\n\n", bold = true, color = colors.primary},
+					{text = "Toggle the usage of your pokeball.\n\n", color = colors.secondary},
 					{text = swapping and "Currently swapping types, please wait!\n\n" or "", color = "gold"},
 					{text = "Notice:\n", bold = true, color = "gold"},
 					{text = "Various factors can prevent this feature from being active.\nAdditionally, when inside your pokeball, you are unable to move or preform actions.", color = "yellow"}
 				}
 			))
 			:toggled(toggle.curr)
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.pokeballTypeHide
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Pokeball Hiding\n\n", bold = true, color = c.primary},
-					{text = "Hide inside your pokeball before swapping types.", color = c.secondary}
+					{text = "Toggle Pokeball Hiding\n\n", bold = true, color = colors.primary},
+					{text = "Hide inside your pokeball before swapping types.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

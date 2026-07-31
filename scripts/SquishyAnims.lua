@@ -201,7 +201,7 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Anims") -- Tries to find script, not required
 
@@ -234,21 +234,21 @@ function events.RENDER(delta, context)
 		if acts.animsPage then
 			acts.animsPage
 				:title(toJson(
-					{text = "Animation Settings", bold = true, color = c.primary}
+					{text = "Animation Settings", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.animsEarsToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Ear Flick Toggle\n\n", bold = true, color = c.primary},
-					{text = "Toggles the ability for the ears to flick.", color = c.secondary}
+					{text = "Ear Flick Toggle\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the ability for the ears to flick.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

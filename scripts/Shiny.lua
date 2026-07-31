@@ -3,8 +3,8 @@ local typeData = require("scripts.TypeControl")
 local sync     = require("lib.LetThatSyncFig")
 
 -- Optional script
-local allowColor, c = pcall(require, "scripts.ColorProperties")
-if not allowColor then c = {} end
+local allowColor, colors = pcall(require, "scripts.ColorProperties")
+if not allowColor then colors = {} end
 
 -- Shiny colors
 local shinyColors = {}
@@ -59,7 +59,7 @@ for k, v in pairs(typeData.data) do
 	
 	-- Store init colors
 	if allowColor then
-		for h, color in pairs(c.typeColors[k]) do
+		for h, color in pairs(colors.typeColors[k]) do
 			initColors[k][h] = color
 		end
 	end
@@ -103,7 +103,7 @@ function typeData.updateTexture()
 	-- Update colors
 	if allowColor then
 		
-		c.typeColors[currStr] = typeData.shiny.curr and shinyColors[currStr] or initColors[currStr]
+		colors.typeColors[currStr] = typeData.shiny.curr and shinyColors[currStr] or initColors[currStr]
 		
 	end
 	
@@ -169,21 +169,21 @@ function events.RENDER(delta, context)
 		if acts.eeveePage then
 			acts.eeveePage
 				:title(toJson(
-					{text = "Eeveelutions Settings", bold = true, color = c.primary}
+					{text = "Eeveelutions Settings", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.shinyToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Shiny Textures\n\n", bold = true, color = c.primary},
-					{text = "Toggles the usage of shiny textures for your pokemon parts.", color = c.secondary}
+					{text = "Toggle Shiny Textures\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the usage of shiny textures for your pokemon parts.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

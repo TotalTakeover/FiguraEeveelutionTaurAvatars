@@ -198,7 +198,7 @@ local toggleKeybind = keybound.new(
 )
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Glowing") -- Tries to find script, not required
 
@@ -239,48 +239,48 @@ function events.RENDER(delta, context)
 	if action_wheel:isEnabled() then
 		acts.glowEyesPage
 			:title(toJson(
-				{text = "Glowing Eyes Settings", bold = true, color = c.primary}
+				{text = "Glowing Eyes Settings", bold = true, color = colors.primary}
 			))
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 		acts.glowEyesToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Glowing Eyes\n\n", bold = true, color = c.primary},
-					{text = "Toggles the glowing of the eyes.\n\n", color = c.secondary},
+					{text = "Toggle Glowing Eyes\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the glowing of the eyes.\n\n", color = colors.secondary},
 					{text = "WARNING: ", bold = true, color = "dark_red"},
 					{text = "This feature has a tendency to not work correctly.\nDue to the rendering properties of emissives, the eyes may not glow.\nIf it does not work, please reload the avatar. Rinse and Repeat.\nThis is the only fix, I have tried everything.\n\n- Total", color = "red"}
 				}
 			))
 			:toggled(toggle.curr)
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.glowEyesPower
 			:title(toJson(
 				{
 					"",
-					{text = "Origins Power Toggle\n\n", bold = true, color = c.primary},
-					{text = "Toggles the glowing based on various Origin powers.\nThe eyes will only glow when powers are activated.", color = c.secondary}
+					{text = "Origins Power Toggle\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the glowing based on various Origin powers.\nThe eyes will only glow when powers are activated.", color = colors.secondary}
 				}
 			))
 			:toggleItem(typeData.data[typeData.getString()].stone)
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.glowEyesNightVision
 			:title(toJson(
 				{
 					"",
-					{text = "Night Vision Toggle\n\n", bold = true, color = c.primary},
-					{text = "Toggles the glowing based on having the Night Vision effect.\nThis setting will ", color = c.secondary},
-					{text = "OVERRIDE ", bold = true, color = c.secondary},
-					{text = "the other subsettings.", color = c.secondary}
+					{text = "Night Vision Toggle\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the glowing based on having the Night Vision effect.\nThis setting will ", color = colors.secondary},
+					{text = "OVERRIDE ", bold = true, color = colors.secondary},
+					{text = "the other subsettings.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

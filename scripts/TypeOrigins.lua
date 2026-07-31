@@ -28,7 +28,7 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.TypeOrigins") -- Tries to find script, not required
 
@@ -61,21 +61,21 @@ function events.RENDER(delta, context)
 		if acts.typesPage then
 			acts.typesPage
 				:title(toJson(
-					{text = "Eeveelutions Types", bold = true, color = c.primary}
+					{text = "Eeveelutions Types", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.originToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Origin Override\n\n", bold = true, color = c.primary},
-					{text = "Allow your origin to override your chosen type.", color = c.secondary}
+					{text = "Toggle Origin Override\n\n", bold = true, color = colors.primary},
+					{text = "Allow your origin to override your chosen type.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

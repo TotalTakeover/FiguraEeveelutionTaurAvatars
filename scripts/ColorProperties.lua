@@ -2,11 +2,11 @@
 local typeData = require("scripts.TypeControl")
 
 -- Table setup
-local c = {}
+local colors = {}
 
 -- Color table
 -- If Shiny.lua is present, it will provide additional colors to use, and modify these to show the changes
-c.typeColors = {
+colors.typeColors = {
 	
 	eevee    = {primary = vectors.hexToRGB("AE6C44")},
 	vaporeon = {primary = vectors.hexToRGB("61A5C5")},
@@ -23,7 +23,7 @@ c.typeColors = {
 function events.RENDER(delta, context)
 	
 	-- Current type
-	local currCol = c.typeColors[typeData.getString()]
+	local currCol = colors.typeColors[typeData.getString()]
 	
 	-- Avatar color
 	avatar:color(currCol.primary)
@@ -34,31 +34,31 @@ function events.RENDER(delta, context)
 end
 
 -- Host only instructions
-if not host:isHost() then return c end
+if not host:isHost() then return colors end
 
 -- Secondary colors
-c.typeColors.eevee.secondary    = vectors.hexToRGB("F0E3B0")
-c.typeColors.vaporeon.secondary = vectors.hexToRGB("E5E2A5")
-c.typeColors.jolteon.secondary  = vectors.hexToRGB("DBDBE0")
-c.typeColors.flareon.secondary  = vectors.hexToRGB("E3CB71")
-c.typeColors.espeon.secondary   = vectors.hexToRGB("C04053")
-c.typeColors.umbreon.secondary  = vectors.hexToRGB("F1CA5B")
-c.typeColors.leafeon.secondary  = vectors.hexToRGB("E4D48D")
-c.typeColors.glaceon.secondary  = vectors.hexToRGB("89CDD4")
-c.typeColors.sylveon.secondary  = vectors.hexToRGB("85C6EC")
+colors.typeColors.eevee.secondary    = vectors.hexToRGB("F0E3B0")
+colors.typeColors.vaporeon.secondary = vectors.hexToRGB("E5E2A5")
+colors.typeColors.jolteon.secondary  = vectors.hexToRGB("DBDBE0")
+colors.typeColors.flareon.secondary  = vectors.hexToRGB("E3CB71")
+colors.typeColors.espeon.secondary   = vectors.hexToRGB("C04053")
+colors.typeColors.umbreon.secondary  = vectors.hexToRGB("F1CA5B")
+colors.typeColors.leafeon.secondary  = vectors.hexToRGB("E4D48D")
+colors.typeColors.glaceon.secondary  = vectors.hexToRGB("89CDD4")
+colors.typeColors.sylveon.secondary  = vectors.hexToRGB("85C6EC")
 
 function events.RENDER(delta, context)
 	
 	-- Current type
-	local currCol = c.typeColors[typeData.getString()]
+	local currCol = colors.typeColors[typeData.getString()]
 	
 	-- Action variables
-	c.hover     = currCol.secondary
-	c.active    = currCol.primary
-	c.primary   = "#"..vectors.rgbToHex(currCol.primary)
-	c.secondary = "#"..vectors.rgbToHex(currCol.secondary)
+	colors.hover     = currCol.secondary
+	colors.active    = currCol.primary
+	colors.primary   = "#"..vectors.rgbToHex(currCol.primary)
+	colors.secondary = "#"..vectors.rgbToHex(currCol.secondary)
 	
 end
 
 -- Return variables
-return c
+return colors

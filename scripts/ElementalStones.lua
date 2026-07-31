@@ -47,7 +47,7 @@ end
 if not host:isHost() then return end
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.TypePicker") -- Tries to find script, not required
 
@@ -81,24 +81,24 @@ function events.RENDER(delta, context)
 		if acts.typesPage then
 			acts.typesPage
 				:title(toJson(
-					{text = "Eeveelutions Types", bold = true, color = c.primary}
+					{text = "Eeveelutions Types", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.stoneToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Stone Type Changing\n\n", bold = true, color = c.primary},
-					{text = "Allow various stones to change your typing when held.\nThis expects Cobblemon items, but if they are not present, glazed terracotta works too.", color = c.secondary},
+					{text = "Toggle Stone Type Changing\n\n", bold = true, color = colors.primary},
+					{text = "Allow various stones to change your typing when held.\nThis expects Cobblemon items, but if they are not present, glazed terracotta works too.", color = colors.secondary},
 					{text = typeData.origin and typeData.origin.curr and "\n\nCurrently overridden by origin type toggle." or "", color = "gold"}
 				}
 			))
 			:toggleItem(typeData.data[typeData.types[math.floor(world.getTime() * 0.05) % #typeData.types + 1]].stone)
 			:toggled(stone.curr)
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	
