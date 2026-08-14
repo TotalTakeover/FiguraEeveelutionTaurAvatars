@@ -231,7 +231,7 @@ function events.ENTITY_INIT()
 end
 
 -- Apply function
-typeData.type:applyFunc(function()
+typeData.type:addFunc(function()
 	typeData:updateAll()
 end)
 

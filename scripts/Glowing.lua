@@ -81,7 +81,7 @@ function events.RENDER(delta, context)
 end
 
 -- Apply sound function
-toggle:applyFunc(function()
+toggle:addFunc(function()
 	if player:isLoaded() and toggle.curr then
 		sounds:playSound("entity.glow_squid.ambient", player:getPos(), 0.75)
 	end

@@ -259,10 +259,10 @@ for _, blend in ipairs(blendAnims) do
 end
 
 -- Apply functions
-isSit:applyFunc(function()
+isSit:addFunc(function()
 	anims.sit:playing(canSit and isSit.curr)
 end)
-isLie:applyFunc(function()
+isLie:addFunc(function()
 	anims.lying:playing(canLie and isLie.curr)
 end)
 

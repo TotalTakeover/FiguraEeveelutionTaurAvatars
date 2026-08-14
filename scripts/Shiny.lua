@@ -110,7 +110,7 @@ function typeData.updateTexture()
 end
 
 -- Apply function
-typeData.shiny:applyFunc(function()
+typeData.shiny:addFunc(function()
 	typeData.updateTexture()
 	if player:isLoaded() and typeData.shiny.curr then
 		sounds:playSound("block.amethyst_block.chime", player:getPos())

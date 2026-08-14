@@ -65,7 +65,7 @@ function typeData.updateTexture()
 end
 
 -- Apply function
-gender:applyFunc(function()
+gender:addFunc(function()
 	if typeData.getString() == "eevee" then
 		typeData.updateTexture()
 	end
